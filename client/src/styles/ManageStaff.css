@@ -1,0 +1,195 @@
+.black-container {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9;
+}
+
+.top-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.main-container {
+    z-index: 99;
+    width: 900px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.heading {
+    text-align: center;
+    color: #233655;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+.staff-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.staff-table th, .staff-table td {
+    text-align: left;
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+.staff-table th {
+    background-color: #233655;
+    color: white;
+    font-weight: bold;
+}
+
+.staff-table td {
+    background-color: #f9f9f9;
+}
+
+.staff-item {
+    transition: background-color 0.3s ease;
+}
+
+.staff-item:hover {
+    background-color: #f1f1f1;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.update-btn, .remove-btn, .add-btn {
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.update-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.update-btn:hover {
+    background-color: #0056b3;
+}
+
+.remove-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.remove-btn:hover {
+    background-color: #c82333;
+}
+
+.add-btn {
+    display: block;
+    width: fit-content;
+    margin: 30px auto;
+    background-color: #28a745;
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-btn:hover {
+    background-color: #218838;
+}
+
+.post-staff-container{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.staff-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.staff-container span {
+    display: inline-block;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 5px 10px;
+}
+
+.staff-container span:nth-child(1) {
+    width: 150px; /* Name column */
+}
+
+.staff-container span:nth-child(2) {
+    width: 120px; /* Position column */
+}
+
+.staff-container span:nth-child(3) {
+    width: 150px; /* Phone column */
+}
+
+.staff-container span:nth-child(4) {
+    width: 200px; /* Email column */
+}
+
+.staff-container span:nth-child(5) {
+    width: 200px; /* Action buttons column */
+    text-align: right; /* Align buttons to the right */
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.update-btn {
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.update-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.update-btn:hover {
+    background-color: #0056b3;
+}
+
+/* .remove-btn { */
+    /* background-color: #dc3545; */
+    /* color: white; */
+/* } */
+/*  */
+/* .remove-btn:hover { */
+    /* background-color: #c82333; */
+/* } */

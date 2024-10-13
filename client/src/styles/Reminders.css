@@ -1,0 +1,109 @@
+/* Main container styling */
+.reminder-container {
+    margin-bottom: 20px; /* Space from the header */
+    padding: 10px;
+    background-color: #e0f7fa; /* Light cyan background */
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Takes up 80% of the screen width */
+    /* max-width: 800px; Limits max width for larger screens */
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #00bcd4; /* Accent border */
+    transition: transform 0.3s ease; /* Smooth animation */
+
+  }
+  
+  .reminder-container:hover {
+    transform: translateY(-5px); /* Lifts up slightly on hover */
+  }
+  
+  /* Inner content styling */
+  .main-container {
+    padding: 0px;
+  }
+  
+  h2 {
+    font-size: 28px;
+    color: #00796b; /* Darker teal for the title */
+    margin-bottom: 15px;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  /* Pending items container */
+  .pending-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Space between pending items */
+    max-height: 250px;
+    overflow-y: scroll;
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.pending-container::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+  
+  .pending-item {
+    background-color: #ffffff;
+    padding: 4px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+    font-size: 16px;
+    color: #004d40; /* Deep green color */
+    border-left: 6px solid #00bcd4; /* Accent left border */
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .pending-item:hover {
+    box-shadow: 0 6px 12px rgba(0, 188, 212, 0.3); /* Box shadow effect on hover */
+    background-color: #e0f7fa; /* Slight cyan tint on hover */
+  }
+  
+  .pending-item span {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+  }
+  
+  .pending-item span::before {
+    content: '⚠️';
+    margin-right: 8px;
+    font-size: 18px;
+  }
+  
+  /* Responsive Design for smaller screens */
+  @media screen and (max-width: 768px) {
+    .reminder-container {
+      width: 90%; /* Wider on smaller screens */
+    }
+  
+    h2 {
+      font-size: 24px; /* Slightly smaller heading */
+    }
+  
+    .pending-item {
+      font-size: 14px; /* Smaller text for smaller screens */
+    }
+  }
+  
+  /* Mobile Design */
+  @media screen and (max-width: 480px) {
+    .reminder-container {
+      width: 95%; /* Even wider for mobile */
+      padding: 15px; /* Less padding for smaller screens */
+    }
+  
+    h2 {
+      font-size: 22px; /* Smaller heading on mobile */
+    }
+  
+    .pending-item {
+      padding: 12px; /* Smaller padding */
+      font-size: 13px; /* Even smaller text for mobile */
+    }
+  }
+  

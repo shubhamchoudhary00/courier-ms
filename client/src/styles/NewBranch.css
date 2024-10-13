@@ -1,0 +1,48 @@
+.main {
+    padding: 20px;
+}
+
+.new-branch {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    background-color: #f9f9f9;
+    /* max-width: 900px; */
+    margin: 0 auto;
+}
+
+.branch-form {
+    width: 100%;
+}
+
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .new-branch {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .branch-form {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
+}
