@@ -1,12 +1,11 @@
-import AddNewStaff from "../components/AddNewStaff";
 import Layout from "../components/Layout";
-import ManageStaff from "../components/ManageStaff";
 import TableGrid from "../components/TableGrid";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import host from "../APIRoute/APIRoute";
 import { message } from "antd";
 import { useSelector } from "react-redux";
+import { PulseLoader } from "react-spinners";
 
 const BranchStaff = () => {
   const [branches, setBranches] = useState([]);
@@ -39,19 +38,21 @@ const BranchStaff = () => {
 
   useEffect(() => {
     getAllBranches();
-  }, []);
+    // console.log(user)
+  }, [user]);
 
   return (
     <Layout>
       {loading ? ( // Conditional rendering based on loading state
-        <div>Loading...</div>
-      ) : (
+        <div className="loader-container">
+        <PulseLoader color="#36d7b7" />
+      </div>      ) : (
         <>
-          <ManageStaff/>  
+          
          {/*  <AddNewStaff data={branches} id={user?._id} /> */}
           <div className='main'>
             <h2>Manage Staff</h2>
-            <TableGrid />
+            <TableGrid data={branches} editable={false} />
           </div>
         </>
       )}

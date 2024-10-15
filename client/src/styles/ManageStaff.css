@@ -150,14 +150,12 @@
 }
 
 .staff-container span:nth-child(3) {
-    width: 150px; /* Phone column */
+    width: fit-content; /* Phone column */
 }
+
+
 
 .staff-container span:nth-child(4) {
-    width: 200px; /* Email column */
-}
-
-.staff-container span:nth-child(5) {
     width: 200px; /* Action buttons column */
     text-align: right; /* Align buttons to the right */
 }

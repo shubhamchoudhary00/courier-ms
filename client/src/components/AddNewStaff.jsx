@@ -4,7 +4,8 @@ import '../styles/AddNewStaff.css'; // Custom styles
 import axios from 'axios';
 import host from '../APIRoute/APIRoute';
 import { message } from 'antd';
-const AddNewStaff = ({ data,id }) => {
+import { useSelector } from 'react-redux';
+const AddNewStaff = ({ branchId,open,setOpen }) => {
   const [staffData, setStaffData] = useState({
     id: '',
     name: '',
@@ -14,6 +15,7 @@ const AddNewStaff = ({ data,id }) => {
     branch: '', // Add branch state here
   });
 
+  const {user}=useSelector((state)=>state.user)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setStaffData({ ...staffData, [name]: value });
@@ -51,35 +53,19 @@ const AddNewStaff = ({ data,id }) => {
   };
 
   useEffect(()=>{
-    staffData.id=id;
-  },[id])
+    staffData.branch=branchId;
+    staffData.id=user?._id
+  },[branchId,user])
   return (
-    <div className="modal-overlay">
+open && 
+  (
+    <div className="modal-overlay" style={{zIndex:'9999'}}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <h2 className="text-center">Add New Staff</h2>
         <form onSubmit={handleSubmit}>
           <div className="col">
             <div className="row mb-3">
-              <div className="col-12">
-                <label htmlFor="branch" className="form-label">Branch</label>
-                <select
-                  className="form-select"
-                  aria-label="Default select example"
-                  name="branch"
-                  value={staffData.branch}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="" disabled>
-                    Select a branch
-                  </option>
-                  {data.map((item) => (
-                    <option key={item?._id} value={item?._id}>
-                      {item?.branchName}/{item?.city}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            
             </div>
             <div className="row mb-3">
               <div className="col-12">
@@ -140,11 +126,16 @@ const AddNewStaff = ({ data,id }) => {
                 />
               </div>
             </div>
-            <button type="submit" className="btn btn-primary w-100">Add Staff</button>
+            <div className='d-flex'>
+            <button type="submit" className="btn btn-primary w-75">Add Staff</button>
+            <button  className="btn btn-danger w-75" onClick={()=>setOpen(false)}>Cancel</button>
+            </div>
           </div>
         </form>
       </div>
     </div>
+  )
+    
   );
 };
 

@@ -2,13 +2,12 @@ import { useEffect, useState } from 'react';
 import '../styles/ManageStaff.css';
 import { message } from 'antd';
 import axios from 'axios';
+import host from '../APIRoute/APIRoute';
+import AddNewStaff from './AddNewStaff'
 
-const ManageStaff = ({id,branchId}) => {
-  const [staff, setStaff] = useState([
-    { id: 1, name: 'John Doe', position: 'Manager', phone: '9887744465', email: 'john@gmail.com', active: 'Y' },
-    { id: 2, name: 'Jane Smith', position: 'Developer', phone: '9887744465', email: 'jane@gmail.com', active: 'Y' },
-    { id: 3, name: 'Emily Johnson', position: 'Designer', phone: '9887744465', email: 'emily@gmail.com', active: 'Y' },
-  ]);
+const ManageStaff = ({ id, setOpen, open }) => {
+  const [staff, setStaff] = useState([]);
+  const [newStaffDialog,setNewStaffDialog]=useState(false)
 
   const handleRemove = (id) => {
     setStaff(staff.filter(member => member.id !== id));
@@ -22,57 +21,59 @@ const ManageStaff = ({id,branchId}) => {
     alert('Add new staff functionality');
   };
 
-  const getAllStaff=async()=>{
-    try{
-      const res=await axios.post(`${host}/staff/get-staff`,{id,branchId},{
-        headers:{
-          Authorization:`Bearer ${localStorage.getItem('token')}`
-        }
-      })
-      if(res.data.success){
-        console.log(res.data)
+  const getAllStaff = async () => {
+    try {
+      const res = await axios.post(`${host}/staff/get-staff`, { id }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      if (res.data.success) {
+        setStaff(res.data.staff); // Assuming 'staff' is returned in the response
+      } else {
+        message.error('Failed to fetch staff');
       }
-    }catch(error){
+    } catch (error) {
       console.log(error.message);
       message.error('Something went wrong');
     }
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     getAllStaff();
-  },[id,branchId]);
+  }, [id]);
 
   return (
-    <div className='top-container'>
-      <div className='black-container'></div>
-      <div className='main-container'>
-        <h1 className='heading'>Manage Staff</h1>
-      <div className='post-staff-container'>
-      <div className='staff-container'>
-      <span>Name</span>
-      <span>Position</span>
-      <span>Phone</span>
-      <span>Email</span>
-      <span>Actions</span>
-      </div>
-      {staff.map((member) => (
-        <div key={member.id} className='staff-container'>
-          <span>{member.name}</span>
-          <span>{member.position}</span>
-          <span>{member.phone}</span>
-          <span>{member.email}</span>
-          <span className='action-buttons'>
-            <button className='update-btn' onClick={() => handleUpdate(member.id)}>Update</button>
-            <button className='remove-btn' onClick={() => handleRemove(member.id)}>Remove</button>
-          </span>
+    open && (
+      <div className='top-container'>
+      {newStaffDialog && <AddNewStaff open={newStaffDialog} branchId={id}  />}
+        <div className='black-container'></div>
+        <div className='main-container'>
+          <h1 className='heading'>Manage Staff</h1>
+          <div className='post-staff-container'>
+            <div className='staff-container'>
+              <span>Name</span>
+              <span>Phone</span>
+              <span>Email</span>
+              <span>Actions</span>
+            </div>
+            {staff.map((member) => (
+              <div key={member.id} className='staff-container'>
+                <span>{member.name}</span>
+                <span>{member.phone}</span>
+                <span>{member.email}</span>
+                <span className='action-buttons'>
+                  <button className='update-btn' onClick={() => handleUpdate(member.id)}>Update</button>
+                  <button className='remove-btn' onClick={() => handleRemove(member.id)}>Remove</button>
+                </span>
+              </div>
+            ))}
+          </div>
+          <button className='add-btn' onClick={()=>setNewStaffDialog(true)}>Add New Staff</button>
+          <button className='primary' onClick={() => setOpen(false)}>Close</button>
         </div>
-      ))}
       </div>
-       
-     
-        <button className='add-btn' onClick={handleAddStaff}>Add New Staff</button>
-      </div>
-    </div>
+    )
   );
 };
 

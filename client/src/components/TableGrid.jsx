@@ -1,8 +1,12 @@
-
-const TableGrid = ({data}) => {
+import { useState } from "react";
+import ManageStaff from "./ManageStaff";
+const TableGrid = ({data,editable}) => {
+    const [id,setId]=useState();
+    const [open,setOpen]=useState(false)
     // Handler for viewing an article
-    const handleView = (day) => {
-        alert(`Viewing article for Day ${day}`);
+    const handleView = (id) => {
+        setId(id);
+        setOpen(!open);
     };
 
     // Handler for editing an article
@@ -19,6 +23,7 @@ const TableGrid = ({data}) => {
 
     return (
         <div className="container">
+        {!editable && open && <ManageStaff id={id} open={open} setOpen={setOpen}/>  }
             <div className="row">
                 <div className="col-12">
                     <table className="table table-bordered">

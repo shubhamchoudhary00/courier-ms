@@ -46,9 +46,11 @@ const getAllStaffController=async(req,res)=>{
 }
 
 const getSpecificStaffController=async(req,res)=>{
+    console.log('init')
     try{
-        const {id,branchId}=req.body;
-        const staff=await userModel.findOne({userId:id,branch:branchId,role:'Staff'});
+        const {id}=req.body;
+        console.log(req.body)
+        const staff=await userModel.find({branch:id,role:'Staff'});
         if(!staff){
             return res.status(404).send({success:false,message:'staff not found'});
         }
