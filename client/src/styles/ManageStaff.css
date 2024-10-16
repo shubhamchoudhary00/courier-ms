@@ -115,11 +115,25 @@
     background-color: #218838;
 }
 
-.post-staff-container{
+.post-staff-container {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    max-height: 450px;
+    overflow: auto; /* Change 'scroll' to 'auto' */
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.post-staff-container::-webkit-scrollbar {
+    display: none; /* Hide the scrollbar */
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.post-staff-container {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
 
 .staff-container {
     display: flex;
@@ -142,7 +156,7 @@
 }
 
 .staff-container span:nth-child(1) {
-    width: 150px; /* Name column */
+    width: 250px; /* Name column */
 }
 
 .staff-container span:nth-child(2) {
@@ -158,11 +172,16 @@
 .staff-container span:nth-child(4) {
     width: 200px; /* Action buttons column */
     text-align: right; /* Align buttons to the right */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .action-buttons {
     display: flex;
     gap: 10px;
+    justify-content: space-around;
+    width: 100%;
 }
 
 .update-btn {
@@ -183,6 +202,14 @@
     background-color: #0056b3;
 }
 
+.btns{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
 /* .remove-btn { */
     /* background-color: #dc3545; */
     /* color: white; */
@@ -191,3 +218,5 @@
 /* .remove-btn:hover { */
     /* background-color: #c82333; */
 /* } */
+
+

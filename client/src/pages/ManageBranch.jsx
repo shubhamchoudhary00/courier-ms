@@ -5,10 +5,12 @@ import axios from 'axios';
 import host from '../APIRoute/APIRoute';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import UpdateBranch from '../components/UpdateBranch';
 
 const ManageBranch = () => {
   const [branches, setBranches] = useState([]);
   const { user } = useSelector((state) => state.user);
+  const [refresh,setRefresh]=useState(false);
 
   const getAllBranches = async () => {
     if (!user) return; // Avoid API call if user is not available
@@ -42,18 +44,23 @@ const ManageBranch = () => {
     }
   };
 
+  const handleBranchUpdate = () => {
+   
+    setRefresh(prev => !prev); // Trigger a refresh after adding new staff
+  };
+
   useEffect(() => {
     // Call API only if user is defined
     if (user) {
       getAllBranches();
     }
-  }, [user]);
+  }, [user,refresh]);
 
   return (
     <Layout>
       <div className="main">
         <h2>Manage Branch</h2>
-        <TableGrid data={branches} editable={true} />
+        <TableGrid data={branches} editable={true} onClose={handleBranchUpdate} />
       </div>
     </Layout>
   );

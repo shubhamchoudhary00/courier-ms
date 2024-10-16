@@ -13,27 +13,30 @@ const BranchStaff = () => {
   const [loading, setLoading] = useState(true); // New loading state
 
   const getAllBranches = async () => {
-    try {
-      setLoading(true); // Set loading before fetching
-      const { data } = await axios.post(
-        `${host}/branch/get-user-specific-branches`,
-        { user },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
+    if(user){
+      try {
+        setLoading(true); // Set loading before fetching
+        const { data } = await axios.post(
+          `${host}/branch/get-user-specific-branches`,
+          { user },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          }
+        );
+        if (data.success) {
+          console.log(data);
+          setBranches(data.branches);
         }
-      );
-      if (data.success) {
-        console.log(data);
-        setBranches(data.branches);
+      } catch (error) {
+        console.log(error.message);
+        message.error('Something went wrong');
+      } finally {
+        setLoading(false); // Set loading to false after fetching
       }
-    } catch (error) {
-      console.log(error.message);
-      message.error('Something went wrong');
-    } finally {
-      setLoading(false); // Set loading to false after fetching
     }
+   
   };
 
   useEffect(() => {

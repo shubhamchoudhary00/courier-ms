@@ -116,5 +116,78 @@ const deleteBranchController=async(req,res)=>{
     }
 }
 
+const getBranchController=async(req,res)=>{
+    try{
+        const {id}=req.body;
+        const branch=await branchModel.findOne({_id:id})
+        if(!branch){
+            return res.status(404).send({success:false,message:'Branch not available'})
+        }
+        return res.status(200).send({success:true,message:'fetched',branch});
+    }catch(error){
+        console.log(error.message);
+        return res.status(500).send({success:false,message:'Internal Server Error'})
+    }
+}
 
-module.exports = { createBranchController,getAllBranchController,getAllBranchForUsersController,changeBranchActiveStatusController,deleteBranchController };
+const updateBranchController = async (req, res) => {
+    try {
+      const id = req.params.id;
+      const {
+        branchName,
+        street,
+        city,
+        state,
+        country,
+        pincode,
+        contactPersonName,
+        contactPersonNumber,
+        active,
+      } = req.body.branchData;
+  
+      console.log(req.body); // Debugging
+  
+      // Find the branch by ID
+      const branch = await branchModel.findOne({ _id: id });
+      
+      // If branch not found, return error
+      if (!branch) {
+        return res.status(404).send({
+          success: false,
+          message: 'Branch not available',
+        });
+      }
+  
+      // Update branch details
+      branch.branchName = branchName || branch.branchName;
+      branch.street = street || branch.street;
+      branch.city = city || branch.city;
+      branch.state = state || branch.state;
+      branch.country = country || branch.country;
+      branch.pincode = pincode || branch.pincode;
+      branch.contactPersonName = contactPersonName || branch.contactPersonName;
+      branch.contactPersonNumber = contactPersonNumber || branch.contactPersonNumber;
+      branch.active = active !== undefined ? active : branch.active;
+  
+      // Save the updated branch
+      await branch.save();
+  
+      // Send success response
+      return res.status(200).send({
+        success: true,
+        message: 'Branch updated successfully',
+        branch,
+      });
+  
+    } catch (error) {
+      console.error(error.message); // Log the error for debugging
+      return res.status(500).send({
+        success: false,
+        message: 'Internal Server Error',
+      });
+    }
+  };
+  
+
+module.exports = { createBranchController,getAllBranchController,getAllBranchForUsersController,getBranchController,updateBranchController,
+    changeBranchActiveStatusController,deleteBranchController };

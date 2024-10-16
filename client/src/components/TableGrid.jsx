@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import ManageStaff from "./ManageStaff";
-const TableGrid = ({data,editable}) => {
+import UpdateBranch from "./UpdateBranch";
+const TableGrid = ({data,editable,onClose}) => {
     const [id,setId]=useState();
-    const [open,setOpen]=useState(false)
+    const [open,setOpen]=useState(false);
+    const [branchId,setBranchId]=useState();
+    const [branchOpen,setBranchOpen]=useState(false);
     // Handler for viewing an article
     const handleView = (id) => {
         setId(id);
@@ -10,7 +13,9 @@ const TableGrid = ({data,editable}) => {
     };
 
     // Handler for editing an article
-    const handleEdit = (day) => {
+    const handleEdit = (id) => {
+        setBranchId(id);
+        setBranchOpen(!branchOpen)
         alert(`Editing article for Day ${day}`);
     };
 
@@ -21,9 +26,13 @@ const TableGrid = ({data,editable}) => {
         }
     };
 
+ 
+
     return (
         <div className="container">
         {!editable && open && <ManageStaff id={id} open={open} setOpen={setOpen}/>  }
+        {editable && branchOpen && <UpdateBranch id={branchId} open={branchOpen} setOpen={setBranchOpen} onClose={onClose} />}
+      
             <div className="row">
                 <div className="col-12">
                     <table className="table table-bordered">
@@ -49,12 +58,13 @@ const TableGrid = ({data,editable}) => {
                                     <button type="button" className="btn btn-primary" onClick={() => handleView(item?._id)}>
                                         <i className="far fa-eye"></i>
                                     </button>
+                                    {editable && <>
                                     <button type="button" className="btn btn-success" onClick={() => handleEdit(item?._id)}>
                                         <i className="fas fa-edit"></i>
                                     </button>
                                     <button type="button" className="btn btn-danger" onClick={() => handleDelete(item?._id)}>
                                         <i className="far fa-trash-alt"></i>
-                                    </button>
+                                    </button> </>}
                                 </td>
                             </tr>
                         ))}
