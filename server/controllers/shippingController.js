@@ -225,7 +225,8 @@ const createShippingController = async (req, res) => {
 
 const getAllShippingDetailsController = async (req, res) => {
     try {
-        const shippings = await shippingModel.find().sort({created:-1});
+        const {id}=req.body
+        const shippings = await shippingModel.find({userId:id}).sort({created:-1});
 
         if (!shippings || shippings.length === 0) {
             return res.status(404).send({ message: 'No shipments found', success: false });
@@ -259,7 +260,8 @@ const getAllShippingDetailsController = async (req, res) => {
 
 const getAllPendingDocumentsShippingController = async (req, res) => {
     try {
-        const shippings = await shippingModel.find();
+        const {id}=req.body;
+        const shippings = await shippingModel.find({userId:id});
 
         if (!shippings || shippings.length === 0) {
             return res.status(404).send({ message: 'No shipments found', success: false });
@@ -502,7 +504,8 @@ const deleteParcelController=async(req,res)=>{
 
 const unsucessfullParcelController=async(req,res)=>{
     try{
-        const parcels=await shippingModel.find();
+        const {id}=req.body
+        const parcels=await shippingModel.find({userId:id});
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }
@@ -523,7 +526,8 @@ const unsucessfullParcelController=async(req,res)=>{
 }
 const accedptedParcelController=async(req,res)=>{
     try{
-        const parcels=await shippingModel.find();
+        const {id}=req.body
+        const parcels=await shippingModel.find({userId:id});
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }
@@ -544,7 +548,8 @@ const accedptedParcelController=async(req,res)=>{
 }
 const collectedParcelController=async(req,res)=>{
     try{
-        const parcels=await shippingModel.find();
+        const {id}=req.body
+        const parcels=await shippingModel.find({userId:id});
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }
@@ -565,7 +570,8 @@ const collectedParcelController=async(req,res)=>{
 }
 const shippedParcelController=async(req,res)=>{
     try{
-        const parcels=await shippingModel.find();
+        const {id}=req.body
+        const parcels=await shippingModel.find({userId:id});
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }
@@ -586,7 +592,8 @@ const shippedParcelController=async(req,res)=>{
 }
 const inTransitParcelController=async(req,res)=>{
     try{
-        const parcels=await shippingModel.find();
+        const {id}=req.body
+        const parcels=await shippingModel.find({userId:id});
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }
@@ -607,7 +614,8 @@ const inTransitParcelController=async(req,res)=>{
 }
 const arrivedParcelController=async(req,res)=>{
     try{
-        const parcels=await shippingModel.find();
+        const {id}=req.body
+        const parcels=await shippingModel.find({userId:id});
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }
@@ -628,7 +636,8 @@ const arrivedParcelController=async(req,res)=>{
 }
 const outForDeliveryParcelController=async(req,res)=>{
     try{
-        const parcels=await shippingModel.find();
+        const {id}=req.body
+        const parcels=await shippingModel.find({userId:id});
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }
@@ -649,7 +658,8 @@ const outForDeliveryParcelController=async(req,res)=>{
 }
 const pickedUpParcelController=async(req,res)=>{
     try{
-        const parcels=await shippingModel.find();
+        const {id}=req.body
+        const parcels=await shippingModel.find({userId:id});
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }
@@ -670,7 +680,8 @@ const pickedUpParcelController=async(req,res)=>{
 }
 const deliveredParcelController=async(req,res)=>{
     try{
-        const parcels=await shippingModel.find();
+        const {id}=req.body
+        const parcels=await shippingModel.find({userId:id});
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }

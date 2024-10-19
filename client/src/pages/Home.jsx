@@ -5,6 +5,7 @@ import { message } from 'antd';
 import axios from 'axios';
 import host from '../APIRoute/APIRoute';
 import Reminders from '../components/Reminders';
+import { useSelector } from 'react-redux';
 
 const Card = ({ imageUrl, count, label }) => {
   return (
@@ -19,10 +20,11 @@ const Card = ({ imageUrl, count, label }) => {
 
 const Home = () => {
   const [shipments, setShipments] = useState([]);
+  const {user}=useSelector((state)=>state.user)
 
-  const getAllPendingShipments = async () => {
+  const getAllPendingShipments = async (id) => {
     try {
-      const res = await axios.get(`${host}/shipping/get-all-pending-shipment`, {
+      const res = await axios.post(`${host}/shipping/get-all-pending-shipment`,{id} {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -38,7 +40,16 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getAllPendingShipments();
+    if(user){
+      if(user.role==='User'){
+        getAllPendingShipments(user?._id);
+
+      }else if(user?.role==='Staff'){
+        getAllPendingShipments(user?.userId);
+
+      }
+
+    }
     console.log(shipments)
   }, []);
 

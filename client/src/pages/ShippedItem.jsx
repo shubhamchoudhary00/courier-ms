@@ -4,13 +4,15 @@ import axios from 'axios'
 import {message} from 'antd';
 import { useEffect, useState } from "react";
 import ParcelTable from "../components/ParcelTable";
+import { useSelector } from "react-redux";
 const ShippedItem = () => {
 
     const [parcels,setParcels]=useState([]);
-    const [trigger,setTrigger]=useState(false)
-    const getParcels=async()=>{
+    const [trigger,setTrigger]=useState(false);
+    const {user}=useSelector((state)=>state.user)
+    const getParcels=async(id)=>{
         try{
-            const res=await axios.get(`${host}/shipping/shipped-parcels`,{
+            const res=await axios.post(`${host}/shipping/shipped-parcels`,{id},{
                 headers:{
                     Authorization:`Bearer ${localStorage.getItem('token')}`
                 }
@@ -26,9 +28,18 @@ const ShippedItem = () => {
         }
     }
 
-    useEffect(()=>{
-        getParcels();
-    },[trigger])
+    useEffect(() => {
+        if(user){
+          if(user.role==='User'){
+            getParcels(user?._id);
+    
+          }else if(user?.role==='Staff'){
+            getParcels(user?.userId);
+    
+          }
+    
+        }
+      }, [trigger]);
 
   return (
     <Layout>

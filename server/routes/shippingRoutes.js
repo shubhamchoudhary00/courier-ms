@@ -33,8 +33,8 @@ router.post('/modify-shipping/:id', upload.fields([
   ]),authMiddleware, modifyShippingController);
 
 
-router.get('/get-all-shipment',authMiddleware,getAllShippingDetailsController)
-router.get('/get-all-pending-shipment',authMiddleware,getAllPendingDocumentsShippingController)
+router.post('/get-all-shipment',authMiddleware,getAllShippingDetailsController)
+router.post('/get-all-pending-shipment',authMiddleware,getAllPendingDocumentsShippingController)
 
 router.get('/get-parcel-details/:id',authMiddleware,getShippingDetailController);
 
@@ -42,24 +42,24 @@ router.post('/update-status/:id',authMiddleware,updateStatusController);
 
 router.delete('/delete-parcel/:id',authMiddleware,deleteParcelController);
 
-router.get('/unsuccessful-parcel',authMiddleware,unsucessfullParcelController)
+router.post('/unsuccessful-parcel',authMiddleware,unsucessfullParcelController)
 
-router.get('/accepted-parcel',authMiddleware,accedptedParcelController)
+router.post('/accepted-parcel',authMiddleware,accedptedParcelController)
 
-router.get('/collected-parcel',authMiddleware,collectedParcelController)
+router.post('/collected-parcel',authMiddleware,collectedParcelController)
 
-router.get('/shipped-parcel',authMiddleware,shippedParcelController)
+router.post('/shipped-parcel',authMiddleware,shippedParcelController)
 
-router.get('/in-transit-parcel',authMiddleware,inTransitParcelController)
+router.post('/in-transit-parcel',authMiddleware,inTransitParcelController)
 
-router.get('/arrived-parcel',authMiddleware,arrivedParcelController)
+router.post('/arrived-parcel',authMiddleware,arrivedParcelController)
 
-router.get('/out-for-delivery-parcel',authMiddleware,outForDeliveryParcelController)
+router.post('/out-for-delivery-parcel',authMiddleware,outForDeliveryParcelController)
 
 
-router.get('/delivered-parcel',authMiddleware,deliveredParcelController)
+router.post('/delivered-parcel',authMiddleware,deliveredParcelController)
 
-router.get('/pick-up-parcel',authMiddleware,pickedUpParcelController)
+router.post('/pick-up-parcel',authMiddleware,pickedUpParcelController)
 
 
 module.exports = router;
