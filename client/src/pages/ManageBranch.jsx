@@ -5,22 +5,17 @@ import axios from 'axios';
 import host from '../APIRoute/APIRoute';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import UpdateBranch from '../components/UpdateBranch';
 
 const ManageBranch = () => {
   const [branches, setBranches] = useState([]);
   const { user } = useSelector((state) => state.user);
-  const [refresh,setRefresh]=useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   const getAllBranches = async () => {
+
     if (!user) return; // Avoid API call if user is not available
     try {
-      // Avoid unnecessary API calls by checking if branches are already loaded
-      const cachedBranches = localStorage.getItem('branches');
-      if (cachedBranches) {
-        setBranches(JSON.parse(cachedBranches));
-        return;
-      }
+  
 
       const { data } = await axios.post(
         `${host}/branch/get-user-specific-branches`,
@@ -36,7 +31,6 @@ const ManageBranch = () => {
         console.log(data);
         setBranches(data.branches);
         // Cache branches in localStorage to avoid fetching the same data
-        localStorage.setItem('branches', JSON.stringify(data.branches));
       }
     } catch (error) {
       console.log(error.message);
@@ -45,16 +39,15 @@ const ManageBranch = () => {
   };
 
   const handleBranchUpdate = () => {
-   
-    setRefresh(prev => !prev); // Trigger a refresh after adding new staff
+    // Clear cached branches and refresh data
+    setRefresh((prev) => !prev); // Trigger a refresh after adding new staff
   };
 
   useEffect(() => {
-    // Call API only if user is defined
     if (user) {
       getAllBranches();
     }
-  }, [user,refresh]);
+  }, [user, refresh]);
 
   return (
     <Layout>

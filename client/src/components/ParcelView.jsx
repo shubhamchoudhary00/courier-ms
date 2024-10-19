@@ -6,6 +6,7 @@ import host from '../APIRoute/APIRoute';
 import PropTypes from 'prop-types';
 import '../styles/ParcelView.css';
 import PdfViewer from "../helpers/PdfViewer";
+import UpdateStatus from "./UpdateStatus";
 
 const ParcelView = ({ id, open, setOpen }) => {
     const [parcel, setParcel] = useState({});
@@ -14,6 +15,7 @@ const ParcelView = ({ id, open, setOpen }) => {
     const [fileType, setFileType] = useState('');
     const [addedBy, setAddedBy] = useState({});
     const [modifiedBy, setModifiedBy] = useState(null);
+    const [edit,setEdit]=useState(false)
 
     const handleCloseView = () => {
         setOpen(false);
@@ -40,6 +42,31 @@ const ParcelView = ({ id, open, setOpen }) => {
 
     const formatBoolean = (value) => {
         return value ? 'Yes' : 'No';
+    };
+
+    const getStatusClass = (status) => {
+        switch (status) {
+            case "Item Accepted By Courier":
+                return "status status-accepted";
+            case "Collected":
+                return "status status-collected";
+            case "Shipped":
+                return "status status-shipped";
+            case "In-Transit":
+                return "status status-intransit";
+            case "Arrived At Destination":
+                return "status status-arrived";
+            case "Out for Delivery":
+                return "status status-outfordelivery";
+            case "Delivered":
+                return "status status-delivered";
+            case "Picked Up":
+                return "status status-pickedup";
+            case "Unsuccessful Delivery Attempt":
+                return "status status-unsuccessful";
+            default:
+                return "";
+        }
     };
 
     const getParcelDetails = async () => {
@@ -88,6 +115,16 @@ const ParcelView = ({ id, open, setOpen }) => {
         return null;
     };
 
+    const handleUpdateClick = () => {
+        setEdit(true); // Open the update modal
+    };
+
+  
+
+    const handleUpdateModalClose = () => {
+        setEdit(false); // Close the update modal
+        getParcelDetails();
+    };
     useEffect(() => {
         if (id) {
             getParcelDetails();
@@ -98,6 +135,8 @@ const ParcelView = ({ id, open, setOpen }) => {
         <>
             {open ? (
                 <div className='top-container'>
+               {edit && <UpdateStatus  open={edit} onClose={handleUpdateModalClose} currentStatus={parcel.currentStatus}
+               trackingNumber={parcel._id} /> } 
                     <div className='black-container' onClick={handleCloseView}></div>
                     <div className='main-container' style={{ maxHeight: '650px', overflow: 'scroll' }}>
                         <div className="header-section">
@@ -118,7 +157,7 @@ const ParcelView = ({ id, open, setOpen }) => {
                             <div className="detail-item"><strong>Actual Weight:</strong> {parcel?.actualWeight || 'N/A'} kg</div>
                             <div className="detail-item"><strong>Volumetric Weight:</strong> {parcel?.volumetricWeight || 'N/A'} kg</div>
                             <div className="detail-item"><strong>Charges:</strong> ${parcel?.charges || 'N/A'}</div>
-                            <div className="detail-item"><strong>Current Status:</strong> {parcel?.currentStatus || 'N/A'}</div>
+                            <div className="detail-item " ><strong>Current Status:</strong> <span className={getStatusClass(parcel.currentStatus)}>{parcel?.currentStatus || 'N/A'}</span> <i onClick={handleUpdateClick} className="fa-solid fa-pen-to-square"></i> </div>
                             <div className="detail-item"><strong>Vehicle No:</strong> {parcel?.vehicleNo || 'N/A'}</div>
                             <div className="detail-item"><strong>GST Refund Status:</strong> {parcel?.gstRefundStatus || 'N/A'}</div>
                             <div className="detail-item"><strong>BOA Date:</strong> {formatDate(parcel?.boaDate)}</div>

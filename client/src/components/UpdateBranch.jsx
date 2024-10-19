@@ -3,9 +3,10 @@ import host from "../APIRoute/APIRoute";
 import axios from "axios";
 import '../styles/ManageStaff.css'
 import { useEffect, useState } from "react";
+import Confirmation from  './Confirmation'
 const UpdateBranch = ({open,setOpen,onClose,id}) => {
 
-  const [refresh, setRefresh] = useState(false); // New state to trigger refresh
+  const [isConfirm,setIsConfirm]=useState(false)  
 
     const [branchData,setBranchData]=useState({
         branchName:'',
@@ -36,7 +37,6 @@ const UpdateBranch = ({open,setOpen,onClose,id}) => {
                     }
                 });
                 if(data.success){
-                    message.success(data.message);
                     const res=data.branch;
                     setBranchData({
                         branchName:res.branchName,
@@ -52,12 +52,12 @@ const UpdateBranch = ({open,setOpen,onClose,id}) => {
                 }
     
             }catch(error){
-                console.log(error.message)
-                message.error('Something went wrong')
+                message.error(error.message)
             }
         }
     }
     const handleSubmit=async()=>{
+      setIsConfirm(true)
         try{
             const {data}=await axios.post(`${host}/branch/update-branch/${id}`,{branchData},{
                 headers:{
@@ -65,7 +65,7 @@ const UpdateBranch = ({open,setOpen,onClose,id}) => {
                 }
             });
             if(data.success){
-                message.success(data.message)
+              message.success('Updated Successfully')
                 const res=data.branch
                 setBranchData({
                     branchName:res.branchName,
@@ -80,9 +80,9 @@ const UpdateBranch = ({open,setOpen,onClose,id}) => {
                 })
             }
         }catch(error){
-            console.log(error.message)
-            message.error('Something went wrong')
+            message.error(error.message)
         }
+        setIsConfirm(false)
     }
   
     useEffect(()=>{
@@ -103,9 +103,10 @@ const UpdateBranch = ({open,setOpen,onClose,id}) => {
             onClose(); // Call onClose when modal closes
           }}
         >
+        {isConfirm && <Confirmation isConfirm={isConfirm} setIsConfirm={setIsConfirm} onConfirm={handleSubmit}/>}
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h2 className="text-center">Update Branch</h2>
-            <form onSubmit={handleSubmit}>
+            <form >
               <div className="col">
                 <div className="row mb-3"></div>
                 <div className="row mb-3">
@@ -212,26 +213,35 @@ const UpdateBranch = ({open,setOpen,onClose,id}) => {
                   </div>
                
                   <div className="row mb-3">
-                    <div className="col-12">
-                      <label htmlFor="active" className="form-label">Active</label>
-                      <select
-                        className="form-control"
-                        value={branchData.active ? 'Yes' :'No'}
-                        onChange={(e) => setBranchData({active:e.target.value})} // Update active state
-                      >
-                        <option value={true}>Yes</option>
-                        <option value={false}>No</option>
-                      </select>
-                    </div>
+                  <div className="col-12">
+                    <label htmlFor="active" className="form-label">Active</label>
+                    <select
+                      className="form-control"
+                      value={branchData.active ? 'Yes' : 'No'}
+                      onChange={(e) =>
+                        setBranchData({ ...branchData, active: e.target.value === 'Yes' }) // Convert value to boolean
+                      }
+                    >
+                      <option value="Yes">Yes</option>
+                      <option value="No">No</option>
+                    </select>
                   </div>
+                </div>
+                
                
                 <div className="d-flex justify-content-between">
-                  <button type="submit" className="btn btn-primary w-50">
+                  <button type="button"
+                  onClick={(e)=>{
+                    e.preventDefault();
+                    setIsConfirm(true)
+                  }}
+                   className="btn btn-primary" style={{fontSize:'0.8rem'}}>
                     Update Branch
                   </button>
                   <button
                     type="button"
                     className="btn btn-danger w-50"
+                    style={{fontSize:'0.8rem'}}
                     onClick={() => {
                       setOpen(false);
                       onClose(); // Ensure the modal closes properly

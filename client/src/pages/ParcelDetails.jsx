@@ -46,6 +46,7 @@ const ParcelDetails = () => {
     shippingBillDate: '',
     shippingBillSubmittedToBank: '',
     gstRefundStatus: '',
+    awbNo:'',
     documents: {
       invoiceCopy: null,
       courierSlip: null,
@@ -55,17 +56,29 @@ const ParcelDetails = () => {
       courierBill: null,
       otherDocuments: [],
     },
+      deliveryAddress:'',
+      deliveryPersonName:'',
+      deliveryPersonNumber:'',
+      deliveryGst:'',
+      deliveryEwayBillNo:'',
+      supplierAddress:'',
+      supplierPersonName:'',
+      supplierPersonNumber:'',
+      supplierGst:''
+    
   });
 
   const [volumetricWeight, setVolumetricWeight] = useState(0);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [dimensions, setDimensions] = useState({ length: 0, breadth: 0, height: 0 });
+
   const triggerFileInput = (documentType) => {
     // If a file has not been selected for the current visible input, hide the input when another is clicked
     if (!selectedFiles[visibleInput]) {
       setVisibleInput(documentType);
     }
   };
+
   const fileInputRefs = {
     invoiceCopy: useRef(null),
     courierSlip: useRef(null),
@@ -110,12 +123,14 @@ const handleModalClose = () => {
         console.log(data.shipping)
         const {transportType,modeOfTransport,courierCompanyName,courierNo,dispatchDate,accountWith,accountNo,invoiceNo,partyName,noOfBox,actualWeight,
           charges,currentStatus,deliveredDate,vehicleNo,boaDate,boaSubmittedToBank,shippingBillNo,shippingBillDate,shippingBillSubmittedToBank,gstRefundStatus,
-          documents,} = data.shipping;
+          documents,supplierAddress,supplierPersonName,awbNo,
+                supplierPersonNumber,supplierGst,deliveryAddress, deliveryPersonName,deliveryPersonNumber,deliveryEwayBillNo,deliveryGst,deliveryBoxNo} = data.shipping;
   
         // Update formData with the received data
         setFormData({transportType,modeOfTransport,courierCompanyName,courierNo,dispatchDate,accountWith,accountNo,invoiceNo,partyName,
           noOfBox,actualWeight,charges,currentStatus,deliveredDate,vehicleNo,boaDate,boaSubmittedToBank,shippingBillNo,shippingBillDate,
-          shippingBillSubmittedToBank,gstRefundStatus,documents: {
+          supplierAddress,supplierPersonName,supplierPersonNumber,supplierGst,deliveryAddress, deliveryPersonName,deliveryPersonNumber,deliveryEwayBillNo,deliveryGst,deliveryBoxNo,
+          shippingBillSubmittedToBank,gstRefundStatus,awbNo,documents: {
             ...documents, // Spread the existing documents
             otherDocuments: documents.otherDocuments || [], // Ensure it's an array
           },
@@ -219,91 +234,101 @@ const handleDocumentChange = (e) => {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
     console.log(formData);
-  
-    try {
-      // Create a FormData object
-      const formDataToSend = new FormData();
-  
-      // Append regular fields
-      for (const key in formData) {
-        if (key === 'documents') {
-          // Append document files
-          for (const docKey in formData.documents) {
-            const docValue = formData.documents[docKey];
-  
-            if (Array.isArray(docValue)) {
-              // If it's an array (other documents), append each file along with docKey
-              docValue.forEach((file) => {
-                if (file) {
-                  // Append the file directly and the associated docKey
-                  formDataToSend.append(`otherDocuments`, file); // File as 'files'
-                  // formDataToSend.append(`docKey_${index}`, docKey);
-                }
-              });
-            } else if (docValue) {
-              // Append non-array files directly with the docKey
-              formDataToSend.append(docKey, docValue); // File as 'files'
-        
-            }
-          }
-        } else {
-          formDataToSend.append(key, formData[key]); // Append other form data
-        }
-      }
-      
-      formDataToSend.append('dimensions',JSON.stringify(dimensions))
-      formDataToSend.append('country',selectedCountry?.value)
-      formDataToSend.append('volumetricWeight',volumetricWeight)
-      formDataToSend.append('modifiedBy',JSON.stringify(user))
-    //   for (let pair of formDataToSend.entries()) {
-    //     console.log(`${pair[0]}: ${pair[1]}`);
-    //   }
-    //   return;
-      const {data} = await axios.post(`${host}/shipping/modify-shipping/${params?.id}`, formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-  
-      if (data.success) {
-       const {transportType,modeOfTransport,courierCompanyName,courierNo,dispatchDate,accountWith,accountNo,invoiceNo,partyName,noOfBox,actualWeight,
-          charges,currentStatus,deliveredDate,vehicleNo,boaDate,boaSubmittedToBank,shippingBillNo,shippingBillDate,shippingBillSubmittedToBank,gstRefundStatus,
-          documents,} = data.shipping;
-  
-        // Update formData with the received data
-        setFormData({transportType,modeOfTransport,courierCompanyName,courierNo,dispatchDate,accountWith,accountNo,invoiceNo,partyName,
-          noOfBox,actualWeight,charges,currentStatus,deliveredDate,vehicleNo,boaDate,boaSubmittedToBank,shippingBillNo,shippingBillDate,
-          shippingBillSubmittedToBank,gstRefundStatus,documents: {
-            ...documents, // Spread the existing documents
-            otherDocuments: documents.otherDocuments || [], // Ensure it's an array
-          },
-        });
-        setSelectedCountry({label:data.shipping.country,value:data.shipping.country})
-  
-        // Set dimensions if available
-        if (data.shipping.dimensions.length && data.shipping.dimensions.breadth && data.shipping.dimensions.height) {
-          setDimensions({
-            length: data.shipping.dimensions.length || 0,
-            breadth: data.shipping.dimensions.breadth || 0,
-            height: data.shipping.dimensions.height || 0,
-          });
-        }
-        message.success('Updated Successfully');
 
-        
-      }
+    try {
+        // Create a FormData object
+        const formDataToSend = new FormData();
+
+       
+
+        // Append form fields
+        Object.keys(formData).forEach((key) => {
+            if (key === 'documents') {
+                // Handle document uploads
+                Object.keys(formData.documents).forEach((docKey) => {
+                    const docValue = formData.documents[docKey];
+
+                    if (Array.isArray(docValue)) {
+                        // If it's an array (like otherDocuments), append each file
+                        docValue.forEach((file) => {
+                            if (file) formDataToSend.append('otherDocuments', file);
+                        });
+                    } else if (docValue) {
+                        // Append single files directly
+                        formDataToSend.append(docKey, docValue);
+                    }
+                });
+            
+            } else {
+                // Append regular fields directly
+                formDataToSend.append(key, formData[key]);
+            }
+        });
+
+     
+
+        // Append additional fields that aren't part of formData
+        formDataToSend.append('dimensions', JSON.stringify(dimensions));
+        formDataToSend.append('country', selectedCountry?.value);
+        formDataToSend.append('volumetricWeight', volumetricWeight);
+        formDataToSend.append('modifiedBy', JSON.stringify(user));
+     
+
+        // Send the form data using Axios
+        const { data } = await axios.post(`${host}/shipping/modify-shipping/${params?.id}`, formDataToSend, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        });
+
+        // Handle response and update form state if successful
+        if (data.success) {
+            const {
+                transportType, modeOfTransport, courierCompanyName, courierNo, dispatchDate, accountWith, accountNo, invoiceNo,
+                partyName, noOfBox, actualWeight, charges, currentStatus, deliveredDate, vehicleNo, boaDate, boaSubmittedToBank,
+                shippingBillNo, shippingBillDate, shippingBillSubmittedToBank, gstRefundStatus, documents, supplierAddress,supplierPersonName,
+                supplierPersonNumber,supplierGst,awbNo,deliveryAddress, deliveryPersonName,deliveryPersonNumber,deliveryEwayBillNo,deliveryGst,deliveryBoxNo
+            } = data.shipping;
+
+            // Update formData state with received data
+            setFormData({
+                transportType, modeOfTransport, courierCompanyName, courierNo, dispatchDate, accountWith, accountNo, invoiceNo,
+                partyName, noOfBox, actualWeight, charges, currentStatus, deliveredDate, vehicleNo, boaDate, boaSubmittedToBank,
+                shippingBillNo, shippingBillDate, shippingBillSubmittedToBank, gstRefundStatus,
+                 supplierAddress,supplierPersonName,awbNo,
+                supplierPersonNumber,supplierGst,deliveryAddress, deliveryPersonName,deliveryPersonNumber,deliveryEwayBillNo,deliveryGst,deliveryBoxNo,
+                documents: {
+                    ...documents, // Spread existing documents
+                    otherDocuments: documents.otherDocuments || [], // Ensure it's an array
+                }
+            });
+
+            // Set country and dimensions
+            setSelectedCountry({ label: data.shipping.country, value: data.shipping.country });
+            if (data.shipping.dimensions.length && data.shipping.dimensions.breadth && data.shipping.dimensions.height) {
+                setDimensions({
+                    length: data.shipping.dimensions.length || 0,
+                    breadth: data.shipping.dimensions.breadth || 0,
+                    height: data.shipping.dimensions.height || 0,
+                });
+            }
+
+            message.success('Updated Successfully');
+        }
     } catch (error) {
-      console.log(error.message);
-      message.error('Something went wrong');
+        console.error('Error updating shipping:', error.message);
+        message.error('Something went wrong');
     }
-      setIsConfirm(false);
-  
-    // setLoading(false);
-  };
+
+    setIsConfirm(false); // Close confirmation modal if present
+};
+
+
+
 
 
   useEffect(()=>{
@@ -339,12 +364,12 @@ const handleDocumentChange = (e) => {
                 <Form.Label>Type of Transport</Form.Label>
                 <Form.Select name="transportType" onChange={handleInputChange} value={formData.transportType}>
                   <option>Select transport type</option>
-                  <option value="courier-outgoing">COURIER OUTGOING</option>
-                  <option value="courier-incoming">COURIER INCOMING</option>
-                  <option value="courier-export">COURIER EXPORT</option>
-                  <option value="courier-import">COURIER IMPORT</option>
-                  <option value="by-hand-incoming">BY HAND INCOMING</option>
-                  <option value="by-hand-outgoing">BY HAND OUTGOING</option>
+                  <option value="COURIER OUTGOING">COURIER OUTGOING</option>
+                  <option value="COURIER INCOMING">COURIER INCOMING</option>
+                  <option value="COURIER EXPORT">COURIER EXPORT</option>
+                  <option value="COURIER IMPORT">COURIER IMPORT</option>
+                  <option value="BY HAND INCOMING">BY HAND INCOMING</option>
+                  <option value="BY HAND OUTGOING">BY HAND OUTGOING</option>
                 </Form.Select>
               </Form.Group>
             </Col>
@@ -354,9 +379,9 @@ const handleDocumentChange = (e) => {
                 <Form.Label>Mode of Transport</Form.Label>
                 <Form.Select name="modeOfTransport" onChange={handleInputChange} value={formData.modeOfTransport}>
                   <option>Select mode of transport</option>
-                  <option value="by-road">BY ROAD</option>
-                  <option value="by-air">BY AIR</option>
-                  <option value="by-sea">BY SEA</option>
+                  <option value="BY ROAD">BY ROAD</option>
+                  <option value="BY AIR">BY AIR</option>
+                  <option value="BY SEA">BY SEA</option>
                 </Form.Select>
               </Form.Group>
             </Col>
@@ -379,17 +404,23 @@ const handleDocumentChange = (e) => {
           </Row>
 
           <Row>
-            <Col md={6}>
+            <Col md={4}>
               <Form.Group className="mb-3">
                 <Form.Label>Dispatch Date</Form.Label>
                 <Form.Control type="date" name="dispatchDate" onChange={handleInputChange} value={formatDateToInput(formData.dispatchDate) } />
               </Form.Group>
             </Col>
 
-            <Col md={6}>
+            <Col md={4}>
               <Form.Group className="mb-3">
                 <Form.Label>Invoice No.</Form.Label>
                 <Form.Control type="text" placeholder="Enter invoice number" name="invoiceNo" value={formData.invoiceNo} onChange={handleInputChange} />
+              </Form.Group>
+            </Col>
+            <Col md={4}>
+              <Form.Group className="mb-3">
+                <Form.Label>AWB No.</Form.Label>
+                <Form.Control type="text" placeholder="Enter AWB number" name="awbNo" value={formData.awbNo} onChange={handleInputChange} />
               </Form.Group>
             </Col>
           </Row>
@@ -530,7 +561,18 @@ const handleDocumentChange = (e) => {
             <Col md={4}>
               <Form.Group className="mb-3">
                 <Form.Label>Current Status</Form.Label>
-                <Form.Control type="text" placeholder="Enter current status" name="currentStatus" value={formData.currentStatus} onChange={handleInputChange} />
+                <Form.Select name="currentStatus" onChange={handleInputChange}>
+                <option>Select</option>
+                <option value="Item Accepted By Courier">Item Accepted By Courier</option>
+                <option value="Collected">Collected</option>
+                <option value="Shipped">Shipped</option>
+                <option value="In-Transit">In-Transit</option>
+                <option value="Arrived At Destination">Arrived At Destination</option>
+                <option value="Out for Delivery">Out for Delivery</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Picked Up">Picked Up</option>
+                <option value="Unsuccessful Delivery Attempt">Unsuccessful Delivery Attempt</option>
+              </Form.Select>
               </Form.Group>
             </Col>
 
@@ -580,6 +622,160 @@ const handleDocumentChange = (e) => {
               </Form.Group>
             </Col>
           </Row>
+       <Row className="mb-2">
+  <Col>
+    <h5>Delivery Details</h5>
+  </Col>
+</Row>
+
+<Row>
+  <Col md={6}>
+    <Form.Group className="mb-2">
+      <Form.Label>Delivery Address</Form.Label>
+      <Form.Control 
+        type="text" 
+        placeholder="Enter delivery address" 
+        name="deliveryAddress"  
+        value={formData.deliveryAddress}
+        onChange={handleInputChange} 
+      />
+    </Form.Group>
+  </Col>
+
+  <Col md={6}>
+    <Form.Group className="mb-2">
+      <Form.Label>Contact Person Name</Form.Label>
+      <Form.Control 
+        type="text" 
+        placeholder="Enter Contact Person Name" 
+        value={formData.deliveryPersonName}
+        name="deliveryPersonName"  
+        onChange={handleInputChange} 
+      />
+    </Form.Group>
+  </Col>
+</Row>
+
+<Row>
+  <Col md={6}>
+    <Form.Group className="mb-2">
+      <Form.Label>Contact Person Number</Form.Label>
+      <Form.Control 
+        type="text" 
+        value={formData.deliveryPersonNumber}
+        placeholder="Contact Person Number" 
+        name="deliveryPersonNumber"  
+        onChange={handleInputChange} 
+      />
+    </Form.Group>
+  </Col>
+
+  <Col md={6}>
+    <Form.Group className="mb-2">
+      <Form.Label>GST No.</Form.Label>
+      <Form.Control 
+        type="text" 
+        placeholder="GST" 
+        value={formData.deliveryGst}
+        name="deliveryGst"  
+        onChange={handleInputChange} 
+      />
+    </Form.Group>
+  </Col>
+</Row>
+
+<Row>
+  <Col md={6}>
+    <Form.Group className="mb-2">
+      <Form.Label>Eway Bill No.</Form.Label>
+      <Form.Control 
+        type="text" 
+        placeholder="E-way Bill No" 
+        name="deliveryEwayBillNo"  
+        value={formData.deliveryEwayBillNo}
+        onChange={handleInputChange} 
+      />
+    </Form.Group>
+  </Col>
+
+  <Col md={6}>
+    <Form.Group className="mb-2">
+      <Form.Label>Box No</Form.Label>
+      <Form.Control 
+        type="text" 
+        placeholder="Box No" 
+        name="deliveryBoxNo"  
+        value={formData.deliveryBoxNo}  // Corrected value to use delivery.boxNo
+        onChange={handleInputChange} 
+      />
+    </Form.Group>
+  </Col>
+</Row>
+
+<Row className="mb-2">
+  <Col>
+    <h5>Supplier Details</h5>
+  </Col>
+</Row>
+
+<Row>
+  <Col md={6}>
+    <Form.Group className="mb-2">
+      <Form.Label>Delivery Address</Form.Label>
+      <Form.Control 
+        type="text" 
+        placeholder="Enter delivery address" 
+        name="supplierAddress" 
+        onChange={handleInputChange} 
+        value={formData?.supplierAddress}
+      />
+    </Form.Group>
+  </Col>
+
+  <Col md={6}>
+    <Form.Group className="mb-2">
+      <Form.Label>Contact Person Name</Form.Label>
+      <Form.Control 
+        type="text" 
+        placeholder="Enter Contact Person Name" 
+        name="supplierPersonName" 
+        onChange={handleInputChange} 
+        value={formData?.supplierPersonName}
+      />
+    </Form.Group>
+  </Col>
+</Row>
+
+<Row>
+  <Col md={6}>
+    <Form.Group className="mb-2">
+      <Form.Label>Contact Person Number</Form.Label>
+      <Form.Control 
+        type="text" 
+        placeholder="Contact Person Number" 
+        name="supplierPersonNumber" 
+        onChange={handleInputChange} 
+        value={formData?.supplierPersonNumber}
+      />
+    </Form.Group>
+  </Col>
+
+  <Col md={6}>
+    <Form.Group className="mb-2">
+      <Form.Label>GST No.</Form.Label>
+      <Form.Control 
+        type="text" 
+        placeholder="GST" 
+        name="supplierGst" 
+        onChange={handleInputChange} 
+        value={formData?.supplierGst}
+      />
+    </Form.Group>
+  </Col>
+</Row>
+
+        
+         
 
           <Row>
             <Col>
@@ -794,9 +990,16 @@ const handleDocumentChange = (e) => {
               </Col>
             </Row>
           ))}
-
-          <Button variant="primary" onClick={()=>setIsConfirm(true)} >Update</Button>
+            <div style={{display:'flex',justifyContent:'space-between' ,alignItems:'center'}}>
+          <div style={{display:'flex'}}>
+           <Button variant="primary" onClick={()=>setIsConfirm(true)} >Update</Button>
           <Button variant="danger" ><Link to='/manage-parcels'>Cancel</Link> </Button>
+          </div>
+          <Button variant="success" ><Link to={`/print/${params?.id}`}>Print</Link> </Button>
+
+          </div>
+
+         
         </Form>
 
         {/* Modal for File Preview */}

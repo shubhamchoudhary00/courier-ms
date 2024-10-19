@@ -1,0 +1,100 @@
+.awb-container {
+  width: 21cm;
+  padding: 15px;
+  font-size: 12px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.input-section {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.awb-input {
+  padding: 8px;
+  font-size: 14px;
+  margin-right: 10px;
+  width: 250px;
+}
+
+.print-button {
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #233655;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.print-button:hover {
+  background-color: #344f7d; /* Add a hover effect for better user interaction */
+}
+
+/* General layout */
+.print-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  line-height: 1.5;
+}
+
+.delivery-details,
+.barcode-section,
+.box-details,
+.supplier-details {
+  padding: 10px;
+  /* Removed borders */
+}
+
+.barcode-section {
+  text-align: center;
+}
+
+.handle-with-care {
+  font-size: 18px;
+  color: red;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-top: 15px;
+  text-align: center;
+  grid-column: span 2;
+}
+
+/* Print-specific styling */
+@media print {
+  /* Hide input and button section during print */
+  .input-section {
+    display: none;
+  }
+
+  /* Ensure the container fills the page for printing */
+  .awb-container {
+    padding: 0;
+    margin: 0;
+    width: 100%; /* Full width for print */
+    box-shadow: none; /* Remove shadow for clean print */
+  }
+
+  .print-section {
+    grid-template-columns: 1fr 1fr;
+    gap: 5px; /* Smaller gap in print */
+  }
+
+  /* Hide any headers or titles that aren't needed in print */
+  .awb-container h2 {
+    display: none;
+  }
+
+  /* Adjust font size and layout for print clarity */
+  .awb-container {
+    font-size: 10px;
+  }
+
+  /* Ensure better layout on paper */
+  @page {
+    margin: 0; /* Remove any default margins */
+  }
+}

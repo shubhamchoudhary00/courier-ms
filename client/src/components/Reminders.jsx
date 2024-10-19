@@ -1,38 +1,48 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types'; // For prop validation
 import '../styles/Reminders.css';
+import { useNavigate } from 'react-router-dom';
 
-const ReminderItem = ({ courierNumber }) => {
+const ReminderItem = ({ courierNumber, id }) => {
+  const navigate = useNavigate();
+  
   return (
-    <div className='pending-item'>
+    <div className='pending-item' onClick={() => navigate(`/parcel-detail/${id}`)}>
       <span>There are pending documents for courier number {courierNumber}</span>
     </div>
   );
 };
 
-const Reminders = () => {
-  const pendingCouriers = [
-    '45758254223',
-    '45758254224',
-    '45758254225',
-    '45758254226',
-    '45758254227',
-    '45758254228',
-    '45758254229',
-    '45758254230',
-  ];
-
+const Reminders = ({ shipments = [] }) => {
+  useEffect(()=>{
+    console.log(shipments)
+  },[shipments])
   return (
     <div className='reminder-container'>
       <div className='main-container'>
         <h2>Reminders</h2>
         <div className='pending-container'>
-          {pendingCouriers.map((courierNumber, index) => (
-            <ReminderItem key={index} courierNumber={courierNumber} />
-          ))}
+          {shipments.length === 0 ? (
+            <p>No pending shipments</p>
+          ) : (
+            shipments.map((shipment, index) => (
+              <ReminderItem key={index} courierNumber={shipment?.courierNo} id={shipment?._id} />
+            ))
+          )}
         </div>
       </div>
     </div>
   );
+};
+
+// Prop validation for the Reminders component
+Reminders.propTypes = {
+  shipments: PropTypes.arrayOf(
+    PropTypes.shape({
+      courierNo: PropTypes.string,
+      _id: PropTypes.string,
+    })
+  ),
 };
 
 export default Reminders;

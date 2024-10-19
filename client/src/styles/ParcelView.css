@@ -7,9 +7,9 @@
     right: 0;
     background-color: rgba(0, 0, 0, 0.8);
     z-index: 9;
-}
-
-.top-container {
+  }
+  
+  .top-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,211 +19,140 @@
     width: 100vw;
     position: fixed;
     background-color: rgba(255, 255, 255, 0.8);
-}
-
-.main-container {
+  }
+  
+  .main-container {
     z-index: 99;
     width: 90%;
-    max-width: 900px;
+    max-width: 1100px;
     background-color: #ffffff;
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     max-height: 650px;
     overflow-y: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-.main-container::-webkit-scrollbar {
+  }
+  
+  .main-container::-webkit-scrollbar {
     display: none;
-}
-
-/* Typography and heading */
-.heading {
+  }
+  
+  .heading {
     text-align: center;
     color: #233655;
     margin-bottom: 20px;
     font-size: 26px;
     font-weight: bold;
     letter-spacing: 1px;
-}
-
-/* Responsive table */
-.staff-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-.staff-table th, .staff-table td {
-    text-align: left;
-    padding: 12px;
-    border: 1px solid #ddd;
+  }
+  
+  /* Parcel Details Section */
+  .parcel-details-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two-column layout */
+    gap: 20px;
+    padding: 10px;
+  }
+  
+  .detail-item {
+    margin-bottom: 10px;
     font-size: 14px;
-}
-
-.staff-table th {
-    background-color: #233655;
+  }
+  
+  .detail-item strong {
+    color: #233655;
+  }
+  
+  /* Highlighted tracking number */
+  .tracking-number {
+    background-color: #8012bf;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-align: center;
+    grid-column: span 2;
+  }
+  
+  /* Document section */
+  .documents-preview-section {
+    margin-top: 20px;
+  }
+  
+  .document-item {
+    font-size: 14px;
+  }
+  
+  .document-item span {
+    color: #344f7d;
+    cursor: pointer;
+  }
+  
+  .document-item a {
+    margin-left: 10px;
+    color: #1890ff;
+  }
+  
+  /* User details at the bottom */
+  .user-details {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 12px;
+  }
+  
+  /* Responsive layout */
+  @media (max-width: 768px) {
+    .parcel-details-section {
+      grid-template-columns: 1fr; /* Single-column layout for smaller screens */
+    }
+  }
+  
+  .status {
+    padding: 5px 10px;
+    border-radius: 20px;
     color: white;
     font-weight: bold;
-    font-size: 16px;
-}
-
-.staff-table td {
-    background-color: #f9f9f9;
-}
-
-.staff-item {
-    transition: background-color 0.3s ease;
-}
-
-.staff-item:hover {
-    background-color: #f1f1f1;
-}
-
-/* Responsive action buttons */
-.action-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.update-btn, .remove-btn, .add-btn {
-    border: none;
-    border-radius: 5px;
-    padding: 8px 15px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-}
-
-.update-btn {
-    background-color: #007bff;
-    color: white;
-}
-
-.update-btn:hover {
-    background-color: #0056b3;
-}
-
-.remove-btn {
-    background-color: #dc3545;
-    color: white;
-}
-
-.remove-btn:hover {
-    background-color: #c82333;
-}
-
-.add-btn {
-    display: block;
-    width: fit-content;
-    margin: 30px auto;
-    background-color: #28a745;
-    color: white;
-    padding: 12px 25px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.add-btn:hover {
-    background-color: #218838;
-}
-
-.post-staff-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* Responsive staff container */
-.staff-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    margin: 10px 0;
-    background-color: #ffffff;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-}
-
-.staff-container:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.staff-container span {
     display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 5px 10px;
 }
 
-.header-section{
-    display: flex;
-    justify-content: space-between;
-    /* padding: 20px 0; */
-    align-items: center;
-    
+.status-accepted {
+    background-color: rgba(0, 123, 255, 0.72); /* Lighter blue for accepted status */
 }
 
-.header-section h1{
-    display: inline;
+.status-collected {
+    background-color: rgba(0, 123, 255, 0.72); /* Lighter blue for collected status */
 }
 
-/* Responsive grid layout for smaller screens */
-@media (max-width: 768px) {
-    .main-container {
-        width: 95%;
-        padding: 20px 15px;
-    }
-
-    .staff-container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .staff-container span {
-        width: 100%;
-        margin-bottom: 5px;
-    }
-
-    .staff-container span:nth-child(5) {
-        text-align: left;
-        margin-top: 10px;
-    }
-
-    .action-buttons {
-        justify-content: flex-start;
-    }
+.status-shipped {
+    background-color: rgba(255, 193, 7, 0.72); /* Lighter yellow for shipped status */
 }
 
-/* Tablet and desktop screens */
-@media (min-width: 769px) {
-    .staff-container span:nth-child(1) {
-        width: 150px; /* Name column */
-    }
+.status-intransit {
+    background-color: rgba(255, 193, 7, 0.72); /* Lighter yellow for in-transit status */
+}
 
-    .staff-container span:nth-child(2) {
-        width: 120px; /* Position column */
-    }
+.status-arrived {
+    background-color: rgba(255, 193, 7, 0.72); /* Lighter yellow for arrived status */
+}
 
-    .staff-container span:nth-child(3) {
-        width: 150px; /* Phone column */
-    }
+.status-outfordelivery {
+    background-color: rgba(255, 193, 7, 0.72); /* Lighter yellow for out for delivery status */
+}
 
-    .staff-container span:nth-child(4) {
-        width: 200px; /* Email column */
-    }
+.status-delivered {
+    background-color: rgba(40, 167, 69, 0.72); /* Lighter green for delivered status */
+}
 
-    .staff-container span:nth-child(5) {
-        width: 200px; /* Action buttons column */
-        text-align: right; /* Align buttons to the right */
-    }
+.status-pickedup {
+    background-color: rgba(40, 167, 69, 0.72); /* Lighter green for picked up status */
+}
+
+.status-unsuccessful {
+    background-color: rgba(220, 53, 69, 0.72); /* Lighter red for unsuccessful attempt */
 }

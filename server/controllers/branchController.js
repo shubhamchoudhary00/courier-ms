@@ -101,13 +101,13 @@ const changeBranchActiveStatusController=async(req,res)=>{
 
 const deleteBranchController=async(req,res)=>{
     try{
-        const {id}=req.body;
-        const branch=await branchModel.findOne({_id:id});
+        console.log(req.body)
+        const id=req.params.id;
+        const branch=await branchModel.findOneAndDelete({_id:id});
         if(!branch){
             return res.status(404).send({success:false,message:'branch not found'});
         }
 
-        await branch.delete();
         return res.status(200).send({success:true,message:'deleted successfully'});
 
     }catch(error){
@@ -149,6 +149,7 @@ const updateBranchController = async (req, res) => {
   
       // Find the branch by ID
       const branch = await branchModel.findOne({ _id: id });
+      console.log('branch',branch)
       
       // If branch not found, return error
       if (!branch) {
@@ -159,15 +160,15 @@ const updateBranchController = async (req, res) => {
       }
   
       // Update branch details
-      branch.branchName = branchName || branch.branchName;
-      branch.street = street || branch.street;
-      branch.city = city || branch.city;
-      branch.state = state || branch.state;
-      branch.country = country || branch.country;
-      branch.pincode = pincode || branch.pincode;
-      branch.contactPersonName = contactPersonName || branch.contactPersonName;
-      branch.contactPersonNumber = contactPersonNumber || branch.contactPersonNumber;
-      branch.active = active !== undefined ? active : branch.active;
+      branch.branchName = branchName ;
+      branch.street = street ;
+      branch.city = city ;
+      branch.state = state;
+      branch.country = country;
+      branch.pincode = pincode;
+      branch.contactPersonName = contactPersonName;
+      branch.contactPersonNumber = contactPersonNumber;
+      branch.active = active;
   
       // Save the updated branch
       await branch.save();
@@ -187,7 +188,7 @@ const updateBranchController = async (req, res) => {
       });
     }
   };
-  
+
 
 module.exports = { createBranchController,getAllBranchController,getAllBranchForUsersController,getBranchController,updateBranchController,
     changeBranchActiveStatusController,deleteBranchController };

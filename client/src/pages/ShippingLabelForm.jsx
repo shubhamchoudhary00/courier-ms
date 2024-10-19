@@ -12,6 +12,8 @@ import axios from 'axios'
 import host from '../APIRoute/APIRoute';
 import {message} from 'antd';
 import {useSelector} from 'react-redux'
+import Confirmation from '../components/Confirmation';
+import { Link } from 'react-router-dom';
 
 const ShippingLabelForm = () => {
   const {user}=useSelector((state)=>state.user)
@@ -46,11 +48,22 @@ const ShippingLabelForm = () => {
       courierBill: null,
       otherDocuments: [],
     },
+    deliveryAddress:'',
+      deliveryPersonName:'',
+      deliveryPersonNumber:'',
+      deliveryGst:'',
+      deliveryEwayBillNo:'',
+      supplierAddress:'',
+      supplierPersonName:'',
+      supplierPersonNumber:'',
+      supplierGst:'',
+      awbNo:''
   });
-
+  const [isConfirm,setIsConfirm]=useState(false)
   const [volumetricWeight, setVolumetricWeight] = useState(0);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [dimensions, setDimensions] = useState({ length: 0, breadth: 0, height: 0 });
+  const [id,setId]=useState()
 
   const handleCountryChange = (selectedOption) => {
     setSelectedCountry(selectedOption);
@@ -104,51 +117,64 @@ const ShippingLabelForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  
+    const keys = name.split('.'); // Split the name to handle nested state
+    setFormData((prevState) => {
+      let updatedState = { ...prevState };
+  
+      // Use reduce to navigate through nested structure
+      keys.reduce((acc, key, index) => {
+        if (index === keys.length - 1) {
+          acc[key] = value; // Update the final key
+        }
+        return acc[key] = acc[key] || {}; // Create nested objects if they don't exist
+      }, updatedState);
+  
+      return updatedState;
+    });
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
     console.log(formData);
+    setIsConfirm(true)
   
     try {
       // Create a FormData object
       const formDataToSend = new FormData();
   
-      // Append regular fields
-      for (const key in formData) {
+     
+  
+      // Append regular form data
+      Object.keys(formData).forEach((key) => {
         if (key === 'documents') {
-          // Append document files
-          for (const docKey in formData.documents) {
+          // Handle document files
+          Object.keys(formData.documents).forEach((docKey) => {
             const docValue = formData.documents[docKey];
   
             if (Array.isArray(docValue)) {
-              // If it's an array (other documents), append each file along with docKey
+              // For array of files (e.g., otherDocuments)
               docValue.forEach((file) => {
-                if (file) {
-                  // Append the file directly and the associated docKey
-                  formDataToSend.append(`otherDocuments`, file); // File as 'files'
-                  // formDataToSend.append(`docKey_${index}`, docKey);
-                }
+                if (file) formDataToSend.append('otherDocuments', file);
               });
             } else if (docValue) {
-              // Append non-array files directly with the docKey
-              formDataToSend.append(docKey, docValue); // File as 'files'
-        
+              // Append non-array files directly
+              formDataToSend.append(docKey, docValue);
             }
-          }
+          });
         } else {
-          formDataToSend.append(key, formData[key]); // Append other form data
+          // Append regular fields (non-documents, non-nested)
+          formDataToSend.append(key, formData[key]);
         }
-      }
-      
-      formDataToSend.append('dimensions',JSON.stringify(dimensions))
-      formDataToSend.append('volumetricWeight',volumetricWeight)
-      formDataToSend.append('addedBy',JSON.stringify(user))
-      // for (let pair of formDataToSend.entries()) {
-      //   console.log(`${pair[0]}: ${pair[1]}`);
-      // }
-      // return;
+      });
+  
+      // Append additional fields that are not in formData
+      formDataToSend.append('dimensions', JSON.stringify(dimensions));
+      formDataToSend.append('volumetricWeight', volumetricWeight);
+      formDataToSend.append('addedBy', JSON.stringify(user));
+  
+      // Send the form data to the server
       const res = await axios.post(`${host}/shipping/create-shipping`, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -156,23 +182,32 @@ const ShippingLabelForm = () => {
         },
       });
   
+      // Handle success response
       if (res.data.success) {
-        message.success('Created Shipping');
+        message.success('Shipping created successfully');
         console.log(res.data);
+        const shipping=res.data.shipping;
+        setId(shipping?._id)
       }
     } catch (error) {
-      console.log(error.message);
+      console.error(error.message);
       message.error('Something went wrong');
     }
   
+    // Optionally reset loading or other states here
     // setLoading(false);
+    setIsConfirm(false)
+
   };
+  
+  
   
   
   
 
   return (
     <Layout>
+    {isConfirm && <Confirmation isConfirm={isConfirm} setIsConfirm={setIsConfirm} onConfirm={handleSubmit} />}
       <Container className="main">
         <h2 className="text-center mb-4">Shipping Details</h2>
         <Form className="form-container" onSubmit={handleSubmit}>
@@ -188,12 +223,12 @@ const ShippingLabelForm = () => {
                 <Form.Label>Type of Transport</Form.Label>
                 <Form.Select name="transportType" onChange={handleInputChange}>
                   <option>Select transport type</option>
-                  <option value="courier-outgoing">COURIER OUTGOING</option>
-                  <option value="courier-incoming">COURIER INCOMING</option>
-                  <option value="courier-export">COURIER EXPORT</option>
-                  <option value="courier-import">COURIER IMPORT</option>
-                  <option value="by-hand-incoming">BY HAND INCOMING</option>
-                  <option value="by-hand-outgoing">BY HAND OUTGOING</option>
+                  <option value="COURIER OUTGOING">COURIER OUTGOING</option>
+                  <option value="COURIER INCOMING">COURIER INCOMING</option>
+                  <option value="COURIER EXPORT">COURIER EXPORT</option>
+                  <option value="COURIER IMPORT">COURIER IMPORT</option>
+                  <option value="BY HAND INCOMING">BY HAND INCOMING</option>
+                  <option value="BY HAND OUTGOING">BY HAND OUTGOING</option>
                 </Form.Select>
               </Form.Group>
             </Col>
@@ -203,9 +238,9 @@ const ShippingLabelForm = () => {
                 <Form.Label>Mode of Transport</Form.Label>
                 <Form.Select name="modeOfTransport" onChange={handleInputChange}>
                   <option>Select mode of transport</option>
-                  <option value="by-road">BY ROAD</option>
-                  <option value="by-air">BY AIR</option>
-                  <option value="by-sea">BY SEA</option>
+                  <option value="BY ROAD">BY ROAD</option>
+                  <option value="BY AIR">BY AIR</option>
+                  <option value="BY SEA">BY SEA</option>
                 </Form.Select>
               </Form.Group>
             </Col>
@@ -228,17 +263,23 @@ const ShippingLabelForm = () => {
           </Row>
 
           <Row>
-            <Col md={6}>
+            <Col md={4}>
               <Form.Group className="mb-3">
                 <Form.Label>Dispatch Date</Form.Label>
                 <Form.Control type="date" name="dispatchDate" onChange={handleInputChange} />
               </Form.Group>
             </Col>
 
-            <Col md={6}>
+            <Col md={4}>
               <Form.Group className="mb-3">
                 <Form.Label>Invoice No.</Form.Label>
                 <Form.Control type="text" placeholder="Enter invoice number" name="invoiceNo" onChange={handleInputChange} />
+              </Form.Group>
+            </Col>
+            <Col md={4}>
+              <Form.Group className="mb-3">
+                <Form.Label>AWB No.</Form.Label>
+                <Form.Control type="text" placeholder="Enter AWB number" name="awbNo" onChange={handleInputChange} />
               </Form.Group>
             </Col>
           </Row>
@@ -379,7 +420,18 @@ const ShippingLabelForm = () => {
             <Col md={4}>
               <Form.Group className="mb-3">
                 <Form.Label>Current Status</Form.Label>
-                <Form.Control type="text" placeholder="Enter current status" name="currentStatus" onChange={handleInputChange} />
+                <Form.Select name="currentStatus" onChange={handleInputChange}>
+                <option>Select</option>
+                <option value="Item Accepted By Courier">Item Accepted By Courier</option>
+                <option value="Collected">Collected</option>
+                <option value="Shipped">Shipped</option>
+                <option value="In-Transit">In-Transit</option>
+                <option value="Arrived At Destination">Arrived At Destination</option>
+                <option value="Out for Delivery">Out for Delivery</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Picked Up">Picked Up</option>
+                <option value="Unsuccessful Delivery Attempt">Unsuccessful Delivery Attempt</option>
+              </Form.Select>
               </Form.Group>
             </Col>
 
@@ -429,6 +481,160 @@ const ShippingLabelForm = () => {
               </Form.Group>
             </Col>
           </Row>
+          <Row className="mb-2">
+              <Col>
+                <h5>Delivery Details</h5>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-2">
+                  <Form.Label>Delivery Address</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    placeholder="Enter delivery address" 
+                    name="deliveryAddress"  
+                    value={formData.deliveryAddress}
+                    onChange={handleInputChange} 
+                  />
+                </Form.Group>
+              </Col>
+
+              <Col md={6}>
+                <Form.Group className="mb-2">
+                  <Form.Label>Contact Person Name</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    placeholder="Enter Contact Person Name" 
+                    value={formData.deliveryPersonName}
+                    name="deliveryPersonName"  
+                    onChange={handleInputChange} 
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-2">
+                  <Form.Label>Contact Person Number</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    value={formData.deliveryPersonNumber}
+                    placeholder="Contact Person Number" 
+                    name="deliveryPersonNumber"  
+                    onChange={handleInputChange} 
+                  />
+                </Form.Group>
+              </Col>
+
+              <Col md={6}>
+                <Form.Group className="mb-2">
+                  <Form.Label>GST No.</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    placeholder="GST" 
+                    value={formData.deliveryGst}
+                    name="deliveryGst"  
+                    onChange={handleInputChange} 
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-2">
+                  <Form.Label>Eway Bill No.</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    placeholder="E-way Bill No" 
+                    name="deliveryEwayBillNo"  
+                    value={formData.deliveryEwayBillNo}
+                    onChange={handleInputChange} 
+                  />
+                </Form.Group>
+              </Col>
+
+              <Col md={6}>
+                <Form.Group className="mb-2">
+                  <Form.Label>Box No</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    placeholder="Box No" 
+                    name="deliveryBoxNo"  
+                    value={formData.deliveryBoxNo}  // Corrected value to use delivery.boxNo
+                    onChange={handleInputChange} 
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="mb-2">
+              <Col>
+                <h5>Supplier Details</h5>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-2">
+                  <Form.Label>Delivery Address</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    placeholder="Enter delivery address" 
+                    name="supplierAddress" 
+                    onChange={handleInputChange} 
+                    value={formData?.supplierAddress}
+                  />
+                </Form.Group>
+              </Col>
+
+              <Col md={6}>
+                <Form.Group className="mb-2">
+                  <Form.Label>Contact Person Name</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    placeholder="Enter Contact Person Name" 
+                    name="supplierPersonName" 
+                    onChange={handleInputChange} 
+                    value={formData?.supplierPersonName}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-2">
+                  <Form.Label>Contact Person Number</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    placeholder="Contact Person Number" 
+                    name="supplierPersonNumber" 
+                    onChange={handleInputChange} 
+                    value={formData?.supplierPersonNumber}
+                  />
+                </Form.Group>
+              </Col>
+
+              <Col md={6}>
+                <Form.Group className="mb-2">
+                  <Form.Label>GST No.</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    placeholder="GST" 
+                    name="supplierGst" 
+                    onChange={handleInputChange} 
+                    value={formData?.supplierGst}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+         
+
 
           <Row>
             <Col>
@@ -503,6 +709,14 @@ const ShippingLabelForm = () => {
               </Col>
             </Row>
           ))}
+          <div style={{display:'flex',justifyContent:'space-between' ,alignItems:'center'}}>
+          <div style={{display:'flex'}}>
+           <Button variant="primary" onClick={()=>setIsConfirm(true)} >Update</Button>
+          <Button variant="danger" ><Link to='/manage-parcels'>Cancel</Link> </Button>
+          </div>
+          <Button variant="success" ><Link to={`/print/${id}`}>Print</Link> </Button>
+
+          </div>
 
           <Button variant="primary" type="submit">Submit</Button>
         </Form>

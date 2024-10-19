@@ -4,13 +4,13 @@ import axios from 'axios'
 import {message} from 'antd';
 import { useEffect, useState } from "react";
 import ParcelTable from "../components/ParcelTable";
-const ManageParcels = () => {
+const PickedUpItem = () => {
 
     const [parcels,setParcels]=useState([]);
     const [trigger,setTrigger]=useState(false)
-    const getAllParcels=async()=>{
+    const getParcels=async()=>{
         try{
-            const res=await axios.get(`${host}/shipping/get-all-shipment`,{
+            const res=await axios.get(`${host}/shipping/pick-up-parcels`,{
                 headers:{
                     Authorization:`Bearer ${localStorage.getItem('token')}`
                 }
@@ -27,7 +27,7 @@ const ManageParcels = () => {
     }
 
     useEffect(()=>{
-        getAllParcels();
+        getParcels();
     },[trigger])
 
   return (
@@ -40,4 +40,4 @@ const ManageParcels = () => {
   )
 }
 
-export default ManageParcels
+export default PickedUpItem

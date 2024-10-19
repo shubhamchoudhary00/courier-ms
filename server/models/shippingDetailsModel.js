@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 
 const shippingSchema = mongoose.Schema({
+    userId:{
+        type:String,
+    },
+    branch:{
+        type:String,
+    },
     transportType: {
         type: String,
         required: true
@@ -25,6 +31,9 @@ const shippingSchema = mongoose.Schema({
     },
     accountIfscCode: {
         type: String
+    },
+    awbNo:{
+        type:String
     },
     invoiceNo: {
         type: String,
@@ -88,6 +97,34 @@ const shippingSchema = mongoose.Schema({
         height: {
             type: String
         }
+    },
+    
+    
+    deliveryAddress:{
+            type:String,
+        },
+       
+    deliveryPersonName:{
+            type:String
+        },
+    deliveryPersonNumber:{
+            type:String
+        },
+    deliveryGst:{
+            type:String,
+        },
+       
+    supplierAddress:{
+        type:String
+    },
+    supplierGst:{
+        type:String,
+    },
+    supplierPersonName:{
+        type:String,
+    },
+    supplierPersonNumber:{
+        type:String
     },
     documents: {
         invoiceCopy: { type: String, default: null },

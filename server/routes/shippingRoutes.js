@@ -1,9 +1,9 @@
 const express = require('express');
 
-const { createShippingController, getAllShippingDetailsController, getAllPendingDocumentsShippingController, getShippingDetailController, modifyShippingController } = require('../controllers/shippingController');
+const { createShippingController, getAllShippingDetailsController, getAllPendingDocumentsShippingController, getShippingDetailController, modifyShippingController, updateStatusController, deleteParcelController, unsucessfullParcelController, accedptedParcelController, collectedParcelController, shippedParcelController, inTransitParcelController, arrivedParcelController, outForDeliveryParcelController, deliveredParcelController, pickedUpParcelController } = require('../controllers/shippingController');
 
 const router = express.Router();
-
+const authMiddleware=require('../middleware/authMiddleware')
 
 const multer = require('multer');
 
@@ -20,7 +20,7 @@ router.post('/create-shipping', upload.fields([
     { name: 'boa', maxCount: 5 }, // Field for 'files'
     { name: 'courierBill', maxCount: 5 }, // Field for 'files'
     { name: 'shippingBill', maxCount: 5 }, // Field for 'files'
-  ]), createShippingController);
+  ]),authMiddleware, createShippingController);
 
 router.post('/modify-shipping/:id', upload.fields([
     { name: 'otherDocuments', maxCount: 10 }, // Field for 'otherDocuments'
@@ -30,13 +30,36 @@ router.post('/modify-shipping/:id', upload.fields([
     { name: 'boa', maxCount: 5 }, // Field for 'files'
     { name: 'courierBill', maxCount: 5 }, // Field for 'files'
     { name: 'shippingBill', maxCount: 5 }, // Field for 'files'
-  ]), modifyShippingController);
+  ]),authMiddleware, modifyShippingController);
 
 
-router.get('/get-all-shipment',getAllShippingDetailsController)
-router.get('/get-all-pending-shipment',getAllPendingDocumentsShippingController)
+router.get('/get-all-shipment',authMiddleware,getAllShippingDetailsController)
+router.get('/get-all-pending-shipment',authMiddleware,getAllPendingDocumentsShippingController)
 
-router.get('/get-parcel-details/:id',getShippingDetailController);
+router.get('/get-parcel-details/:id',authMiddleware,getShippingDetailController);
+
+router.post('/update-status/:id',authMiddleware,updateStatusController);
+
+router.delete('/delete-parcel/:id',authMiddleware,deleteParcelController);
+
+router.get('/unsuccessful-parcel',authMiddleware,unsucessfullParcelController)
+
+router.get('/accepted-parcel',authMiddleware,accedptedParcelController)
+
+router.get('/collected-parcel',authMiddleware,collectedParcelController)
+
+router.get('/shipped-parcel',authMiddleware,shippedParcelController)
+
+router.get('/in-transit-parcel',authMiddleware,inTransitParcelController)
+
+router.get('/arrived-parcel',authMiddleware,arrivedParcelController)
+
+router.get('/out-for-delivery-parcel',authMiddleware,outForDeliveryParcelController)
+
+
+router.get('/delivered-parcel',authMiddleware,deliveredParcelController)
+
+router.get('/pick-up-parcel',authMiddleware,pickedUpParcelController)
 
 
 module.exports = router;

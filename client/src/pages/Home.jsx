@@ -29,7 +29,7 @@ const Home = () => {
       });
       if (res.data.success) {
         console.log(res.data);
-        setShipments(res.data.pendingShipments);
+        setShipments(res.data.pendingShipment);
       }
     } catch (error) {
       console.log(error.message);
@@ -39,6 +39,7 @@ const Home = () => {
 
   useEffect(() => {
     getAllPendingShipments();
+    console.log(shipments)
   }, []);
 
   // Predefined card data
@@ -61,7 +62,7 @@ const Home = () => {
     <Layout>
       <div className='main'>
         <h2>Home</h2>
-        <Reminders />
+        <Reminders shipments={shipments} />
         <div className='containers'>
           {cardData.map((card, index) => (
             <Card key={index} imageUrl={card.imageUrl} count={card.count} label={card.label} />

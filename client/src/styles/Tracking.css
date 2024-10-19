@@ -1,0 +1,93 @@
+.tracking-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tracking-input-section {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .tracking-input {
+    width: 70%;
+  }
+  
+  .parcel-details-section {
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .parcel-heading {
+    text-align: center;
+    font-size: 1.5em;
+    color: #233655;
+    margin-bottom: 20px;
+  }
+  
+  .parcel-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .parcel-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1em;
+  }
+  
+  .parcel-item strong {
+    color: #344f7d;
+  }
+  
+  .parcel-status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+  }
+  
+  .parcel-status.item-accepted-by-courier {
+    background-color: #4caf50; /* Green */
+  }
+  
+  .parcel-status.collected {
+    background-color: #ffeb3b; /* Yellow */
+    color: #333;
+  }
+  
+  .parcel-status.shipped {
+    background-color: #03a9f4; /* Light Blue */
+  }
+  
+  .parcel-status['in-transit'] {
+    background-color: #ff9800; /* Orange */
+  }
+  
+  .parcel-status.arrived-at-destination {
+    background-color: #8e44ad; /* Purple */
+  }
+  
+  .parcel-status['out-for-delivery'] {
+    background-color: #f39c12; /* Dark Yellow */
+  }
+  
+  .parcel-status.delivered {
+    background-color: #2ecc71; /* Green */
+  }
+  
+  .parcel-status.picked-up {
+    background-color: #3498db; /* Blue */
+  }
+  
+  .parcel-status.unsuccessful-delivery-attempt {
+    background-color: #e74c3c; /* Red */
+  }
+  

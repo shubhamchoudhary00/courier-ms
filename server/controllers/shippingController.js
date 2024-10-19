@@ -428,6 +428,17 @@ const modifyShippingController = async (req, res) => {
         shipping.shippingBillDate=formData.shippingBillDate;
         shipping.shippingBillSubmittedToBank=formData.shippingBillSubmittedToBank;
         shipping.gstRefundStatus=formData.gstRefundStatus;
+        shipping.deliveryAddress=formData.deliveryAddress;
+        shipping.deliveryPersonName=formData.deliveryPersonName;
+        shipping.deliveryPersonNumber=formData.deliveryPersonNumber;
+        shipping.deliveryGst=formData.deliveryGst;
+        shipping.deliveryEwayBillNo=formData.deliveryEwayBillNo;
+        shipping.deliveryBoxNo=formData.deliveryBoxNo;
+        shipping.awbNo=formData.awbNo;
+        shipping.supplierAddress=formData.supplierAddress;
+        shipping.supplierPersonName=formData.supplierPersonName;
+        shipping.supplierPersonNumber=formData.supplierPersonNumber;
+        shipping.supplierGst=formData.supplierGst;
         shipping.country=formData.country;
         shipping.volumetricWeight=formData.volumetricWeight;
         shipping.dimensions = dimensions;
@@ -452,8 +463,236 @@ const modifyShippingController = async (req, res) => {
     }
 };
 
+const updateStatusController=async(req,res)=>{
+    try{
+        const id=req.params.id;
+        const {value}=req.body;
+        const parcel=await shippingModel.findOne({_id:id});
+        if(!parcel){
+            return res.status(404).send({success:false,message:'Parcel not found'})
+        }
+        parcel.currentStatus=value;
+        await parcel.save();
+        return res.status(200).send({success:true,message:'Updated Successfully'})
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            message: 'Internal Server Error',
+            error: error.message,
+        });
+    }
+};
+
+const deleteParcelController=async(req,res)=>{
+    try{
+        const id=req.params.id;
+        const parcel=await shippingModel.findOneAndDelete({_id:id});
+        if(!parcel){
+            return res.status(404).send({success:false,message:'no found'})
+        }
+        return res.status(200).send({success:true,message:'Deleted Successfully'});
+    }catch (error) {
+        return res.status(500).send({
+            success: false,
+            message: 'Internal Server Error',
+            error: error.message,
+        });
+    }
+}
+
+const unsucessfullParcelController=async(req,res)=>{
+    try{
+        const parcels=await shippingModel.find();
+        if(parcels.length===0){
+            return res.status(404).send({success:false,message:'No Parcel found'})
+        }
+        let Parcel=[];
+        for(let item of parcels){
+            if(item.currentStatus==='Unsuccessful Delivery Attempt'){
+                Parcel.push(item);
+            }
+        }
+        return res.status(200).send({success:true,message:'Fetched',Parcel})
+    }catch(error){
+        return res.status(500).send({
+            success: false,
+            message: 'Internal Server Error',
+            error: error.message,
+        });
+    }
+}
+const accedptedParcelController=async(req,res)=>{
+    try{
+        const parcels=await shippingModel.find();
+        if(parcels.length===0){
+            return res.status(404).send({success:false,message:'No Parcel found'})
+        }
+        let Parcel=[];
+        for(let item of parcels){
+            if(item.currentStatus==='Item Accepted By Courier'){
+                Parcel.push(item);
+            }
+        }
+        return res.status(200).send({success:true,message:'Fetched',Parcel})
+    }catch(error){
+        return res.status(500).send({
+            success: false,
+            message: 'Internal Server Error',
+            error: error.message,
+        });
+    }
+}
+const collectedParcelController=async(req,res)=>{
+    try{
+        const parcels=await shippingModel.find();
+        if(parcels.length===0){
+            return res.status(404).send({success:false,message:'No Parcel found'})
+        }
+        let Parcel=[];
+        for(let item of parcels){
+            if(item.currentStatus==='Collected'){
+                Parcel.push(item);
+            }
+        }
+        return res.status(200).send({success:true,message:'Fetched',Parcel})
+    }catch(error){
+        return res.status(500).send({
+            success: false,
+            message: 'Internal Server Error',
+            error: error.message,
+        });
+    }
+}
+const shippedParcelController=async(req,res)=>{
+    try{
+        const parcels=await shippingModel.find();
+        if(parcels.length===0){
+            return res.status(404).send({success:false,message:'No Parcel found'})
+        }
+        let Parcel=[];
+        for(let item of parcels){
+            if(item.currentStatus==='Shipped'){
+                Parcel.push(item);
+            }
+        }
+        return res.status(200).send({success:true,message:'Fetched',Parcel})
+    }catch(error){
+        return res.status(500).send({
+            success: false,
+            message: 'Internal Server Error',
+            error: error.message,
+        });
+    }
+}
+const inTransitParcelController=async(req,res)=>{
+    try{
+        const parcels=await shippingModel.find();
+        if(parcels.length===0){
+            return res.status(404).send({success:false,message:'No Parcel found'})
+        }
+        let Parcel=[];
+        for(let item of parcels){
+            if(item.currentStatus==='In-Transit'){
+                Parcel.push(item);
+            }
+        }
+        return res.status(200).send({success:true,message:'Fetched',Parcel})
+    }catch(error){
+        return res.status(500).send({
+            success: false,
+            message: 'Internal Server Error',
+            error: error.message,
+        });
+    }
+}
+const arrivedParcelController=async(req,res)=>{
+    try{
+        const parcels=await shippingModel.find();
+        if(parcels.length===0){
+            return res.status(404).send({success:false,message:'No Parcel found'})
+        }
+        let Parcel=[];
+        for(let item of parcels){
+            if(item.currentStatus==='Arrived At Destination'){
+                Parcel.push(item);
+            }
+        }
+        return res.status(200).send({success:true,message:'Fetched',Parcel})
+    }catch(error){
+        return res.status(500).send({
+            success: false,
+            message: 'Internal Server Error',
+            error: error.message,
+        });
+    }
+}
+const outForDeliveryParcelController=async(req,res)=>{
+    try{
+        const parcels=await shippingModel.find();
+        if(parcels.length===0){
+            return res.status(404).send({success:false,message:'No Parcel found'})
+        }
+        let Parcel=[];
+        for(let item of parcels){
+            if(item.currentStatus==='Out for Delivery'){
+                Parcel.push(item);
+            }
+        }
+        return res.status(200).send({success:true,message:'Fetched',Parcel})
+    }catch(error){
+        return res.status(500).send({
+            success: false,
+            message: 'Internal Server Error',
+            error: error.message,
+        });
+    }
+}
+const pickedUpParcelController=async(req,res)=>{
+    try{
+        const parcels=await shippingModel.find();
+        if(parcels.length===0){
+            return res.status(404).send({success:false,message:'No Parcel found'})
+        }
+        let Parcel=[];
+        for(let item of parcels){
+            if(item.currentStatus==='Picked Up'){
+                Parcel.push(item);
+            }
+        }
+        return res.status(200).send({success:true,message:'Fetched',Parcel})
+    }catch(error){
+        return res.status(500).send({
+            success: false,
+            message: 'Internal Server Error',
+            error: error.message,
+        });
+    }
+}
+const deliveredParcelController=async(req,res)=>{
+    try{
+        const parcels=await shippingModel.find();
+        if(parcels.length===0){
+            return res.status(404).send({success:false,message:'No Parcel found'})
+        }
+        let Parcel=[];
+        for(let item of parcels){
+            if(item.currentStatus==='Delivered'){
+                Parcel.push(item);
+            }
+        }
+        return res.status(200).send({success:true,message:'Fetched',Parcel})
+    }catch(error){
+        return res.status(500).send({
+            success: false,
+            message: 'Internal Server Error',
+            error: error.message,
+        });
+    }
+}
 
 
-
-module.exports = { createShippingController ,modifyShippingController,
-    getAllShippingDetailsController,getAllPendingDocumentsShippingController,getShippingDetailController};
+module.exports = { createShippingController ,modifyShippingController,updateStatusController,deleteParcelController,unsucessfullParcelController,
+    getAllShippingDetailsController,getAllPendingDocumentsShippingController,getShippingDetailController,deliveredParcelController,
+    pickedUpParcelController,outForDeliveryParcelController,arrivedParcelController,accedptedParcelController,collectedParcelController,
+    shippedParcelController,inTransitParcelController
+};
