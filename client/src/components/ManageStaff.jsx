@@ -137,7 +137,7 @@ const ManageStaff = ({ id, setOpen, open }) => {
             ))}
           </div>
          <div className='btns'>
-         <button
+         {/*<button
          className="btn btn-primary"
          onClick={() => {
            setUpdate(false);
@@ -146,7 +146,7 @@ const ManageStaff = ({ id, setOpen, open }) => {
          }}
        >
          Add New Staff
-       </button>
+       </button>*/}
        <button className="btn btn-danger" onClick={() => setOpen(false)}>
          Close
        </button>

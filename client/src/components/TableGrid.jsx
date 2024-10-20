@@ -5,6 +5,7 @@ import { message } from "antd";
 import axios from "axios";
 import host from "../APIRoute/APIRoute";
 import Confirmation from "./Confirmation";
+import '../styles/ParcelTable.css'
 const TableGrid = ({data,editable,onClose}) => {
     const [id,setId]=useState();
     const [open,setOpen]=useState(false);

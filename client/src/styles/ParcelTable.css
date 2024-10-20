@@ -1,0 +1,180 @@
+/* General styling for the container */
+.container {
+    padding: 20px;
+    background-color: #f8f9fa; /* Light background for better readability */
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Table styling */
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: white; /* White background for the table */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow for a modern look */
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Table Head Styling */
+.table th {
+    background-color: #233655;
+    color: #ffffff;
+    padding: 12px;
+    font-size: 0.8rem;
+    text-align: left;
+    border-bottom: 2px solid #e9ecef;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.table th:first-child {
+    border-top-left-radius: 12px;
+}
+
+.table th:last-child {
+    border-top-right-radius: 12px;
+}
+
+/* Table Body Styling */
+.table td {
+    padding: 12px;
+    font-size: 0.7rem;
+    color: #4d4d4d;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f4f9; /* Subtle hover effect */
+}
+
+.table td:nth-child(1),
+.table td:nth-child(5) {
+    font-weight: bold;
+}
+
+/* Status Badge Styling */
+.status {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.65rem;
+    text-align: center;
+    display: inline-block;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Status Colors */
+.status-accepted,
+.status-collected {
+    background-color: #007bff;
+}
+
+.status-shipped,
+.status-intransit,
+.status-arrived,
+.status-outfordelivery {
+    background-color: #ffc107;
+}
+
+.status-delivered,
+.status-pickedup {
+    background-color: #28a745;
+}
+
+.status-unsuccessful {
+    background-color: #dc3545;
+}
+
+/* Action buttons */
+.btn {
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    margin: 0 5px;
+}
+
+.btn i {
+    margin-right: 5px;
+}
+
+.btn-primary {
+    background-color: #233655;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #1b2943;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.link-btn {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Document Status */
+td:nth-child(6) {
+    font-weight: 500;
+    font-size: 0.7rem;
+    color: #344f7d; /* Color emphasis for the document status */
+}
+
+/* Print Icon */
+.fa-print {
+    color: #233655;
+    font-size: 0.8rem;
+}
+
+/* Loading Spinner */
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .table th, .table td {
+        padding: 10px;
+        font-size: 0.7rem;
+    }
+
+    .btn {
+        padding: 6px 8px;
+        font-size: 0.7rem;
+    }
+
+    .status {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+    }
+}

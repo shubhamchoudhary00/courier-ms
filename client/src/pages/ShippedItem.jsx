@@ -19,7 +19,7 @@ const ShippedItem = () => {
             })
             if(res.data.success){
                 console.log(res.data)
-                setParcels(res.data.shippings);
+                setParcels(res.data.filteredParcels);
             }
 
         }catch(error){
@@ -39,12 +39,12 @@ const ShippedItem = () => {
           }
     
         }
-      }, [trigger]);
+      }, [trigger,user]);
 
   return (
     <Layout>
       <div className="main">
-      <h2>Manage Parcels</h2>
+      <h2>Shipped Parcels</h2>
       <ParcelTable data={parcels} trigger={trigger} setTrigger={setTrigger} />
       </div>
     </Layout>

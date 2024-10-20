@@ -12,17 +12,19 @@ import axios from 'axios'
 import host from '../APIRoute/APIRoute';
 import {message,Modal} from 'antd';
 import {useSelector} from 'react-redux'
-import { Link, useParams } from 'react-router-dom';
+import {  useNavigate, useParams } from 'react-router-dom';
 import PdfViewer from "../helpers/PdfViewer";
 import Confirmation from '../components/Confirmation';
 
 const ParcelDetails = () => {
   const {user}=useSelector((state)=>state.user);
+  const navigate=useNavigate()
   const [filePreview, setFilePreview] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileType, setFileType] = useState('');
   const [visibleInput, setVisibleInput] = useState(null); // Tracks which input is visible
-  const [selectedFiles, setSelectedFiles] = useState({});  const params=useParams();
+  const [selectedFiles, setSelectedFiles] = useState({}); 
+   const params=useParams();
   const [isConfirm,setIsConfirm]=useState(false)
   const [formData, setFormData] = useState({
     transportType: '',
@@ -221,13 +223,14 @@ const handleDocumentChange = (e) => {
     }));
   };
 
-  const removeOtherDocumentInput = (index) => {
-    const updatedDocuments = formData.documents.otherDocuments.filter((_, i) => i !== index);
-    setFormData((prevState) => ({
-      ...prevState,
-      documents: { ...prevState.documents, otherDocuments: updatedDocuments },
-    }));
-  };
+const documentTypes = [
+  { key: 'invoiceCopy', label: 'Invoice Copy' },
+  { key: 'courierSlip', label: 'Courier Slip' },
+  { key: 'cargoPhoto', label: 'Cargo Photo' },
+  { key: 'BOA', label: 'BOA' },
+  { key: 'shippingBill', label: 'Shipping Bill' },
+  { key: 'courierBill', label: 'Courier Bill' }
+];
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -561,7 +564,7 @@ const handleSubmit = async (e) => {
             <Col md={4}>
               <Form.Group className="mb-3">
                 <Form.Label>Current Status</Form.Label>
-                <Form.Select name="currentStatus" onChange={handleInputChange}>
+                <Form.Select name="currentStatus" onChange={handleInputChange} value={formData.currentStatus}>
                 <option>Select</option>
                 <option value="Item Accepted By Courier">Item Accepted By Courier</option>
                 <option value="Collected">Collected</option>
@@ -698,18 +701,7 @@ const handleSubmit = async (e) => {
     </Form.Group>
   </Col>
 
-  <Col md={6}>
-    <Form.Group className="mb-2">
-      <Form.Label>Box No</Form.Label>
-      <Form.Control 
-        type="text" 
-        placeholder="Box No" 
-        name="deliveryBoxNo"  
-        value={formData.deliveryBoxNo}  // Corrected value to use delivery.boxNo
-        onChange={handleInputChange} 
-      />
-    </Form.Group>
-  </Col>
+ 
 </Row>
 
 <Row className="mb-2">
@@ -784,188 +776,37 @@ const handleSubmit = async (e) => {
           </Row>
 
           <div className="documents-container">
-  {/* Invoice Copy */}
-  <div className="documents">
-    <span onClick={() => handleFileClick(formData?.documents?.invoiceCopy)} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
-      Invoice Copy
-    </span>
-    <span>
-      {formData?.documents?.invoiceCopy !== null ? <i className="fa-solid fa-check"></i> : <i className="fa-solid fa-xmark"></i>}
-    </span>
-    <div>
-      <span onClick={() => triggerFileInput('invoiceCopy')} style={{ cursor: 'pointer' }}>
-        {formData?.documents?.invoiceCopy ? 'Update' : 'Add'}
+  {documentTypes.map(({ key, label }) => (
+    <div className="documents" key={key}>
+      <span onClick={() => handleFileClick(formData?.documents?.[key])} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
+        {label}
       </span>
-        <div>
+      <span>
+        {formData?.documents?.[key] !== null ? <i className="fa-solid fa-check check-icon"></i> : <i className="fa-solid fa-xmark cross-icon"></i>}
+      </span>
+      <div>
+        <span onClick={() => triggerFileInput(key)} style={{ cursor: 'pointer' }}>
+          {formData?.documents?.[key] ? 'Update' : 'Add'}
+        </span>
+        <div className='handle-file'>
           <input
-            ref={fileInputRefs.invoiceCopy}
+            ref={fileInputRefs[key]}
             type="file"
-            name="invoiceCopy"
+            name={key}
             onChange={handleDocumentChange}
             style={{ width: '150px' }}
           />
-          {selectedFiles?.invoiceCopy && (
+          {selectedFiles?.[key] && (
             <div>
-              <span>{selectedFiles.invoiceCopy.name}</span>
-              <button onClick={() => handleRemoveFile('invoiceCopy')}>Remove</button>
+              <button onClick={() => handleRemoveFile(key)}><i className="fa-solid fa-delete-left"></i></button>
             </div>
           )}
         </div>
-      
+      </div>
     </div>
-  </div>
-
-  {/* Courier Slip */}
-  <div className="documents">
-    <span onClick={() => handleFileClick(formData?.documents?.courierSlip)} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
-      Courier Slip
-    </span>
-    <span>
-      {formData?.documents?.courierSlip !== null ? <i className="fa-solid fa-check"></i> : <i className="fa-solid fa-xmark"></i>}
-    </span>
-    <div>
-      <span onClick={() => triggerFileInput('courierSlip')} style={{ cursor: 'pointer' }}>
-        {formData?.documents?.courierSlip ? 'Update' : 'Add'}
-      </span>
-        <div>
-          <input
-            ref={fileInputRefs.courierSlip}
-            type="file"
-            name="courierSlip"
-            onChange={handleDocumentChange}
-            style={{ width: '150px' }}
-          />
-          {selectedFiles?.courierSlip && (
-            <div>
-              <span>{selectedFiles.courierSlip.name}</span>
-              <button onClick={() => handleRemoveFile('courierSlip')}>Remove</button>
-            </div>
-          )}
-        </div>
-    </div>
-  </div>
-
-  {/* Cargo Photo */}
-  <div className="documents">
-    <span onClick={() => handleFileClick(formData?.documents?.cargoPhoto)} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
-      Cargo Photo
-    </span>
-    <span>
-      {formData?.documents?.cargoPhoto !== null ? <i className="fa-solid fa-check"></i> : <i className="fa-solid fa-xmark"></i>}
-    </span>
-    <div>
-      <span onClick={() => triggerFileInput('cargoPhoto')} style={{ cursor: 'pointer' }}>
-        {formData?.documents?.cargoPhoto ? 'Update' : 'Add'}
-      </span>
-        <div>
-          <input
-            ref={fileInputRefs.cargoPhoto}
-            type="file"
-            name="cargoPhoto"
-            onChange={handleDocumentChange}
-            style={{ width: '150px' }}
-          />
-          {selectedFiles?.cargoPhoto && (
-            <div>
-              <span>{selectedFiles.cargoPhoto.name}</span>
-              <button onClick={() => handleRemoveFile('cargoPhoto')}>Remove</button>
-            </div>
-          )}
-        </div>
-    </div>
-  </div>
-
-  {/* BOA */}
-  <div className="documents">
-    <span onClick={() => handleFileClick(formData?.documents?.BOA)} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
-      BOA
-    </span>
-    <span>
-      {formData?.documents?.BOA !== null ? <i className="fa-solid fa-check"></i> : <i className="fa-solid fa-xmark"></i>}
-    </span>
-    <div>
-      <span onClick={() => triggerFileInput('BOA')} style={{ cursor: 'pointer' }}>
-        {formData?.documents?.BOA ? 'Update' : 'Add'}
-      </span>
-        <div>
-          <input
-            ref={fileInputRefs.BOA}
-            type="file"
-            name="BOA"
-            onChange={handleDocumentChange}
-            style={{ width: '150px' }}
-          />
-          {selectedFiles?.BOA && (
-            <div>
-              <span>{selectedFiles.boa.name}</span>
-              <button onClick={() => handleRemoveFile('boa')}>Remove</button>
-            </div>
-          )}
-        </div>
-    </div>
-  </div>
-
-  {/* Shipping Bill */}
-  <div className="documents">
-    <span onClick={() => handleFileClick(formData?.documents?.shippingBill)} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
-      Shipping Bill
-    </span>
-    <span>
-      {formData?.documents?.shippingBill !== null ? <i className="fa-solid fa-check"></i> : <i className="fa-solid fa-xmark"></i>}
-    </span>
-    <div>
-      <span onClick={() => triggerFileInput('shippingBill')} style={{ cursor: 'pointer' }}>
-        {formData?.documents?.shippingBill ? 'Update' : 'Add'}
-      </span>
-        <div>
-          <input
-            ref={fileInputRefs.shippingBill}
-            type="file"
-            name="shippingBill"
-            onChange={handleDocumentChange}
-            style={{ width: '150px' }}
-          />
-          {selectedFiles?.shippingBill && (
-            <div>
-              <span>{selectedFiles.shippingBill.name}</span>
-              <button onClick={() => handleRemoveFile('shippingBill')}>Remove</button>
-            </div>
-          )}
-        </div>
-    </div>
-  </div>
-
-  {/* Courier Bill */}
-  <div className="documents">
-    <span onClick={() => handleFileClick(formData?.documents?.courierBill)} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
-      Courier Bill
-    </span>
-    <span>
-      {formData?.documents?.courierBill !== null ? <i className="fa-solid fa-check"></i> : <i className="fa-solid fa-xmark"></i>}
-    </span>
-    <div>
-      <span onClick={() => triggerFileInput('courierBill')} style={{ cursor: 'pointer' }}>
-        {formData?.documents?.courierBill ? 'Update' : 'Add'}
-      </span>
-        <div>
-          <input
-            ref={fileInputRefs.courierBill}
-            type="file"
-            name="courierBill"
-            onChange={handleDocumentChange}
-            style={{ width: '150px' }}
-          />
-          {selectedFiles?.courierBill && (
-            <div>
-              <span>{selectedFiles.courierBill.name}</span>
-              <button onClick={() => handleRemoveFile('courierBill')}>Remove</button>
-            </div>
-          )}
-        </div>
-    </div>
-  </div>
+  ))}
 </div>
-
+           
            
           
 
@@ -978,24 +819,45 @@ const handleSubmit = async (e) => {
             </Col>
           </Row>
 
-          {formData.documents.otherDocuments.map((doc, index) => (
-            <Row key={index}>
-              <Col md={11}>
-                <Form.Group className="mb-3">
-                  <Form.Control type="file" onChange={(e) => handleOtherDocumentChange(index, e.target.files[0])} />
-                </Form.Group>
-              </Col>
-              <Col md={1}>
-                <Button onClick={() => removeOtherDocumentInput(index)} variant="danger">Remove</Button>
-              </Col>
-            </Row>
-          ))}
+         {formData.documents.otherDocuments.map((doc, index) => (
+  <div className='documents-container' key={index}>
+    <div className="documents">
+      <span onClick={() => handleFileClick(doc)} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
+        Other Document {index + 1}
+      </span>
+      <span>
+        {doc !== null ? <i className="fa-solid fa-check check-icon"></i> : <i className="fa-solid fa-xmark cross-icon"></i>}
+      </span>
+      <div>
+        <span onClick={() => triggerFileInput(`otherDocument_${index}`)} style={{ cursor: 'pointer' }}>
+          {doc ? 'Update' : 'Add'}
+        </span>
+        <div className='handle-file'>
+          <input
+            ref={fileInputRefs[`otherDocument_${index}`]} // Dynamic ref for other documents
+            type="file"
+            name={`otherDocuments_${index}`} // Dynamic name for each file input
+            onChange={(e) => handleOtherDocumentChange(index, e.target.files[0])} // Handle change for each specific document
+            style={{ width: '150px' }}
+          />
+          {selectedFiles?.[`otherDocument_${index}`] && (
+            <div>
+              <span>{selectedFiles[`otherDocument_${index}`].name}</span>
+              <button onClick={() => handleRemoveFile(`otherDocument_${index}`)}><i className="fa-solid fa-delete-left"></i></button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+))}
+
             <div style={{display:'flex',justifyContent:'space-between' ,alignItems:'center'}}>
           <div style={{display:'flex'}}>
            <Button variant="primary" onClick={()=>setIsConfirm(true)} >Update</Button>
-          <Button variant="danger" ><Link to='/manage-parcels'>Cancel</Link> </Button>
+          <Button variant="danger" onClick={()=>navigate('/manage-parcels')} >Cancel</Button>
           </div>
-          <Button variant="success" ><Link to={`/print/${params?.id}`}>Print</Link> </Button>
+          <Button variant="success" onClick={()=>navigate(`/print/${params?.id}`)} >Print</Button>
 
           </div>
 

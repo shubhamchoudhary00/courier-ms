@@ -1,109 +1,116 @@
 /* Main container styling */
 .reminder-container {
-    margin-bottom: 20px; /* Space from the header */
-    padding: 10px;
-    background-color: #e0f7fa; /* Light cyan background */
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    width: 100%; /* Takes up 80% of the screen width */
-    /* max-width: 800px; Limits max width for larger screens */
-    margin-left: auto;
-    margin-right: auto;
-    border: 2px solid #00bcd4; /* Accent border */
-    transition: transform 0.3s ease; /* Smooth animation */
+  margin-bottom: 20px; /* Space from the header */
+  padding: 15px;
+  background: linear-gradient(135deg, #e0f7fa, #f3f4f6); /* Subtle gradient background */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%; 
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #00acc1; /* Softer accent border */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
+}
 
-  }
-  
-  .reminder-container:hover {
-    transform: translateY(-5px); /* Lifts up slightly on hover */
-  }
-  
-  /* Inner content styling */
-  .main-container {
-    padding: 0px;
-  }
-  
-  h2 {
-    font-size: 28px;
-    color: #00796b; /* Darker teal for the title */
-    margin-bottom: 15px;
-    font-weight: 600;
-    text-align: center;
-  }
-  
-  /* Pending items container */
-  .pending-container {
-    display: flex;
-    flex-direction: column;
-    gap: 12px; /* Space between pending items */
-    max-height: 250px;
-    overflow-y: scroll;
-    scrollbar-width: none; /* For Firefox */
-    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+.reminder-container:hover {
+  transform: translateY(-4px); /* Slight lift on hover */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+}
+
+/* Inner content styling */
+.main-container {
+  padding: 0px;
+}
+
+h2 {
+  font-size: 26px;
+  color: #004d40; /* Darker teal for the title */
+  margin-bottom: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Pending items container */
+.pending-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between pending items */
+  max-height: 250px;
+  overflow-y: scroll;
+  scrollbar-width: thin; /* Custom scrollbars */
+  scrollbar-color: #00acc1 #e0f7fa; /* Teal scroll thumb */
 }
 
 .pending-container::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari, and Opera */
+  width: 6px;
 }
 
-  
+.pending-container::-webkit-scrollbar-thumb {
+  background-color: #00acc1; /* Teal scroll thumb */
+  border-radius: 3px;
+}
+
+/* Individual pending item */
+.pending-item {
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  font-size: 16px;
+  color: #004d40; /* Deep green color */
+  border-left: 5px solid #00acc1; /* Accent left border */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pending-item:hover {
+  box-shadow: 0 4px 10px rgba(0, 188, 212, 0.2); /* Box shadow effect on hover */
+  background-color: #e0f7fa; /* Light cyan tint on hover */
+}
+
+/* Text and icon in pending item */
+.pending-item span {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.pending-item span::before {
+  content: '⚠️';
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+/* Responsive Design for smaller screens */
+@media screen and (max-width: 768px) {
+  .reminder-container {
+    width: 95%; /* Wider on smaller screens */
+  }
+
+  h2 {
+    font-size: 24px; /* Slightly smaller heading */
+  }
+
   .pending-item {
-    background-color: #ffffff;
-    padding: 4px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Stronger shadow */
-    font-size: 16px;
-    color: #004d40; /* Deep green color */
-    border-left: 6px solid #00bcd4; /* Accent left border */
-    transition: box-shadow 0.3s ease;
+    font-size: 15px; /* Smaller text for smaller screens */
   }
-  
-  .pending-item:hover {
-    box-shadow: 0 6px 12px rgba(0, 188, 212, 0.3); /* Box shadow effect on hover */
-    background-color: #e0f7fa; /* Slight cyan tint on hover */
+}
+
+/* Mobile Design */
+@media screen and (max-width: 480px) {
+  .reminder-container {
+    width: 100%; /* Full width for mobile */
+    padding: 10px; /* Less padding for smaller screens */
   }
-  
-  .pending-item span {
-    font-weight: 500;
-    display: flex;
-    align-items: center;
+
+  h2 {
+    font-size: 20px; /* Smaller heading on mobile */
   }
-  
-  .pending-item span::before {
-    content: '⚠️';
-    margin-right: 8px;
-    font-size: 18px;
+
+  .pending-item {
+    padding: 10px; /* Smaller padding */
+    font-size: 14px; /* Even smaller text for mobile */
   }
-  
-  /* Responsive Design for smaller screens */
-  @media screen and (max-width: 768px) {
-    .reminder-container {
-      width: 90%; /* Wider on smaller screens */
-    }
-  
-    h2 {
-      font-size: 24px; /* Slightly smaller heading */
-    }
-  
-    .pending-item {
-      font-size: 14px; /* Smaller text for smaller screens */
-    }
-  }
-  
-  /* Mobile Design */
-  @media screen and (max-width: 480px) {
-    .reminder-container {
-      width: 95%; /* Even wider for mobile */
-      padding: 15px; /* Less padding for smaller screens */
-    }
-  
-    h2 {
-      font-size: 22px; /* Smaller heading on mobile */
-    }
-  
-    .pending-item {
-      padding: 12px; /* Smaller padding */
-      font-size: 13px; /* Even smaller text for mobile */
-    }
-  }
-  
+}

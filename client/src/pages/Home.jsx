@@ -1,30 +1,22 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, lazy, Suspense } from 'react';
 import Layout from '../components/Layout';
 import '../styles/Home.css';
-import { message } from 'antd';
+import { message, Spin } from 'antd'; // Use Spin for loading indicator
 import axios from 'axios';
 import host from '../APIRoute/APIRoute';
 import Reminders from '../components/Reminders';
 import { useSelector } from 'react-redux';
 
-const Card = ({ imageUrl, count, label }) => {
-  return (
-    <div className='sub-containers' style={{ backgroundImage: `url(${imageUrl})` }}>
-      <div className='sub-details d-flex'>
-        <span>{count}</span>
-        <span>{label}</span>
-      </div>
-    </div>
-  );
-};
+// Lazy load the Card component
+const Card = lazy(() => import('../components/Card'));
 
 const Home = () => {
   const [shipments, setShipments] = useState([]);
-  const {user}=useSelector((state)=>state.user)
+  const { user } = useSelector((state) => state.user);
 
   const getAllPendingShipments = async (id) => {
     try {
-      const res = await axios.post(`${host}/shipping/get-all-pending-shipment`,{id} {
+      const res = await axios.post(`${host}/shipping/get-all-pending-shipment`, { id }, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -40,18 +32,15 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if(user){
-      if(user.role==='User'){
+    if (user) {
+      if (user.role === 'User') {
         getAllPendingShipments(user?._id);
-
-      }else if(user?.role==='Staff'){
+      } else if (user?.role === 'Staff') {
         getAllPendingShipments(user?.userId);
-
       }
-
     }
-    console.log(shipments)
-  }, []);
+    console.log(shipments);
+  }, [user]);
 
   // Predefined card data
   const cardData = useMemo(() => [
@@ -74,10 +63,13 @@ const Home = () => {
       <div className='main'>
         <h2>Home</h2>
         <Reminders shipments={shipments} />
+        
         <div className='containers'>
-          {cardData.map((card, index) => (
-            <Card key={index} imageUrl={card.imageUrl} count={card.count} label={card.label} />
-          ))}
+          <Suspense fallback={<Spin />}> {/* Suspense for lazy loading fallback */}
+            {cardData.map((card, index) => (
+              <Card key={index} imageUrl={card.imageUrl} count={card.count} label={card.label} />
+            ))}
+          </Suspense>
         </div>
       </div>
     </Layout>

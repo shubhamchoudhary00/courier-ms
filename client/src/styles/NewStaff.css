@@ -1,0 +1,104 @@
+/* NewStaff Form Styles */
+.main-staff {
+    padding: 2rem;
+    background-color: #f7f9fc; /* Softer background for better contrast */
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* More prominent shadow for depth */
+    max-width: 700px; /* More compact width */
+    margin: 2rem auto;
+  }
+  
+  h2 {
+    color: #233655;
+    font-size: 2rem;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-label {
+    font-size: 1rem;
+    color: #344f7d;
+    font-weight: 500;
+  }
+  
+  .form-control {
+    border: 1px solid #d1dce9;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: #344f7d;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-control:focus {
+    border-color: #8012bf;
+    box-shadow: 0 0 5px rgba(128, 18, 191, 0.2); /* Soft shadow on focus */
+  }
+  
+  .mb-3 {
+    margin-bottom: 1.5rem; /* Increase spacing between elements */
+  }
+  
+  select.form-control {
+    padding-right: 2rem;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="%23334555" stroke-width="2" d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 12px;
+  }
+  
+  button.btns {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%; /* Full width buttons */
+    max-width: 150px; /* Limit button width */
+  }
+  
+  button.btns-primary {
+    background-color: #8012bf;
+    border-color: #8012bf;
+    color: #fff;
+  }
+  
+  button.btns-primary:hover {
+    background-color: #6a0fa3;
+    transform: scale(1.05); /* Subtle scale on hover */
+  }
+  
+  button.btns-danger {
+    background-color: #ff4d4f;
+    border-color: #ff4d4f;
+    color: #fff;
+  }
+  
+  button.btns-danger:hover {
+    background-color: #e03a3c;
+    transform: scale(1.05);
+  }
+  
+  .d-flex {
+    display: flex;
+    gap: 20px; /* More space between buttons */
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    .row {
+      flex-direction: column;
+    }
+  
+    .col-md-6 {
+      margin-bottom: 1.5rem; /* Add space between stacked columns */
+    }
+  
+    button {
+      max-width: 100%; /* Ensure buttons span full width on smaller screens */
+    }
+  }
+  

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import Barcode from 'react-barcode';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -124,18 +124,18 @@ const AWBBarcodePrint = () => {
       <div className="print-section">
         {/* Delivery Details */}
         <div className="delivery-details">
-          <h3>Delivery Address</h3>
-          <p>{formData?.deliveryAddress}</p>
-          <p>Contact Person: {formData?.deliveryPersonName}</p>
-          <p>Mobile No: {formData?.deliveryPersonNumber}</p>
-          <p>GST No: {formData?.deliveryGst}</p>
-          <p>Eway Bill No: {formData?.deliveryEwayBillNo}</p>
-          <p>Invoice No: {formData?.invoiceNo}</p>
-          <p>Invoice Amount: {formData?.charges}</p>
-          <p>No of Box: {formData?.noOfBox}</p>
-          <p>Mode of Courier: {formData?.modeOfTransport}</p>
-          <p>Courier Company Name: {formData?.courierCompanyName}</p>
-          <p>Courier AWB No: {formData?.awbNo}</p>
+          <h3 style={{fontSize:'1.4rem'}}><strong>Delivery Address</strong></h3>
+          <p><strong>Address:</strong> {formData?.deliveryAddress}</p>
+          <p><strong>Contact Person:</strong> {formData?.deliveryPersonName}</p>
+          <p><strong>Mobile No:</strong> {formData?.deliveryPersonNumber}</p>
+          <p><strong>GST No:</strong> {formData?.deliveryGst}</p>
+          <p><strong>Eway Bill No:</strong> {formData?.deliveryEwayBillNo}</p>
+          <p><strong>Invoice No:</strong> {formData?.invoiceNo}</p>
+          <p><strong>Invoice Amount:</strong> {formData?.charges} (in INR)</p>
+          <p><strong>No of Box:</strong> {formData?.noOfBox}</p>
+          <p><strong>Mode of Courier:</strong> {formData?.modeOfTransport}</p>
+          <p><strong>Courier Company Name:</strong> {formData?.courierCompanyName}</p>
+          <p><strong>Courier AWB No:</strong> {formData?.awbNo}</p>
         </div>
 
         {/* Barcode Section */}
@@ -143,29 +143,29 @@ const AWBBarcodePrint = () => {
           {formData?.awbNo ? (
             <Barcode value={formData?.awbNo} width={1.5} height={60} displayValue={false} />
           ) : (
-            <p>No AWB Number available</p>
+            <p><strong>No AWB Number available</strong></p>
           )}
         </div>
 
         {/* Box Details */}
         <div className="box-details">
-          <h3>Box Dimensions</h3>
-          <p>{dimensions?.length} x {dimensions?.breadth} x {dimensions?.height} (CM)</p>
-          <p>Weight: {formData?.actualWeight} kg</p>
-          <p>Dimension Weight: {volumetricWeight} kg</p>
+          <h3 style={{fontSize:'1.4rem'}}><strong>Box Dimensions</strong></h3>
+          <p><strong>Dimensions:</strong> {dimensions?.length} x {dimensions?.breadth} x {dimensions?.height} (CM)</p>
+          <p><strong>Weight:</strong> {formData?.actualWeight} kg</p>
+          <p><strong>Dimension Weight:</strong> {volumetricWeight} kg</p>
         </div>
 
         {/* Supplier Details */}
         <div className="supplier-details">
-          <h3>Supplier Address</h3>
-          <p>{formData?.supplierAddress}</p>
-          <p>Contact Person: {formData?.supplierPersonName}</p>
-          <p>Mobile No: {formData?.supplierPersonNumber}</p>
-          <p>GST No: {formData?.supplierGst}</p>
+          <h3 style={{fontSize:'1.4rem'}}><strong>Supplier Address</strong></h3>
+          <p><strong>Address:</strong> {formData?.supplierAddress}</p>
+          <p><strong>Contact Person:</strong> {formData?.supplierPersonName}</p>
+          <p><strong>Mobile No:</strong> {formData?.supplierPersonNumber}</p>
+          <p><strong>GST No:</strong> {formData?.supplierGst}</p>
         </div>
 
         {/* Footer Section */}
-        <p className="handle-with-care">HANDLE WITH CARE</p>
+        <p className="handle-with-care"><strong>HANDLE WITH CARE</strong></p>
       </div>
     </div>
   );

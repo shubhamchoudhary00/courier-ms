@@ -6,6 +6,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full viewport height */
+    height: 100dvh; /* Full viewport height */
+  }
+
+  .main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .main h2{
+    font-size: 1.5rem;
+    font-weight: 600;
   }
   

@@ -13,10 +13,11 @@ import host from '../APIRoute/APIRoute';
 import {message} from 'antd';
 import {useSelector} from 'react-redux'
 import Confirmation from '../components/Confirmation';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ShippingLabelForm = () => {
-  const {user}=useSelector((state)=>state.user)
+  const {user}=useSelector((state)=>state.user);
+  const navigate=useNavigate()
   const [formData, setFormData] = useState({
     transportType: '',
     modeOfTransport: '',
@@ -63,7 +64,7 @@ const ShippingLabelForm = () => {
   const [volumetricWeight, setVolumetricWeight] = useState(0);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [dimensions, setDimensions] = useState({ length: 0, breadth: 0, height: 0 });
-  const [id,setId]=useState()
+  const [id,setId]=useState();
 
   const handleCountryChange = (selectedOption) => {
     setSelectedCountry(selectedOption);
@@ -134,45 +135,54 @@ const ShippingLabelForm = () => {
     });
   };
   
-
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
-    console.log(formData);
-    setIsConfirm(true)
+    // e.preventDefault(); // Prevent default form submission
+    
+    // console.log(formData);
+    setIsConfirm(true); // Set confirmation state
   
     try {
       // Create a FormData object
       const formDataToSend = new FormData();
   
-     
+      // Helper to append document files
+      const appendDocuments = (documents) => {
+        Object.keys(documents).forEach((docKey) => {
+          const docValue = documents[docKey];
+  
+          if (Array.isArray(docValue)) {
+            // For array of files (e.g., otherDocuments)
+            docValue.forEach((file) => {
+              if (file) formDataToSend.append('otherDocuments', file);
+            });
+          } else if (docValue) {
+            // Append non-array files directly
+            formDataToSend.append(docKey, docValue);
+          }
+        });
+      };
   
       // Append regular form data
       Object.keys(formData).forEach((key) => {
         if (key === 'documents') {
-          // Handle document files
-          Object.keys(formData.documents).forEach((docKey) => {
-            const docValue = formData.documents[docKey];
-  
-            if (Array.isArray(docValue)) {
-              // For array of files (e.g., otherDocuments)
-              docValue.forEach((file) => {
-                if (file) formDataToSend.append('otherDocuments', file);
-              });
-            } else if (docValue) {
-              // Append non-array files directly
-              formDataToSend.append(docKey, docValue);
-            }
-          });
+          appendDocuments(formData.documents);
         } else {
-          // Append regular fields (non-documents, non-nested)
+          // Append regular fields
           formDataToSend.append(key, formData[key]);
         }
       });
   
-      // Append additional fields that are not in formData
+      // Append additional fields
       formDataToSend.append('dimensions', JSON.stringify(dimensions));
       formDataToSend.append('volumetricWeight', volumetricWeight);
       formDataToSend.append('addedBy', JSON.stringify(user));
+  
+      // Conditionally append userId based on user role
+      if (user?.role === 'User') {
+        formDataToSend.append('userId', user?._id);
+      } else if (user?.role === 'Staff') {
+        formDataToSend.append('userId', user?.userId);
+      }
   
       // Send the form data to the server
       const res = await axios.post(`${host}/shipping/create-shipping`, formDataToSend, {
@@ -185,20 +195,19 @@ const ShippingLabelForm = () => {
       // Handle success response
       if (res.data.success) {
         message.success('Shipping created successfully');
-        console.log(res.data);
-        const shipping=res.data.shipping;
-        setId(shipping?._id)
+        const shipping = res.data.shipping;
+        setId(shipping?._id); // Store the created shipping ID
       }
-    } catch (error) {
-      console.error(error.message);
-      message.error('Something went wrong');
-    }
   
-    // Optionally reset loading or other states here
-    // setLoading(false);
-    setIsConfirm(false)
-
+    } catch (error) {
+      console.error('Error during form submission:', error.message); // Detailed error log
+      message.error('Something went wrong during shipping creation.');
+    } finally {
+      // Reset confirmation state after the request completes
+      setIsConfirm(false);
+    }
   };
+  
   
   
   
@@ -207,10 +216,12 @@ const ShippingLabelForm = () => {
 
   return (
     <Layout>
+    
+   
     {isConfirm && <Confirmation isConfirm={isConfirm} setIsConfirm={setIsConfirm} onConfirm={handleSubmit} />}
       <Container className="main">
         <h2 className="text-center mb-4">Shipping Details</h2>
-        <Form className="form-container" onSubmit={handleSubmit}>
+        <Form className="form-container" >
           <Row>
             <Col>
               <h5>Transport Details</h5>
@@ -495,7 +506,6 @@ const ShippingLabelForm = () => {
                     type="text" 
                     placeholder="Enter delivery address" 
                     name="deliveryAddress"  
-                    value={formData.deliveryAddress}
                     onChange={handleInputChange} 
                   />
                 </Form.Group>
@@ -507,7 +517,6 @@ const ShippingLabelForm = () => {
                   <Form.Control 
                     type="text" 
                     placeholder="Enter Contact Person Name" 
-                    value={formData.deliveryPersonName}
                     name="deliveryPersonName"  
                     onChange={handleInputChange} 
                   />
@@ -521,7 +530,6 @@ const ShippingLabelForm = () => {
                   <Form.Label>Contact Person Number</Form.Label>
                   <Form.Control 
                     type="text" 
-                    value={formData.deliveryPersonNumber}
                     placeholder="Contact Person Number" 
                     name="deliveryPersonNumber"  
                     onChange={handleInputChange} 
@@ -535,7 +543,6 @@ const ShippingLabelForm = () => {
                   <Form.Control 
                     type="text" 
                     placeholder="GST" 
-                    value={formData.deliveryGst}
                     name="deliveryGst"  
                     onChange={handleInputChange} 
                   />
@@ -551,24 +558,12 @@ const ShippingLabelForm = () => {
                     type="text" 
                     placeholder="E-way Bill No" 
                     name="deliveryEwayBillNo"  
-                    value={formData.deliveryEwayBillNo}
                     onChange={handleInputChange} 
                   />
                 </Form.Group>
               </Col>
 
-              <Col md={6}>
-                <Form.Group className="mb-2">
-                  <Form.Label>Box No</Form.Label>
-                  <Form.Control 
-                    type="text" 
-                    placeholder="Box No" 
-                    name="deliveryBoxNo"  
-                    value={formData.deliveryBoxNo}  // Corrected value to use delivery.boxNo
-                    onChange={handleInputChange} 
-                  />
-                </Form.Group>
-              </Col>
+             
             </Row>
 
             <Row className="mb-2">
@@ -586,7 +581,6 @@ const ShippingLabelForm = () => {
                     placeholder="Enter delivery address" 
                     name="supplierAddress" 
                     onChange={handleInputChange} 
-                    value={formData?.supplierAddress}
                   />
                 </Form.Group>
               </Col>
@@ -599,7 +593,6 @@ const ShippingLabelForm = () => {
                     placeholder="Enter Contact Person Name" 
                     name="supplierPersonName" 
                     onChange={handleInputChange} 
-                    value={formData?.supplierPersonName}
                   />
                 </Form.Group>
               </Col>
@@ -614,7 +607,6 @@ const ShippingLabelForm = () => {
                     placeholder="Contact Person Number" 
                     name="supplierPersonNumber" 
                     onChange={handleInputChange} 
-                    value={formData?.supplierPersonNumber}
                   />
                 </Form.Group>
               </Col>
@@ -627,7 +619,6 @@ const ShippingLabelForm = () => {
                     placeholder="GST" 
                     name="supplierGst" 
                     onChange={handleInputChange} 
-                    value={formData?.supplierGst}
                   />
                 </Form.Group>
               </Col>
@@ -709,16 +700,12 @@ const ShippingLabelForm = () => {
               </Col>
             </Row>
           ))}
-          <div style={{display:'flex',justifyContent:'space-between' ,alignItems:'center'}}>
-          <div style={{display:'flex'}}>
-           <Button variant="primary" onClick={()=>setIsConfirm(true)} >Update</Button>
-          <Button variant="danger" ><Link to='/manage-parcels'>Cancel</Link> </Button>
-          </div>
-          <Button variant="success" ><Link to={`/print/${id}`}>Print</Link> </Button>
-
-          </div>
-
-          <Button variant="primary" type="submit">Submit</Button>
+          
+          <button className='btn btn-primary' onClick={(e)=>{
+            e.preventDefault()
+            setIsConfirm(true)
+          }} >Submit</button>
+          <button className='btn btn-danger' onClick={()=>navigate('/')} >Cancel</button>
         </Form>
       </Container>
     </Layout>

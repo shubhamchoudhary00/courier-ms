@@ -3,18 +3,11 @@ import './App.css';
 import { BeatLoader } from 'react-spinners';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'flowbite/dist/flowbite.css';
+
 import ProtectedRoutes from './Auth/ProtectedRoutes';
-import AWBBarcodePrint from './components/AWBBarcodePrint';
-import Tracking from './pages/Tracking';
-import UnsuccessfulItem from './pages/UnsuccessfulItem';
-import ShippedItem from './pages/ShippedItem';
-import PickedUpItem from './pages/PickedUpItem';
-import OutforDeliveryItem from './pages/OutforDeliveryItem';
-import InTransitItem from './pages/InTransitItem';
-import DeliveredItem from './pages/DeliveredItem';
-import CollectedItem from './pages/CollectedItem';
-import ArrivedItem from './pages/ArrivedItem';
-import AcceptedItem from './pages/AcceptedItem';
+import PublicRoute from './Auth/PublicRoute';
+
 // import PublicRoute from './helpers/PublicRoute';
 
 const Home = lazy(() => import('./pages/Home'));
@@ -26,6 +19,19 @@ const ManageBranch = lazy(() => import('./pages/ManageBranch'));
 const BranchStaff = lazy(() => import('./pages/BranchStaff'));
 const ManageParcels = lazy(() => import('./pages/ManageParcels'));
 const ParcelDetails = lazy(() => import('./pages/ParcelDetails'));
+const AWBBarcodePrint=lazy(()=>import('./pages/AWBBarcodePrint'))
+const Tracking=lazy(()=>import('./pages/Tracking'))
+const UnsuccessfulItem=lazy(()=>import('./pages/UnsuccessfulItem'))
+const PickedUpItem=lazy(()=>import('./pages/PickedUpItem'))
+const ShippedItem=lazy(()=>import('./pages/ShippedItem'))
+const OutforDeliveryItem=lazy(()=>import('./pages/OutforDeliveryItem'))
+const InTransitItem=lazy(()=>import('./pages/InTransitItem'))
+const DeliveredItem=lazy(()=>import('./pages/DeliveredItem'))
+const CollectedItem=lazy(()=>import('./pages/CollectedItem'))
+const ArrivedItem=lazy(()=>import('./pages/ArrivedItem'))
+const AcceptedItem=lazy(()=>import('./pages/AcceptedItem'))
+const NewStaff=lazy(()=>import('./pages/NewStaff'))
+const UserProfile=lazy(()=>import('./pages/UserProfile'))
 
 const App = () => {
   return (
@@ -39,16 +45,16 @@ const App = () => {
             }
           >
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/newBranch" element={<ProtectedRoutes><NewBranch /></ProtectedRoutes>} />
+              <Route path="/" element={<ProtectedRoutes><Home /></ProtectedRoutes>} />
+              <Route path="/new-branch" element={<ProtectedRoutes><NewBranch /></ProtectedRoutes>} />
               <Route path="/manage-branch" element={<ProtectedRoutes><ManageBranch /></ProtectedRoutes>} />
               <Route path="/branch-staff" element={<ProtectedRoutes><BranchStaff /></ProtectedRoutes>} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<PublicRoute><Login /></PublicRoute> } />
+              <Route path="/register" element={<PublicRoute><Register /></PublicRoute> } />
               <Route path="/shippingLabel" element={<ProtectedRoutes> <ShippingLabelForm /></ProtectedRoutes>} />
               <Route path="/manage-parcels" element={<ProtectedRoutes> <ManageParcels /></ProtectedRoutes>} />
               <Route path="/parcel-detail/:id" element={<ProtectedRoutes> <ParcelDetails /></ProtectedRoutes>} />
-              <Route path="/print/:id" element={ <AWBBarcodePrint />} />
+              <Route path="/print/:id" element={<ProtectedRoutes><AWBBarcodePrint /></ProtectedRoutes> } />
               <Route path="/track" element={<ProtectedRoutes><Tracking /></ProtectedRoutes> } />
               <Route path="/unsuccessful" element={<ProtectedRoutes><UnsuccessfulItem /></ProtectedRoutes> } />
               <Route path="/shipped" element={<ProtectedRoutes><ShippedItem /></ProtectedRoutes> } />
@@ -59,6 +65,8 @@ const App = () => {
               <Route path="/collected" element={<ProtectedRoutes><CollectedItem /></ProtectedRoutes> } />
               <Route path="/arrived" element={<ProtectedRoutes><ArrivedItem /></ProtectedRoutes> } />
               <Route path="/accepted" element={<ProtectedRoutes><AcceptedItem /></ProtectedRoutes> } />
+              <Route path="/new-staff" element={<ProtectedRoutes><NewStaff /></ProtectedRoutes> } />
+              <Route path="/user-profile/:id" element={<ProtectedRoutes><UserProfile /></ProtectedRoutes> } />
             </Routes>
           </Suspense>
         </BrowserRouter>

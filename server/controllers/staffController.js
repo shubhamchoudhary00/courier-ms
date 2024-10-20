@@ -176,6 +176,22 @@ const updateStaffController = async (req, res) => {
     }
   };
   
+  const getStatsController=async(req,res)=>{
+    try{
+        const id=req.params.id;
+        if(!id){
+            return res.status(404).send({success:false,message:'Not found'});
+        }
+        const staff=await userModel.find({userId:id})
+        return res.status(200).send({success:true,message:'success',totalStaffs:staff.length})
+    }catch(error){
+        return res.status(500).send({
+            success: false,
+            message: 'Internal Server Error',
+            error: error.message,
+        });
+    }
+}
 
 module.exports={addStaffController,getAllStaffController,getSpecificStaffController,changeActiveStatusController,getSingleStaffController,
-    deleteSpecificStaffController,updateStaffController};
+    deleteSpecificStaffController,updateStaffController,getStatsController};

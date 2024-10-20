@@ -42,6 +42,7 @@ const isPDF = (buffer) => {
 };
 
 const createShippingController = async (req, res) => {
+    console.log(req.body)
     try {
         const formData = req.body;
         const downloadURLs = []; // Array to hold download URLs for files
@@ -195,7 +196,14 @@ const createShippingController = async (req, res) => {
             ...formData,
             dimensions: dimensions, // Use the parsed dimensions object
             documents: documents, // Populate the documents with URLs
-            addedBy: addedBy
+            addedBy: addedBy,
+            userId: addedBy?.role === 'User' 
+            ? addedBy?._id 
+            : addedBy?.role === 'Staff' 
+                ? addedBy?.userId 
+                : null,
+            branch:addedBy?.role === 'Staff' 
+            ? addedBy?.branch : null
         });
 
         // Save the new shipping document to the database
@@ -509,13 +517,23 @@ const unsucessfullParcelController=async(req,res)=>{
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }
-        let Parcel=[];
+        let filteredParcels=[];
+       
+
         for(let item of parcels){
             if(item.currentStatus==='Unsuccessful Delivery Attempt'){
-                Parcel.push(item);
+                const documents = item?.documents || {};
+                const hasPendingDocuments = 
+                    !documents.invoiceCopy || 
+                    !documents.shippingBill || 
+                    !documents.cargoPhoto || 
+                    !documents.courierSlip || 
+                    !documents.BOA;
+    
+                    filteredParcels.push({ item, pending: hasPendingDocuments });
             }
         }
-        return res.status(200).send({success:true,message:'Fetched',Parcel})
+        return res.status(200).send({success:true,message:'Fetched',filteredParcels})
     }catch(error){
         return res.status(500).send({
             success: false,
@@ -531,13 +549,21 @@ const accedptedParcelController=async(req,res)=>{
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }
-        let Parcel=[];
+        let filteredParcels=[];
         for(let item of parcels){
             if(item.currentStatus==='Item Accepted By Courier'){
-                Parcel.push(item);
+                const documents = item?.documents || {};
+                const hasPendingDocuments = 
+                    !documents.invoiceCopy || 
+                    !documents.shippingBill || 
+                    !documents.cargoPhoto || 
+                    !documents.courierSlip || 
+                    !documents.BOA;
+    
+                    filteredParcels.push({ item, pending: hasPendingDocuments });
             }
         }
-        return res.status(200).send({success:true,message:'Fetched',Parcel})
+        return res.status(200).send({success:true,message:'Fetched',filteredParcels})
     }catch(error){
         return res.status(500).send({
             success: false,
@@ -553,13 +579,21 @@ const collectedParcelController=async(req,res)=>{
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }
-        let Parcel=[];
+        let filteredParcels=[];
         for(let item of parcels){
             if(item.currentStatus==='Collected'){
-                Parcel.push(item);
+                const documents = item?.documents || {};
+                const hasPendingDocuments = 
+                    !documents.invoiceCopy || 
+                    !documents.shippingBill || 
+                    !documents.cargoPhoto || 
+                    !documents.courierSlip || 
+                    !documents.BOA;
+    
+                filteredParcels.push({ item, pending: hasPendingDocuments });
             }
         }
-        return res.status(200).send({success:true,message:'Fetched',Parcel})
+        return res.status(200).send({success:true,message:'Fetched',filteredParcels})
     }catch(error){
         return res.status(500).send({
             success: false,
@@ -575,13 +609,21 @@ const shippedParcelController=async(req,res)=>{
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }
-        let Parcel=[];
+        let filteredParcels=[];
         for(let item of parcels){
             if(item.currentStatus==='Shipped'){
-                Parcel.push(item);
+                const documents = item?.documents || {};
+                const hasPendingDocuments = 
+                    !documents.invoiceCopy || 
+                    !documents.shippingBill || 
+                    !documents.cargoPhoto || 
+                    !documents.courierSlip || 
+                    !documents.BOA;
+    
+                filteredParcels.push({ item, pending: hasPendingDocuments });
             }
         }
-        return res.status(200).send({success:true,message:'Fetched',Parcel})
+        return res.status(200).send({success:true,message:'Fetched',filteredParcels})
     }catch(error){
         return res.status(500).send({
             success: false,
@@ -597,13 +639,21 @@ const inTransitParcelController=async(req,res)=>{
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }
-        let Parcel=[];
+        let filteredParcels=[];
         for(let item of parcels){
             if(item.currentStatus==='In-Transit'){
-                Parcel.push(item);
+                const documents = item?.documents || {};
+                const hasPendingDocuments = 
+                    !documents.invoiceCopy || 
+                    !documents.shippingBill || 
+                    !documents.cargoPhoto || 
+                    !documents.courierSlip || 
+                    !documents.BOA;
+    
+                filteredParcels.push({ item, pending: hasPendingDocuments });
             }
         }
-        return res.status(200).send({success:true,message:'Fetched',Parcel})
+        return res.status(200).send({success:true,message:'Fetched',filteredParcels})
     }catch(error){
         return res.status(500).send({
             success: false,
@@ -619,13 +669,21 @@ const arrivedParcelController=async(req,res)=>{
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }
-        let Parcel=[];
+        let filteredParcels=[];
         for(let item of parcels){
             if(item.currentStatus==='Arrived At Destination'){
-                Parcel.push(item);
+                const documents = item?.documents || {};
+                const hasPendingDocuments = 
+                    !documents.invoiceCopy || 
+                    !documents.shippingBill || 
+                    !documents.cargoPhoto || 
+                    !documents.courierSlip || 
+                    !documents.BOA;
+    
+                filteredParcels.push({ item, pending: hasPendingDocuments });
             }
         }
-        return res.status(200).send({success:true,message:'Fetched',Parcel})
+        return res.status(200).send({success:true,message:'Fetched',filteredParcels})
     }catch(error){
         return res.status(500).send({
             success: false,
@@ -641,13 +699,21 @@ const outForDeliveryParcelController=async(req,res)=>{
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }
-        let Parcel=[];
+        let filteredParcels=[];
         for(let item of parcels){
             if(item.currentStatus==='Out for Delivery'){
-                Parcel.push(item);
+                const documents = item?.documents || {};
+                const hasPendingDocuments = 
+                    !documents.invoiceCopy || 
+                    !documents.shippingBill || 
+                    !documents.cargoPhoto || 
+                    !documents.courierSlip || 
+                    !documents.BOA;
+    
+                    filteredParcels.push({ item, pending: hasPendingDocuments });
             }
         }
-        return res.status(200).send({success:true,message:'Fetched',Parcel})
+        return res.status(200).send({success:true,message:'Fetched',filteredParcels})
     }catch(error){
         return res.status(500).send({
             success: false,
@@ -663,13 +729,21 @@ const pickedUpParcelController=async(req,res)=>{
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }
-        let Parcel=[];
+        let filteredParcels=[];
         for(let item of parcels){
             if(item.currentStatus==='Picked Up'){
-                Parcel.push(item);
+                const documents = item?.documents || {};
+                const hasPendingDocuments = 
+                    !documents.invoiceCopy || 
+                    !documents.shippingBill || 
+                    !documents.cargoPhoto || 
+                    !documents.courierSlip || 
+                    !documents.BOA;
+    
+                filteredParcels.push({ item, pending: hasPendingDocuments });
             }
         }
-        return res.status(200).send({success:true,message:'Fetched',Parcel})
+        return res.status(200).send({success:true,message:'Fetched',filteredParcels})
     }catch(error){
         return res.status(500).send({
             success: false,
@@ -685,13 +759,21 @@ const deliveredParcelController=async(req,res)=>{
         if(parcels.length===0){
             return res.status(404).send({success:false,message:'No Parcel found'})
         }
-        let Parcel=[];
+        let filteredParcels=[];
         for(let item of parcels){
             if(item.currentStatus==='Delivered'){
-                Parcel.push(item);
+                const documents = item?.documents || {};
+                const hasPendingDocuments = 
+                    !documents.invoiceCopy || 
+                    !documents.shippingBill || 
+                    !documents.cargoPhoto || 
+                    !documents.courierSlip || 
+                    !documents.BOA;
+    
+                    filteredParcels.push({ item, pending: hasPendingDocuments });
             }
         }
-        return res.status(200).send({success:true,message:'Fetched',Parcel})
+        return res.status(200).send({success:true,message:'Fetched',filteredParcels})
     }catch(error){
         return res.status(500).send({
             success: false,
@@ -700,6 +782,8 @@ const deliveredParcelController=async(req,res)=>{
         });
     }
 }
+
+
 
 
 module.exports = { createShippingController ,modifyShippingController,updateStatusController,deleteParcelController,unsucessfullParcelController,

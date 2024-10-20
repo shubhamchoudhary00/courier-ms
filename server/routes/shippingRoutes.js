@@ -42,24 +42,24 @@ router.post('/update-status/:id',authMiddleware,updateStatusController);
 
 router.delete('/delete-parcel/:id',authMiddleware,deleteParcelController);
 
-router.post('/unsuccessful-parcel',authMiddleware,unsucessfullParcelController)
+router.post('/unsuccessful-parcels',authMiddleware,unsucessfullParcelController)
 
-router.post('/accepted-parcel',authMiddleware,accedptedParcelController)
+router.post('/accepted-parcels',authMiddleware,accedptedParcelController)
 
-router.post('/collected-parcel',authMiddleware,collectedParcelController)
+router.post('/collected-parcels',authMiddleware,collectedParcelController)
 
-router.post('/shipped-parcel',authMiddleware,shippedParcelController)
+router.post('/shipped-parcels',authMiddleware,shippedParcelController)
 
-router.post('/in-transit-parcel',authMiddleware,inTransitParcelController)
+router.post('/in-transit-parcels',authMiddleware,inTransitParcelController)
 
-router.post('/arrived-parcel',authMiddleware,arrivedParcelController)
+router.post('/arrived-parcels',authMiddleware,arrivedParcelController)
 
-router.post('/out-for-delivery-parcel',authMiddleware,outForDeliveryParcelController)
+router.post('/out-for-delivery-parcels',authMiddleware,outForDeliveryParcelController)
 
 
-router.post('/delivered-parcel',authMiddleware,deliveredParcelController)
+router.post('/delivered-parcels',authMiddleware,deliveredParcelController)
 
-router.post('/pick-up-parcel',authMiddleware,pickedUpParcelController)
+router.post('/pick-up-parcels',authMiddleware,pickedUpParcelController)
 
 
 module.exports = router;

@@ -69,8 +69,8 @@ const getAllBranchForUsersController = async (req, res) => {
 
 const getAllBranchController=async(req,res)=>{
     try{
-      
-        const branches=await branchModel.find({});
+        const {id}=req.body;
+        const branches=await branchModel.find({user:id});
         if(!branches){
             return res.status(404).send({success:false,message:'No branches available'});
         }
@@ -189,6 +189,19 @@ const updateBranchController = async (req, res) => {
     }
   };
 
+  const getStatsController=async(req,res)=>{
+    try{
+        const id=req.params.id;
+        const branches=await branchModel.find({user:id})
+        return res.status(200).send({success:true,message:'success',totalBranches:branches.length});
+    }catch (error) {
+        console.error(error.message); // Log the error for debugging
+        return res.status(500).send({
+          success: false,
+          message: 'Internal Server Error',
+        });
+      }
+  }
 
 module.exports = { createBranchController,getAllBranchController,getAllBranchForUsersController,getBranchController,updateBranchController,
-    changeBranchActiveStatusController,deleteBranchController };
+    changeBranchActiveStatusController,deleteBranchController,getStatsController };

@@ -11,7 +11,7 @@ const CollectedItem = () => {
     const [trigger,setTrigger]=useState(false);
     const {user}=useSelector((state)=>state.user)
 
-    const getParcels=async()=>{
+    const getParcels=async(id)=>{
         try{
             const res=await axios.post(`${host}/shipping/collected-parcels`,{id},{
                 headers:{
@@ -20,7 +20,9 @@ const CollectedItem = () => {
             })
             if(res.data.success){
                 console.log(res.data)
-                setParcels(res.data.shippings);
+                setParcels(res.data.filteredParcels);
+                console.log(parcels)
+
             }
 
         }catch(error){
@@ -30,6 +32,7 @@ const CollectedItem = () => {
     }
 
     useEffect(() => {
+      console.log(user)
         if(user){
           if(user.role==='User'){
             getParcels(user?._id);
@@ -40,12 +43,13 @@ const CollectedItem = () => {
           }
     
         }
-      }, [trigger]);
+        console.log(parcels)
+      }, [trigger,user]);
 
   return (
     <Layout>
       <div className="main">
-      <h2>Manage Parcels</h2>
+      <h2>Collected Parcels</h2>
       <ParcelTable data={parcels} trigger={trigger} setTrigger={setTrigger} />
       </div>
     </Layout>

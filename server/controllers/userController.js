@@ -135,30 +135,43 @@ const authController = async (req, res) => {
   }
 
 
-  const changePasswordController=async(req,res)=>{
-    try{
-        const {id,password,newPassword}=req.body;
-        const user=await userModel.findOne({_id:id});
-        if(!user){
-            return res.status(404).send({success:false,message:'User does not exist'});
-        }
-        const isMatch=bcryptjs.compare(password,user?.password);
-        if(!isMatch){
-            return res.status(400).send({success:false,message:'Wrong Password'})
-        }
-        const salt=await bcryptjs.genSalt(10);
-        const hashedPassword=await bcryptjs.hash(newPassword,salt);
-        user.password=hashedPassword;
-        await user.save();
-        
-        return res.status(200).send({success:true,message:'Password changed successfully'});
 
-    }catch(error){
-        console.log(error.message);
-        return res.status(500).send({success:false,message:'Internal Server Error'})
+  const changePasswordController = async (req, res) => {
+    try {
+      console.log(req.body);
+      const { id, password, newPassword } = req.body;
+  
+      // Find user by id
+      const user = await userModel.findOne({ _id: id });
+      if (!user) {
+        return res.status(404).send({ success: false, message: 'User does not exist' });
+      }
+  
+      // Compare current password
+      const isMatch = await bcryptjs.compare(password, user?.password); // Added 'await' here
+      if (!isMatch) {
+        return res.status(400).send({ success: false, message: 'Wrong Password' });
+      }
+  
+      // Hash new password
+      const salt = await bcryptjs.genSalt(10);
+      const hashedPassword = await bcryptjs.hash(newPassword, salt);
+  
+      // Update user's password
+      user.password = hashedPassword;
+      await user.save();
+  
+      // Send success response
+      return res.status(200).send({ success: true, message: 'Password changed successfully' });
+  
+    } catch (error) {
+      console.error('Error in changePasswordController:', error.message);
+      return res.status(500).send({ success: false, message: 'Internal Server Error' });
     }
-  }
-
+  };
+  
+  module.exports = changePasswordController;
+  
   const resetPasswordController=async(req,res)=>{
     try{
         const id=req.params.id;
@@ -198,5 +211,6 @@ const authController = async (req, res) => {
     }
   }
 
+  
 module.exports={registerController,loginController,authController,changeUserActiveStatusController,deleteUserController,changePasswordController
     ,modifyUserController,resetPasswordController,getUserDetailsController};

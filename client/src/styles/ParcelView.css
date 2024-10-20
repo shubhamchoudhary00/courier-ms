@@ -78,6 +78,7 @@
   /* Document section */
   .documents-preview-section {
     margin-top: 20px;
+    padding: 0 20px;
   }
   
   .document-item {

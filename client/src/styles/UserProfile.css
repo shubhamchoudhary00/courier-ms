@@ -1,0 +1,60 @@
+.user-profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 36px 0px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .profile-details p {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+  
+  .change-password-section {
+    margin-top: 20px;
+  }
+  
+  .change-password-btn {
+    background-color: #233655;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .change-password-btn:hover {
+    background-color: #344f7d;
+  }
+  
+  .password-form {
+    margin-top: 20px;
+  }
+  
+  .password-form div {
+    margin-bottom: 15px;
+  }
+  
+  .password-form input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .submit-password-btn {
+    background-color: #8012bf;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .submit-password-btn:hover {
+    background-color: #a15ae2;
+  }
+  

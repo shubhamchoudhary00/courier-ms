@@ -113,6 +113,9 @@ const shippingSchema = mongoose.Schema({
     deliveryGst:{
             type:String,
         },
+    deliveryEwayBillNo:{
+        type:String
+    },
        
     supplierAddress:{
         type:String
