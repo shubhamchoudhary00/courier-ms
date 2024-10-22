@@ -16,6 +16,7 @@ const ManageParcels = () => {
   const [addedByFilter, setAddedByFilter] = useState(null);
   const [modifiedByFilter, setModifiedByFilter] = useState(null);
   const [branchFilter, setBranchFilter] = useState(null);
+  const [documentStatusFilter, setDocumentStatusFilter] = useState(null); // New state for document status filter
   const { user } = useSelector((state) => state.user);
   const [addedByUsers, setAddedByUsers] = useState([]);
   const [modifiedByUsers, setModifiedByUsers] = useState([]);
@@ -32,50 +33,38 @@ const ManageParcels = () => {
         console.log(res.data);
         setParcels(res.data.shippings);
         const shippings = res.data.shippings;
-  
+
         // Get unique addedBy and modifiedBy IDs
         const addedByIds = [...new Set(shippings.map(item => item?.item?.addedBy))].filter(id => id);
         const modifiedByIds = [...new Set(shippings.map(item => item?.item?.modifiedBy))].filter(id => id);
         const branchNames = [...new Set(shippings.map(item => item?.item?.branch))].filter(name => name);
-  
-        // Fetch user details for addedBy and modifiedBy if IDs exist
-        if (addedByIds.length) {
-          await fetchAddedByUsers(addedByIds);
-        }
-        if (modifiedByIds.length) {
-          await fetchModifiedByUsers(modifiedByIds);
-        }
-        if (branchNames.length) {
-          await fetchBranches(branchNames);
-        }
-        console.log(branchNames)
+
+        if (addedByIds.length) await fetchAddedByUsers(addedByIds);
+        if (modifiedByIds.length) await fetchModifiedByUsers(modifiedByIds);
+        if (branchNames.length) await fetchBranches(branchNames);
       }
     } catch (error) {
       console.log(error.message);
       message.error('Something went wrong');
     }
   };
-  
+
   const fetchAddedByUsers = async (ids) => {
-    const uniqueIds = [...new Set(ids)];
-    const userPromises = uniqueIds.map(id => getUsers(id));
+    const userPromises = ids.map(id => getUsers(id));
     const users = await Promise.all(userPromises);
-    setAddedByUsers(users.filter(user => user)); // Filter out any undefined responses
+    setAddedByUsers(users.filter(user => user));
   };
 
   const fetchModifiedByUsers = async (ids) => {
-    const uniqueIds = [...new Set(ids)];
-    const userPromises = uniqueIds.map(id => getUsers(id));
+    const userPromises = ids.map(id => getUsers(id));
     const users = await Promise.all(userPromises);
-    setModifiedByUsers(users.filter(user => user)); // Filter out any undefined responses
+    setModifiedByUsers(users.filter(user => user));
   };
 
   const fetchBranches = async (names) => {
-    const uniqueBranches = [...new Set(names)];
-    const branchPromises = uniqueBranches.map(name => getBranch(name));
+    const branchPromises = names.map(name => getBranch(name));
     const fetchedBranches = await Promise.all(branchPromises);
-    setBranches(fetchedBranches.filter(branch => branch)); // Filter out any undefined responses
-    console.log(branches)
+    setBranches(fetchedBranches.filter(branch => branch));
   };
 
   const getUsers = async (id) => {
@@ -86,7 +75,7 @@ const ManageParcels = () => {
         }
       });
       if (data.success) {
-        return data.user; // Return user data to be processed in fetch functions
+        return data.user;
       }
     } catch (error) {
       message.error(error.message);
@@ -101,7 +90,7 @@ const ManageParcels = () => {
         }
       });
       if (data.success) {
-        return data.branch; // Return branch data to be processed
+        return data.branch;
       }
     } catch (error) {
       message.error(error.message);
@@ -122,9 +111,11 @@ const ManageParcels = () => {
     const addedByMatch = addedByFilter ? item.addedBy === addedByFilter : true;
     const modifiedByMatch = modifiedByFilter ? item.modifiedBy === modifiedByFilter : true;
     const branchMatch = branchFilter ? item.branch === branchFilter : true;
-
-    return addedByMatch && modifiedByMatch && branchMatch;
+    const documentStatusMatch = documentStatusFilter === null ? true : parcel.pending === documentStatusFilter;
+  
+    return addedByMatch && modifiedByMatch && branchMatch && documentStatusMatch;
   });
+  
 
   return (
     <Layout>
@@ -136,9 +127,7 @@ const ManageParcels = () => {
           <Select
             placeholder="Added By"
             style={{ width: 150, marginRight: 10 }}
-            onChange={(value) => {
-              setAddedByFilter(value === 'none' ? null : value);
-            }}
+            onChange={(value) => setAddedByFilter(value === 'none' ? null : value)}
           >
             <Option value="none">None</Option>
             {addedByUsers.map(user => (
@@ -149,9 +138,7 @@ const ManageParcels = () => {
           <Select
             placeholder="Modified By"
             style={{ width: 150, marginRight: 10 }}
-            onChange={(value) => {
-              setModifiedByFilter(value === 'none' ? null : value);
-            }}
+            onChange={(value) => setModifiedByFilter(value === 'none' ? null : value)}
           >
             <Option value="none">None</Option>
             {modifiedByUsers.map(user => (
@@ -162,15 +149,24 @@ const ManageParcels = () => {
           <Select
             placeholder="Branch"
             style={{ width: 150, marginRight: 10 }}
-            onChange={(value) => {
-              setBranchFilter(value === 'none' ? null : value);
-            }}
+            onChange={(value) => setBranchFilter(value === 'none' ? null : value)}
           >
             <Option value="none">None</Option>
             {branches.map(branch => (
               <Option key={branch._id} value={branch._id}>{branch.branchName},{branch?.city}</Option>
             ))}
           </Select>
+
+          <Select
+          placeholder="Document Status"
+          style={{ width: 150, marginRight: 10 }}
+          onChange={(value) => setDocumentStatusFilter(value === 'all' ? null : value)} // Set to null for "All"
+        >
+          <Option value="all">All</Option>
+          <Option value={true}>Pending</Option>
+          <Option value={false}>Completed</Option>
+        </Select>
+        
         </div>
 
         <ParcelTable data={filteredParcels} trigger={trigger} setTrigger={setTrigger} />

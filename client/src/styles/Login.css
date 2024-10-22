@@ -41,6 +41,16 @@
   .lp-screen{
     height: 100vh;
   }
+  .logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .login-logo {
+    max-width: 200px;
+    height: auto;
+}
+
   @media (max-width: 767px) {
     .lp-screen{
         height: 100%;

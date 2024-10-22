@@ -1,149 +1,113 @@
+/* General Styling */
 body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  background: #f5f7fa; /* Light background for modern, clean look */
+}
+
+.background-radial-gradient {
+  background-color: #233655; /* Darker, more refined background */
+  background-image: radial-gradient(650px circle at 0% 0%,
+      #344f7d 15%, #233655 35%, #1e2c4a 75%, #1a273f 80%, transparent 100%),
+    radial-gradient(1250px circle at 100% 100%,
+      #344f7d 15%, #233655 35%, #1e2c4a 75%, #1a273f 80%, transparent 100%);
+}
+
+/* Rounded Shape Decorations */
+#radius-shape-1, #radius-shape-2 {
+  background: linear-gradient(135deg, #8012bf, #ad1fff); /* Smooth gradient for a modern touch */
+  border-radius: 50%;
+  box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.2); /* Elegant shadow */
+  position: absolute;
+  overflow: hidden;
+}
+
+#radius-shape-1 {
+  height: 220px;
+  width: 220px;
+  top: -60px;
+  left: -130px;
+}
+
+#radius-shape-2 {
+  border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+  bottom: -60px;
+  right: -110px;
+  width: 300px;
+  height: 300px;
+}
+
+/* Form Card Styling */
+.bg-glass {
+  background-color: hsla(0, 0%, 100%, 0.95) !important;
+  backdrop-filter: saturate(200%) blur(30px);
+  border-radius: 15px; /* Soft rounded corners for a sleek look */
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15); /* Gentle shadow for depth */
+  padding: 3rem;
+}
+
+h1, p {
+  color: #233655; /* Darker text for better contrast */
+}
+
+h1 span {
+  color: #8012bf; /* Accent color for emphasis */
+}
+
+/* Input Styling */
+.MDBInput input {
+  border: 2px solid #344f7d; /* Refined border */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 12px 16px; /* Comfortable padding */
+  font-size: 1rem; /* Refined font size */
+  transition: all 0.3s ease-in-out; /* Smooth transition */
+}
+
+.MDBInput input:focus {
+  outline: none;
+  border-color: #8012bf; /* Border color on focus */
+  box-shadow: 0 0 12px rgba(128, 18, 191, 0.4); /* Glow effect on focus */
+}
+
+/* Button Styling */
+.button-mdn {
+  transition: all 0.3s ease;
+  background-color: #8012bf;
+  border: none;
+  color: white;
+  height: 50px;
+  line-height: 50px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 25px; /* Full rounded button */
+}
+
+.button-mdn:hover {
+  background-color: #9f44e2; /* Brighter hover effect */
+  box-shadow: 0 5px 15px rgba(128, 18, 191, 0.4); /* Button hover shadow */
+}
+
+.button-mdn:active {
+  transform: scale(0.97);
+}
+
+/* Checkbox Styling */
+.MDBCheckbox label {
+  font-size: 0.9rem;
+  color: #1e2c4a;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  #radius-shape-1, #radius-shape-2 {
+    height: 120px;
+    width: 120px;
   }
-  
-  .background-radial-gradient {
-    background-color: hsl(218, 41%, 15%);
-    background-image: radial-gradient(650px circle at 0% 0%,
-        hsl(218, 41%, 35%) 15%,
-        hsl(218, 41%, 30%) 35%,
-        hsl(218, 41%, 20%) 75%,
-        hsl(218, 41%, 19%) 80%,
-        transparent 100%),
-      radial-gradient(1250px circle at 100% 100%,
-        hsl(218, 41%, 45%) 15%,
-        hsl(218, 41%, 30%) 35%,
-        hsl(218, 41%, 20%) 75%,
-        hsl(218, 41%, 19%) 80%,
-        transparent 100%);
-  }
-  
-  #radius-shape-1 {
-    height: 220px;
-    width: 220px;
-    top: -60px;
-    left: -130px;
-    background: radial-gradient(#44006b, #ad1fff);
-    overflow: hidden;
-  }
-  
-  #radius-shape-2 {
-    border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
-    bottom: -60px;
-    right: -110px;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(#44006b, #ad1fff);
-    overflow: hidden;
-  }
-  
+
   .bg-glass {
-    background-color: hsla(0, 0%, 100%, 0.9) !important;
-    backdrop-filter: saturate(200%) blur(25px);
+    padding: 2rem;
   }
-
-  .lp-screen{
-    height: 100vh;
-    width: 100vw;
-  }
-  
-
-  .button-mdn {
-    transition: all 0.3s ease; /* Smooth transition */
-  }
-  
-  .button-mdn:focus {
-    outline: none; /* Remove outline */
-  }
-  
-  .button-mdn:hover {
-    background-color: #1266f1; /* Change background color on hover */
-  }
-  
-  .button-mdn:active {
-    transform: scale(0.98); /* Slightly scale down on click */
-  }
-  
-  
-  /* Media Queries for Responsiveness */
-  @media (max-width: 1200px) {
-    #radius-shape-1 {
-      height: 180px;
-      width: 180px;
-      top: -40px;
-      left: -100px;
-    }
-  
-    #radius-shape-2 {
-      width: 250px;
-      height: 250px;
-      bottom: -40px;
-      right: -80px;
-    }
-  }
-  
-  @media (max-width: 992px) {
-    #radius-shape-1 {
-      height: 150px;
-      width: 150px;
-      top: -30px;
-      left: -60px;
-    }
-  
-    #radius-shape-2 {
-      width: 200px;
-      height: 200px;
-      bottom: -30px;
-      right: -60px;
-    }
-  
-    .bg-glass {
-      padding: 2rem; /* Adjust padding for smaller screens */
-    }
-  }
-  
-  @media (max-width: 768px) {
-    #radius-shape-1 {
-      height: 120px;
-      width: 120px;
-      top: -20px;
-      left: -40px;
-    }
-  
-    #radius-shape-2 {
-      width: 150px;
-      height: 150px;
-      bottom: -20px;
-      right: -40px;
-    }
-  
-    .bg-glass {
-      padding: 1.5rem; /* Adjust padding for smaller screens */
-    }
-    .lp-screen{
-        height: 100%;
-    }
-  }
-  
-  @media (max-width: 576px) {
-    #radius-shape-1 {
-      height: 100px;
-      width: 100px;
-      top: -10px;
-      left: -20px;
-    }
-  
-    #radius-shape-2 {
-      width: 120px;
-      height: 120px;
-      bottom: -10px;
-      right: -20px;
-    }
-  
-    .bg-glass {
-      padding: 1rem; /* Further adjust padding for smaller screens */
-    }
-  }
-  
+}

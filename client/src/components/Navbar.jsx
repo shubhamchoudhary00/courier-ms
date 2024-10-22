@@ -1,6 +1,6 @@
 import  { useState } from "react";
-import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiUser } from "react-icons/hi";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi"; // Add dropdown icons
+import { HiArrowSmRight, HiChartPie,  HiUser } from "react-icons/hi";
+import { FiChevronDown, FiChevronUp,FiTruck } from "react-icons/fi"; // Add dropdown icons
 import '../styles/Navbar.css';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,6 +32,9 @@ const Sidebar = () => {
   }
   return (
     <div className="custom-sidebar">
+      <div className="sidebar-item" onClick={()=>navigate('/')}>
+       <img src="/images/logo.png" />
+      </div>
       <div className="sidebar-item" onClick={()=>navigate('/')}>
         <HiChartPie className="sidebar-icon" />
         <span>Dashboard</span>
@@ -65,6 +68,10 @@ const Sidebar = () => {
         <div className="dropdown-item" onClick={() => navigate('/branch-staff')}>Manage Staff</div>
       </div>
       )}
+      <div className="sidebar-item" onClick={()=>navigate('/shippingLabel')}>
+      <FaBoxes className="sidebar-icon" />
+      <span>New Parcel</span>
+    </div>
 
       <div className="sidebar-item sidebar-collapse" onClick={toggleParcelDropdown}>
       <FaBoxes className="sidebar-icon" />
@@ -96,14 +103,14 @@ const Sidebar = () => {
         <span>Users</span>
       </div>
 
-      {/* 
-      <div className="sidebar-item">
-        <HiInbox className="sidebar-icon" />
-        <span>Inbox</span>
-      </div>
+   <div className="sidebar-item" onClick={()=>navigate(`/track`)}>
+    <FiTruck className="sidebar-icon" /> {/* Updated icon */}
+    <span>Track Parcel</span>
+  </div>
 
       
 
+      {/* 
       <div className="sidebar-item">
         <HiShoppingBag className="sidebar-icon" />
         <span>Products</span>

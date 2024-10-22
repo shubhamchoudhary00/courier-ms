@@ -31,7 +31,10 @@ const CollectedItem=lazy(()=>import('./pages/CollectedItem'))
 const ArrivedItem=lazy(()=>import('./pages/ArrivedItem'))
 const AcceptedItem=lazy(()=>import('./pages/AcceptedItem'))
 const NewStaff=lazy(()=>import('./pages/NewStaff'))
-const UserProfile=lazy(()=>import('./pages/UserProfile'))
+const UserProfile=lazy(()=>import('./pages/UserProfile'));
+const ForgotPassword=lazy(()=>import('./pages/ForgotPassword'));
+const ResetPassword=lazy(()=>import('./pages/ResetPassword'));
+
 
 const App = () => {
   return (
@@ -67,6 +70,8 @@ const App = () => {
               <Route path="/accepted" element={<ProtectedRoutes><AcceptedItem /></ProtectedRoutes> } />
               <Route path="/new-staff" element={<ProtectedRoutes><NewStaff /></ProtectedRoutes> } />
               <Route path="/user-profile/:id" element={<ProtectedRoutes><UserProfile /></ProtectedRoutes> } />
+              <Route path="/forgot-password" element={<ForgotPassword /> } />
+              <Route path="/reset-password/:id" element={<ResetPassword /> } />
             </Routes>
           </Suspense>
         </BrowserRouter>

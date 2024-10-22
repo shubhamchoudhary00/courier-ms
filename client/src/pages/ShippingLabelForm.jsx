@@ -17,7 +17,8 @@ import { useNavigate } from 'react-router-dom';
 
 const ShippingLabelForm = () => {
   const {user}=useSelector((state)=>state.user);
-  const navigate=useNavigate()
+  const navigate=useNavigate();
+  const [loader,setLoader]=useState(false);
   const [formData, setFormData] = useState({
     transportType: '',
     modeOfTransport: '',
@@ -140,6 +141,7 @@ const ShippingLabelForm = () => {
     
     // console.log(formData);
     setIsConfirm(true); // Set confirmation state
+    setLoader(false)
   
     try {
       // Create a FormData object
@@ -195,7 +197,8 @@ const ShippingLabelForm = () => {
       // Handle success response
       if (res.data.success) {
         message.success('Shipping created successfully');
-        const shipping = res.data.shipping;
+        const shipping = res.data.newShipping;
+        // console.log(res.data)
         setId(shipping?._id); // Store the created shipping ID
       }
   
@@ -205,6 +208,7 @@ const ShippingLabelForm = () => {
     } finally {
       // Reset confirmation state after the request completes
       setIsConfirm(false);
+      setLoader(true)
     }
   };
   
@@ -700,12 +704,18 @@ const ShippingLabelForm = () => {
               </Col>
             </Row>
           ))}
-          
-          <button className='btn btn-primary' onClick={(e)=>{
-            e.preventDefault()
-            setIsConfirm(true)
-          }} >Submit</button>
-          <button className='btn btn-danger' onClick={()=>navigate('/')} >Cancel</button>
+          {!loader && (
+            <>
+            <button className='btn btn-primary' onClick={(e)=>{
+              e.preventDefault()
+              setIsConfirm(true)
+            }} >Submit</button>
+            <button className='btn btn-danger' onClick={()=>navigate('/')} >Cancel</button>
+            </>
+         ) }
+
+         {loader &&  
+          <button className='btn btn-success' onClick={()=>navigate(`/print/${id}`)} >Print</button> }
         </Form>
       </Container>
     </Layout>

@@ -1,7 +1,7 @@
 const bcryptjs=require('bcryptjs')
 const jwt=require('jsonwebtoken');
 const userModel = require('../models/userModel');
-const { use } = require('../routes/userRoutes');
+const nodemailer=require('nodemailer')
 
 const registerController = async (req, res) => {
     try {
@@ -170,7 +170,7 @@ const authController = async (req, res) => {
     }
   };
   
-  module.exports = changePasswordController;
+
   
   const resetPasswordController=async(req,res)=>{
     try{
@@ -211,6 +211,47 @@ const authController = async (req, res) => {
     }
   }
 
+const forgotPasswordController=async(req,res)=>{
+  try{
+    const {email}=req.body;
+    if(!email){
+      return res.status(400).send({success:false,message:'Please provide email'})
+    };
+    const user=await userModel.findOne({email:email});
+    if(!user){
+      return res.status(404).send({success:false,message:'User not found'})
+    }
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'shubhamsur09@gmail.com',
+        pass: 'cnpgkkumhduwgqub'
+      }
+    });
+    
+    var mailOptions = {
+      from: 'shubhamsur09@gmail.com',
+      to: user.email,
+      subject: 'ResetPassword Link',
+      text: `http://localhost:5173/reset-password/${user?._id}`
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        return res.status(400).send({message:"Some Error Occured",success:false});
+      } else {
+        return res.status(200).json({ message: "Mail Sent Successfully", success: true });
+      }
+    });
+
+
+  }catch(error){
+    console.log(error.message);
+    return res.status(500).send({success:false,message:'Internal Server Error'})
+}
+}
+
+
   
 module.exports={registerController,loginController,authController,changeUserActiveStatusController,deleteUserController,changePasswordController
-    ,modifyUserController,resetPasswordController,getUserDetailsController};
+    ,modifyUserController,resetPasswordController,getUserDetailsController,forgotPasswordController};

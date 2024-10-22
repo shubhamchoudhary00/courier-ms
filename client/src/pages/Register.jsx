@@ -8,7 +8,6 @@ import {
   MDBCardBody,
   MDBInput,
   MDBCheckbox,
-  MDBIcon,
 } from 'mdb-react-ui-kit';
 import '../styles/Register.css';
 import { message } from 'antd';
@@ -46,6 +45,9 @@ const Register = () => {
     <MDBContainer fluid className="p-4 background-radial-gradient overflow-hidden" style={{ height: '100vh' }}>
       <MDBRow>
         <MDBCol md="6" className="text-center text-md-start d-flex flex-column justify-content-center">
+        <div className='text-center mb-4 logo'>
+        <img src="/images/logo.png" alt="Logo" className="login-logo" />
+    </div>
           <h1 className="my-5 display-3 fw-bold ls-tight px-3" style={{ color: 'hsl(218, 81%, 95%)' }}>
             Create an Account <br />
             <span style={{ color: 'hsl(218, 81%, 75%)' }}>Join us today!</span>
@@ -65,9 +67,7 @@ const Register = () => {
               <MDBInput wrapperClass="mb-4" placeholder="Phone" id="form2" type="text" onChange={(e)=>setPhone(e.target.value)} />
               <MDBInput wrapperClass="mb-4" placeholder="Email" id="form3" type="email" onChange={(e)=>setEmail(e.target.value)} />
               <MDBInput wrapperClass="mb-4" placeholder="Password" id="form4" type="password" onChange={(e)=>setPassword(e.target.value)} />
-              <div className="d-flex justify-content-center mb-4">
-                <MDBCheckbox name="flexCheck" value="" id="flexCheckDefault" label="Subscribe to our newsletter" />
-              </div>
+             
               <MDBBtn 
               className='w-100 mb-4 button-mdn' 
               size='md' 
@@ -81,7 +81,7 @@ const Register = () => {
             </MDBBtn>              
             <div className="text-center">
                 <p>or sign in with: <Link to='/login'>Login</Link> </p>
-                <MDBBtn tag="a" color="none" className="mx-3" style={{ color: '#1266f1' }}>
+                {/*<MDBBtn tag="a" color="none" className="mx-3" style={{ color: '#1266f1' }}>
                   <MDBIcon fab icon="facebook-f" size="sm" />
                 </MDBBtn>
                 <MDBBtn tag="a" color="none" className="mx-3" style={{ color: '#1266f1' }}>
@@ -92,7 +92,7 @@ const Register = () => {
                 </MDBBtn>
                 <MDBBtn tag="a" color="none" className="mx-3" style={{ color: '#1266f1' }}>
                   <MDBIcon fab icon="github" size="sm" />
-                </MDBBtn>
+                </MDBBtn>*/}
               </div>
             </MDBCardBody>
           </MDBCard>
