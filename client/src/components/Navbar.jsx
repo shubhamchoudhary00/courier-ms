@@ -1,5 +1,5 @@
 import  { useState } from "react";
-import { HiArrowSmRight, HiChartPie,  HiUser } from "react-icons/hi";
+import { HiArrowSmRight, HiChartPie,  HiUser,HiOutlineMail } from "react-icons/hi";
 import { FiChevronDown, FiChevronUp,FiTruck } from "react-icons/fi"; // Add dropdown icons
 import '../styles/Navbar.css';
 import { useNavigate } from "react-router-dom";
@@ -40,7 +40,8 @@ const Sidebar = () => {
         <span>Dashboard</span>
       </div>
 
-     {/* E-commerce section with a toggle for dropdown */}
+      {user?.role==='User' && <>
+         {/* E-commerce section with a toggle for dropdown */}
       <div className="sidebar-item sidebar-collapse" onClick={toggleBranchDropdown}>
       <HiOfficeBuilding className="sidebar-icon" />
       <span>Branch</span>
@@ -68,7 +69,10 @@ const Sidebar = () => {
         <div className="dropdown-item" onClick={() => navigate('/branch-staff')}>Manage Staff</div>
       </div>
       )}
-      <div className="sidebar-item" onClick={()=>navigate('/shippingLabel')}>
+        </>}
+
+    
+      <div className="sidebar-item" onClick={()=>navigate('/new-parcel')}>
       <FaBoxes className="sidebar-icon" />
       <span>New Parcel</span>
     </div>
@@ -84,7 +88,6 @@ const Sidebar = () => {
     {isParcelOpen && (
       <div className="sidebar-dropdown">
         <div className="dropdown-item" onClick={()=>navigate('/manage-parcels')}>Manage Parcels</div>
-        <div className="dropdown-item" onClick={()=>navigate('/shippingLabel')}>New Parcel</div>
         <div className="dropdown-item" onClick={()=>navigate('/accepted')}>Item Accepted By Courier</div>
         <div className="dropdown-item" onClick={()=>navigate('/arrived')}>Arrived Items</div>
         <div className="dropdown-item" onClick={()=>navigate('/collected')}>Collected Items</div>
@@ -110,11 +113,11 @@ const Sidebar = () => {
 
       
 
-      {/* 
-      <div className="sidebar-item">
-        <HiShoppingBag className="sidebar-icon" />
-        <span>Products</span>
-      </div> */}
+      
+      <div className="sidebar-item" onClick={()=>navigate('/contact-us')}>
+        <HiOutlineMail className="sidebar-icon" />
+        <span>Contact Us</span>
+      </div> 
 
       <div className="sidebar-item" onClick={handleLogout}>
         <HiArrowSmRight className="sidebar-icon" />

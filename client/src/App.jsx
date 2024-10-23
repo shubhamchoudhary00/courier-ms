@@ -34,7 +34,9 @@ const NewStaff=lazy(()=>import('./pages/NewStaff'))
 const UserProfile=lazy(()=>import('./pages/UserProfile'));
 const ForgotPassword=lazy(()=>import('./pages/ForgotPassword'));
 const ResetPassword=lazy(()=>import('./pages/ResetPassword'));
-
+const ContactUs=lazy(()=>import('./pages/ContactUs'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const Portfolio = lazy(() => import('./pages/Portfolio'));
 
 const App = () => {
   return (
@@ -49,16 +51,33 @@ const App = () => {
           >
             <Routes>
               <Route path="/" element={<ProtectedRoutes><Home /></ProtectedRoutes>} />
+              {/* Branch Routes */}
+
               <Route path="/new-branch" element={<ProtectedRoutes><NewBranch /></ProtectedRoutes>} />
               <Route path="/manage-branch" element={<ProtectedRoutes><ManageBranch /></ProtectedRoutes>} />
               <Route path="/branch-staff" element={<ProtectedRoutes><BranchStaff /></ProtectedRoutes>} />
+              {/*  End */}
+
+              {/* Basic Routes */}
               <Route path="/login" element={<PublicRoute><Login /></PublicRoute> } />
               <Route path="/register" element={<PublicRoute><Register /></PublicRoute> } />
-              <Route path="/shippingLabel" element={<ProtectedRoutes> <ShippingLabelForm /></ProtectedRoutes>} />
+              <Route path="/print/:id" element={<ProtectedRoutes><AWBBarcodePrint /></ProtectedRoutes> } />
+              <Route path="/user-profile/:id" element={<ProtectedRoutes><UserProfile /></ProtectedRoutes> } />
+              <Route path="/forgot-password" element={<ForgotPassword /> } />
+              <Route path="/reset-password/:id" element={<ResetPassword /> } />
+              <Route path="/contact-us" element={<ContactUs /> } />
+              {/* End */}
+
+              <Route path="/new-parcel" element={<ProtectedRoutes> <ShippingLabelForm /></ProtectedRoutes>} />
+              
+              <Route path="/track" element={<ProtectedRoutes><Tracking /></ProtectedRoutes> } />
+
+              {/* Shipment Details */}
               <Route path="/manage-parcels" element={<ProtectedRoutes> <ManageParcels /></ProtectedRoutes>} />
               <Route path="/parcel-detail/:id" element={<ProtectedRoutes> <ParcelDetails /></ProtectedRoutes>} />
-              <Route path="/print/:id" element={<ProtectedRoutes><AWBBarcodePrint /></ProtectedRoutes> } />
-              <Route path="/track" element={<ProtectedRoutes><Tracking /></ProtectedRoutes> } />
+              {/* End */}
+
+              {/* Shipment Routes */}
               <Route path="/unsuccessful" element={<ProtectedRoutes><UnsuccessfulItem /></ProtectedRoutes> } />
               <Route path="/shipped" element={<ProtectedRoutes><ShippedItem /></ProtectedRoutes> } />
               <Route path="/pickup" element={<ProtectedRoutes><PickedUpItem /></ProtectedRoutes> } />
@@ -68,10 +87,14 @@ const App = () => {
               <Route path="/collected" element={<ProtectedRoutes><CollectedItem /></ProtectedRoutes> } />
               <Route path="/arrived" element={<ProtectedRoutes><ArrivedItem /></ProtectedRoutes> } />
               <Route path="/accepted" element={<ProtectedRoutes><AcceptedItem /></ProtectedRoutes> } />
+              {/*  End */}
+
+
               <Route path="/new-staff" element={<ProtectedRoutes><NewStaff /></ProtectedRoutes> } />
-              <Route path="/user-profile/:id" element={<ProtectedRoutes><UserProfile /></ProtectedRoutes> } />
-              <Route path="/forgot-password" element={<ForgotPassword /> } />
-              <Route path="/reset-password/:id" element={<ResetPassword /> } />
+              <Route path="/port" element={<Portfolio />} />  
+              <Route path="*" element={<NotFound />} />  
+            
+              
             </Routes>
           </Suspense>
         </BrowserRouter>

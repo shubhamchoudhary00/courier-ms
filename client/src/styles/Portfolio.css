@@ -1,0 +1,77 @@
+.background-radial-gradient {
+    background-color: hsl(218, 41%, 15%);
+    background-image: radial-gradient(650px circle at 0% 0%,
+        hsl(218, 41%, 35%) 15%,
+        hsl(218, 41%, 30%) 35%,
+        hsl(218, 41%, 20%) 75%,
+        hsl(218, 41%, 19%) 80%,
+        transparent 100%),
+      radial-gradient(1250px circle at 100% 100%,
+        hsl(218, 41%, 45%) 15%,
+        hsl(218, 41%, 30%) 35%,
+        hsl(218, 41%, 20%) 75%,
+        hsl(218, 41%, 19%) 80%,
+        transparent 100%);
+}
+
+.full-screen {
+    height: 100%;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.portfolio-logo {
+    max-width: 200px;
+    height: auto;
+}
+
+.transparent-card {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: saturate(150%) blur(10px);
+    border: none;
+    border-radius: 15px;
+    color: hsl(218, 81%, 95%);
+}
+
+.input-field {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: hsl(218, 81%, 95%) !important;
+    border-color: hsl(218, 81%, 75%);
+}
+
+.input-field::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.button-mdn {
+    background-color: #44006b;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+}
+
+.email-error {
+    color: #ff6b6b;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    text-align: left;
+}
+
+.card-text{
+    color: #8cb1f3 !important;
+}
+
+
+@media (max-width: 767px) {
+    .full-screen {
+        height: 100%;
+    }
+
+    .portfolio-logo {
+        max-width: 150px;
+    }
+}

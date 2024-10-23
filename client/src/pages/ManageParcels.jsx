@@ -31,14 +31,20 @@ const ManageParcels = () => {
       });
       if (res.data.success) {
         console.log(res.data);
-        setParcels(res.data.shippings);
         const shippings = res.data.shippings;
-
+  
+        // Filter parcels if the user is Staff
+        const filteredParcels = user?.role === 'Staff' 
+          ? shippings.filter(item => item?.item?.branch === user.branch)
+          : shippings;
+  
+        setParcels(filteredParcels);
+  
         // Get unique addedBy and modifiedBy IDs
-        const addedByIds = [...new Set(shippings.map(item => item?.item?.addedBy))].filter(id => id);
-        const modifiedByIds = [...new Set(shippings.map(item => item?.item?.modifiedBy))].filter(id => id);
-        const branchNames = [...new Set(shippings.map(item => item?.item?.branch))].filter(name => name);
-
+        const addedByIds = [...new Set(filteredParcels.map(item => item?.item?.addedBy))].filter(id => id);
+        const modifiedByIds = [...new Set(filteredParcels.map(item => item?.item?.modifiedBy))].filter(id => id);
+        const branchNames = [...new Set(filteredParcels.map(item => item?.item?.branch))].filter(name => name);
+  
         if (addedByIds.length) await fetchAddedByUsers(addedByIds);
         if (modifiedByIds.length) await fetchModifiedByUsers(modifiedByIds);
         if (branchNames.length) await fetchBranches(branchNames);
@@ -48,6 +54,7 @@ const ManageParcels = () => {
       message.error('Something went wrong');
     }
   };
+  
 
   const fetchAddedByUsers = async (ids) => {
     const userPromises = ids.map(id => getUsers(id));
@@ -131,6 +138,7 @@ const ManageParcels = () => {
           >
             <Option value="none">None</Option>
             {addedByUsers.map(user => (
+
               <Option key={user._id} value={user._id}>{user.name}</Option>
             ))}
           </Select>
@@ -145,7 +153,7 @@ const ManageParcels = () => {
               <Option key={user._id} value={user._id}>{user.name}</Option>
             ))}
           </Select>
-
+          {user?.role === 'User' && 
           <Select
             placeholder="Branch"
             style={{ width: 150, marginRight: 10 }}
@@ -155,7 +163,7 @@ const ManageParcels = () => {
             {branches.map(branch => (
               <Option key={branch._id} value={branch._id}>{branch.branchName},{branch?.city}</Option>
             ))}
-          </Select>
+          </Select>}
 
           <Select
           placeholder="Document Status"

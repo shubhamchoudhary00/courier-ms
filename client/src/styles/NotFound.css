@@ -1,0 +1,35 @@
+/* src/styles/NotFound.css */
+
+.notfound-container {
+    text-align: center;
+    margin: 100px auto;
+    padding: 20px;
+    max-width: 600px;
+  }
+  
+  .notfound-title {
+    font-size: 4rem;
+    color: #8012bf;
+    margin-bottom: 20px;
+  }
+  
+  .notfound-message {
+    font-size: 1.5rem;
+    color: #344f7d;
+    margin-bottom: 30px;
+  }
+  
+  .notfound-home-link {
+    font-size: 1.2rem;
+    color: white;
+    background-color: #233655;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  
+  .notfound-home-link:hover {
+    background-color: #344f7d;
+    color: #fff;
+  }
+  

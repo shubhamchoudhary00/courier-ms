@@ -50,7 +50,7 @@ const Reminders = () => {
 
   return (
     <div className='reminder-container'>
-      <div className='main-container'>
+      <div className='main-containers'>
         <h2>Reminders</h2>
         <div className='pending-container'>
           {loading ? (

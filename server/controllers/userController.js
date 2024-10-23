@@ -248,10 +248,42 @@ const forgotPasswordController=async(req,res)=>{
   }catch(error){
     console.log(error.message);
     return res.status(500).send({success:false,message:'Internal Server Error'})
-}
+  }
 }
 
+
+
+const sendMessageController=async(req,res)=>{
+  try{
+  const {values}=req.body
+  var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
+      }
+    });
+    
+    var mailOptions = {
+      from: process.env.EMAIL,
+      to: values.email,
+      subject: 'Message from Contact us',
+      text: values.message
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        return res.status(400).send({message:"Some Error Occured",success:false});
+      } else {
+        return res.status(200).json({ message: "Mail Sent Successfully", success: true });
+      }
+    });
+  }catch(error){
+    console.log(error.message);
+    return res.status(500).send({success:false,message:'Internal Server Error'})
+  }
+}
 
   
 module.exports={registerController,loginController,authController,changeUserActiveStatusController,deleteUserController,changePasswordController
-    ,modifyUserController,resetPasswordController,getUserDetailsController,forgotPasswordController};
+    ,modifyUserController,resetPasswordController,getUserDetailsController,forgotPasswordController,sendMessageController};

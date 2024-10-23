@@ -113,8 +113,11 @@ const UserProfile = () => {
         <p><strong>Name:</strong> {userData.name}</p>
         <p><strong>Phone:</strong> {userData.phone}</p>
         <p><strong>Email:</strong> {userData.email}</p>
-        <p><strong>Total Staffs:</strong> {userData.totalStaffs}</p>
+        {user?.role==='User' && <>
+          <p><strong>Total Staffs:</strong> {userData.totalStaffs}</p>
         <p><strong>Total Branches:</strong> {userData.totalBranches}</p>
+        </>}
+        
       </div>
 
       <div className="change-password-section">
