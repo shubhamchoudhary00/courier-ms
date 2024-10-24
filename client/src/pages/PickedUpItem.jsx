@@ -20,7 +20,15 @@ const PickedUpItem = () => {
             })
             if(res.data.success){
                 console.log(res.data)
-                setParcels(res.data.filteredParcels);
+                const allParcels = res.data.filteredParcels;
+
+                const filteredParcels = (user?.role === 'Staff') 
+                    ? allParcels.filter(parcel => 
+                        parcel?.item?.branch === user.branch || parcel?.item?.branch === null
+                    ) 
+                    : allParcels;
+        
+                setParcels(filteredParcels);
             }
 
         }catch(error){

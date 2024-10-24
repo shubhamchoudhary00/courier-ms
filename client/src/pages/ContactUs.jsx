@@ -60,6 +60,14 @@ const ContactUs = () => {
               </Form.Item>
 
               <Form.Item
+                name="text"
+                label="Phone"
+                rules={[{ required: true, message: 'Please enter your Phone number!' }]}
+              >
+                <Input placeholder="Enter your Phone number" />
+              </Form.Item>
+
+              <Form.Item
                 name="message"
                 label="Message"
                 rules={[{ required: true, message: 'Please enter your message!' }]}

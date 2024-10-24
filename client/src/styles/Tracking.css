@@ -6,13 +6,15 @@
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   text-align: center;
+  font-family: 'Arial', sans-serif;
 }
 
 .tracking-title {
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: #233655;
   margin-bottom: 20px;
   font-weight: bold;
+  letter-spacing: 1px;
 }
 
 .tracking-input-section {
@@ -25,6 +27,32 @@
 .tracking-input {
   width: 70%;
   border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.tracking-input:focus {
+  border-color: #4caf50; /* Highlight on focus */
+  outline: none;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #4caf50, #81c784);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.btn:hover {
+  background: linear-gradient(90deg, #388e3c, #66bb6a);
+  transform: translateY(-2px);
 }
 
 .loading-spinner {
@@ -52,13 +80,14 @@
 .parcel-info {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px; /* Increased gap for better spacing */
   font-size: 1.1rem;
 }
 
 .parcel-item {
   display: flex;
   justify-content: space-between;
+  align-items: center; /* Center items vertically */
   color: #344f7d;
 }
 
@@ -69,22 +98,23 @@
   color: #fff;
 }
 
+/* Status color codes */
 .parcel-status.item-accepted-by-courier {
-  background-color: #4caf50;
+  background-color: #4caf50; /* Green */
 }
 
 .parcel-status.shipped {
-  background-color: #03a9f4;
+  background-color: #03a9f4; /* Light Blue */
 }
 
-.parcel-status['in-transit'] {
-  background-color: #ff9800;
+.parcel-status.in-transit {
+  background-color: #ff9800; /* Orange */
 }
 
 .parcel-status.delivered {
-  background-color: #2ecc71;
+  background-color: #2ecc71; /* Darker Green */
 }
 
 .parcel-status.unsuccessful-delivery-attempt {
-  background-color: #e74c3c;
+  background-color: #e74c3c; /* Red */
 }

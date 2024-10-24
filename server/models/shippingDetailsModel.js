@@ -6,6 +6,7 @@ const shippingSchema = mongoose.Schema({
     },
     branch:{
         type:String,
+        default:null
     },
     transportType: {
         type: String,

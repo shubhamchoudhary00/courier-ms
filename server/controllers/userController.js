@@ -264,12 +264,14 @@ const sendMessageController=async(req,res)=>{
       }
     });
     
-    var mailOptions = {
-      from: process.env.EMAIL,
-      to: values.email,
-      subject: 'Message from Contact us',
-      text: values.message
-    };
+   var mailOptions = {
+    from: process.env.EMAIL, // Sender's email address
+    to: process.env.PERSONAL_EMAIL_ID, // Recipient's email address
+    subject: 'Message from Contact us', // Subject of the email
+    text: ` ${values?.name} has messaged you from the track trace. Below is the message and his phone number is ${values?.phone} and mail id is ${values?.email}
+    ${values?.message}` // Body of the email
+};
+
     
     transporter.sendMail(mailOptions, function(error, info){
       if (error) {

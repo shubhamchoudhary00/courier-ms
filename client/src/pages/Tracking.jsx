@@ -49,9 +49,9 @@ const Tracking = () => {
             onChange={(e) => setTrackingNumber(e.target.value)}
             className="tracking-input"
           />
-          <Button type="primary" onClick={handleTrack} loading={loading}>
+          <button className='btn btn-primary' onClick={handleTrack} loading={loading}>
             Track
-          </Button>
+          </button>
         </div>
 
         {loading ? (

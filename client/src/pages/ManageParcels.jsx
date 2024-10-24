@@ -31,14 +31,14 @@ const ManageParcels = () => {
       });
       if (res.data.success) {
         console.log(res.data);
-        const shippings = res.data.shippings;
-  
-        // Filter parcels if the user is Staff
-        const filteredParcels = user?.role === 'Staff' 
-          ? shippings.filter(item => item?.item?.branch === user.branch)
-          : shippings;
-  
-        setParcels(filteredParcels);
+        const allParcels = res.data.shippings;
+
+        const filteredParcels = (user?.role === 'Staff') 
+              ? allParcels.filter(parcel => 
+              parcel?.item?.branch === user.branch || parcel?.item?.branch === null
+              ) 
+              : allParcels;
+              setParcels(filteredParcels);
   
         // Get unique addedBy and modifiedBy IDs
         const addedByIds = [...new Set(filteredParcels.map(item => item?.item?.addedBy))].filter(id => id);

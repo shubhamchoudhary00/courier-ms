@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBBtn, MDBInput } from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Portfolio.css';
-
+import host from '../APIRoute/APIRoute';
+import axios from 'axios';
+import { ClipLoader } from 'react-spinners';
+import { message } from 'antd';
 const Portfolio = () => {
   const navigate = useNavigate();
   const [emailError, setEmailError] = useState('');
+  const [loader,setLoader]=useState(false)
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
@@ -28,15 +32,27 @@ const Portfolio = () => {
       }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
+    setLoader(true)
     if (!contactForm.email || emailError) {
         validateEmail(contactForm.email);
         return; // prevent form submission if email is invalid
       }
     console.log('Contact Form Data:', contactForm);
+ 
+    try{
+        const {data}=await axios.post(`${host}/user/send-message`,{values:contactForm})
+        if(data.success){
+            message.success('Message Sent Successfully. Our team will contact you within 48 hours')
+        }
+    }catch(error){
+        message.error('Something went wrong')
+    }
+    setLoader(false)
     setContactForm({ name: '', email: '', message: '',phone:'' });
   };
+
 
   return (
     <MDBContainer fluid className="p-4 background-radial-gradient overflow-hidden full-screen">
@@ -163,8 +179,8 @@ const Portfolio = () => {
                     />
                   </MDBCol>
                 </MDBRow>
-
-                <MDBBtn type="submit" className="button-mdn">Send Message</MDBBtn>
+                {loader ? <ClipLoader /> : <MDBBtn type="submit" className="button-mdn">Send Message</MDBBtn> }
+                                  
               </form>
             </MDBCardBody>
           </MDBCard>
