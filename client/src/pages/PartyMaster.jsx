@@ -4,14 +4,19 @@ import Layout from '../components/Layout';
 import { Form, Button } from 'react-bootstrap';
 import '../styles/PartyMaster.css';
 import { message } from 'antd';
+import Select from 'react-select'
 import axios from 'axios';
 import host from '../APIRoute/APIRoute';
 import { useSelector } from 'react-redux';
-
+import Country from '../helpers/Country';
+import { useNavigate } from 'react-router-dom';
 const PartyMaster = () => {
   const [isConfirm, setIsConfirm] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
   const {user}=useSelector((state)=>state.user);
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const navigate=useNavigate()
+
   const [formData, setFormData] = useState({
     companyName: '',
     address: '',
@@ -31,6 +36,14 @@ const PartyMaster = () => {
     aadharNo: ''
   });
 
+  const handleCountryChange = (selectedOption) => {
+    setSelectedCountry(selectedOption);
+    setFormData((prevData) => ({
+      ...prevData,
+      country: selectedOption.value // Use selectedOption.value directly
+    }));
+  };
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -38,14 +51,16 @@ const PartyMaster = () => {
       [name]: value
     }));
   };
+  
 
   useEffect(() => {
     const { companyName, address, city, state, country } = formData;
-    setIsFormValid(companyName && address && city && state && country);
+    setIsFormValid(companyName && address && city && state && country );
   }, [formData]);
 
   const handleSubmit = async () => {
     console.log(formData);
+   
     try {
         
       const { data } = await axios.post(`${host}/party/add-party`, { form: formData,userId:user?.role=== 'User' ?user?._id  : user?.userId}, {
@@ -57,15 +72,21 @@ const PartyMaster = () => {
         message.success('Added Successfully');
       }
     } catch (error) {
-        if(error.data && error.data.response){
-            message.error(error.data.response.message);
-        }else{
-            message.error('Something went wrong', error.message);
-
-        }
+      if (error.response && error.response.data && error.response.data.message) {
+        message.error(error.response.data.message); // Show the error message from the response
+      } else {
+        message.error('Something went wrong', error.message); // Show general error message
+      }
+  
 
     }
   };
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+        navigate('/login');
+    }
+}, [navigate]);
+
 
   return (
     <Layout>
@@ -122,16 +143,18 @@ const PartyMaster = () => {
               required
             />
           </Form.Group>
-          <Form.Group className="mb-2" controlId="country">
-            <Form.Label>Country <span className="required">*</span></Form.Label>
-            <Form.Control
-              type="text"
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+          
+          <Form.Group className="mb-3">
+          <Form.Label>Country</Form.Label>
+          <Select
+            value={selectedCountry}
+            onChange={handleCountryChange}
+            options={Country}
+            placeholder="Select or search country"
+            isSearchable
+          />
+        </Form.Group>
+          
           <Form.Group className="mb-2" controlId="gstNo">
             <Form.Label>GST No</Form.Label>
             <Form.Control

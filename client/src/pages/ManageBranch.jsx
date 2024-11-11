@@ -5,11 +5,13 @@ import axios from 'axios';
 import host from '../APIRoute/APIRoute';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const ManageBranch = () => {
   const [branches, setBranches] = useState([]);
   const { user } = useSelector((state) => state.user);
   const [refresh, setRefresh] = useState(false);
+  const navigate=useNavigate()
 
   const getAllBranches = async () => {
 
@@ -48,6 +50,12 @@ const ManageBranch = () => {
       getAllBranches();
     }
   }, [user, refresh]);
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+        navigate('/login');
+    }
+}, [navigate]);
+
 
   return (
     <Layout>

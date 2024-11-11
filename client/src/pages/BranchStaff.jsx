@@ -6,11 +6,13 @@ import host from "../APIRoute/APIRoute";
 import { message } from "antd";
 import { useSelector } from "react-redux";
 import { PulseLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
 
 const BranchStaff = () => {
   const [branches, setBranches] = useState([]);
   const { user } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(true); // New loading state
+  const navigate=useNavigate()
 
   const getAllBranches = async () => {
     if(user){
@@ -43,6 +45,12 @@ const BranchStaff = () => {
     getAllBranches();
     // console.log(user)
   }, [user]);
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+        navigate('/login');
+    }
+}, [navigate]);
+
 
   return (
     <Layout>

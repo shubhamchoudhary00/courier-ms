@@ -5,11 +5,14 @@ import {message} from 'antd';
 import { useEffect, useState } from "react";
 import ParcelTable from "../components/ParcelTable";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const PickedUpItem = () => {
 
     const [parcels,setParcels]=useState([]);
     const [trigger,setTrigger]=useState(false);
     const {user}=useSelector((state)=>state.user)
+    const navigate=useNavigate()
+
 
     const getParcels=async(id)=>{
         try{
@@ -49,6 +52,13 @@ const PickedUpItem = () => {
     
         }
       }, [trigger,user]);
+
+      useEffect(() => {
+        if (!localStorage.getItem('token')) {
+            navigate('/login');
+        }
+    }, [navigate]);
+    
 
   return (
     <Layout>

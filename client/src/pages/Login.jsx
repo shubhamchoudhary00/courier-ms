@@ -75,10 +75,10 @@ const Login = () => {
                             <MDBInput wrapperClass='mb-4' id='form2' type='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
 
                             <div className='d-flex justify-content-between mb-4'>
-                                <MDBBtn tag='a' color='none'                                 style={{ height: '50px', lineHeight: 'normal' }}
+                               {/* <MDBBtn tag='a' color='none'                                 style={{ height: '50px', lineHeight: 'normal' }}
                                 className='text-dark' onClick={()=>navigate('/forgot-password')}>
                                     <MDBIcon fas icon="lock" /> Forgot password?
-                                </MDBBtn>
+                                </MDBBtn> */}
                             </div>
 
                             <MDBBtn
@@ -94,7 +94,7 @@ const Login = () => {
                             </MDBBtn>
 
                             <div className="text-center">
-                                <p>or signup with us : <Link to='/register'>Register</Link></p>
+                                {/* <p>or signup with us : <Link to='/register'>Register</Link></p> */}
 
                               {/*  <MDBBtn tag='a' color='none' className='mx-3' style={{ color: '#1266f1' }}>
                                     <MDBIcon fab icon='facebook-f' size="sm" />

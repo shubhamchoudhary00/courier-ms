@@ -7,6 +7,7 @@ import ParcelTable from "../components/ParcelTable";
 import { useSelector } from "react-redux";
 import { Select } from 'antd'; // Import Select component
 import '../styles/Home.css';
+import { useNavigate } from "react-router-dom";
 
 const { Option } = Select; // Destructure Option from Select
 
@@ -21,6 +22,7 @@ const ManageParcels = () => {
   const [addedByUsers, setAddedByUsers] = useState([]);
   const [modifiedByUsers, setModifiedByUsers] = useState([]);
   const [branches, setBranches] = useState([]);
+  const navigate=useNavigate()
 
   const getAllParcels = async (id) => {
     try {
@@ -122,7 +124,12 @@ const ManageParcels = () => {
   
     return addedByMatch && modifiedByMatch && branchMatch && documentStatusMatch;
   });
-  
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+        navigate('/login');
+    }
+}, [navigate]);
+
 
   return (
     <Layout>

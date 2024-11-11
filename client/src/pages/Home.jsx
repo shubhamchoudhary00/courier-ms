@@ -6,6 +6,7 @@ import axios from 'axios';
 import host from '../APIRoute/APIRoute';
 import Reminders from '../components/Reminders';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Card = lazy(() => import('../components/Card'));
 
@@ -13,6 +14,7 @@ const Home = () => {
   const [parcels, setParcels] = useState([]);
   const [branch, setBranch] = useState(0);
   const [staff, setStaff] = useState(0);
+  const navigate=useNavigate();
   const [parcelStatusCounts, setParcelStatusCounts] = useState({
     accepted: 0,
     collected: 0,
@@ -173,6 +175,13 @@ const Home = () => {
       }
     }
   }, [user]);
+
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+        navigate('/login');
+    }
+}, [navigate]);
+
 
   // Predefined card data using API data
 const cardData = useMemo(() => {

@@ -14,9 +14,11 @@ const shippingSchema = mongoose.Schema({
     },
     modeOfTransport: {
         type: String,
+        required: true
     },
     courierCompanyName: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'courierPartnerModel'
     },
     courierNo: {
         type: String
@@ -24,15 +26,7 @@ const shippingSchema = mongoose.Schema({
     dispatchDate: {
         type: Date // Changed to Date type
     },
-    accountWith: {
-        type: String,
-    },
-    accountNo: {
-        type: String
-    },
-    accountIfscCode: {
-        type: String
-    },
+ 
     awbNo:{
         type:String
     },
@@ -40,12 +34,7 @@ const shippingSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    partyName: {
-        type: String
-    },
-    country: {
-        type: String
-    },
+  
     noOfBox: {
         type: Number
     },
@@ -69,7 +58,7 @@ const shippingSchema = mongoose.Schema({
         type: String
     },
     boaSubmittedToBank: {
-        type: Boolean,
+        type: String,
         default: false
     },
     boaDate: {
@@ -82,8 +71,8 @@ const shippingSchema = mongoose.Schema({
         type: Date // Changed to Date type
     },
     shippingBillSubmittedToBank: {
-        type: Boolean,
-        default: false
+        type: String,
+        
     },
     gstRefundStatus: {
         type: String
@@ -101,35 +90,20 @@ const shippingSchema = mongoose.Schema({
     },
     
     
-    deliveryAddress:{
-            type:String,
-        },
-       
-    deliveryPersonName:{
-            type:String
-        },
-    deliveryPersonNumber:{
-            type:String
-        },
-    deliveryGst:{
-            type:String,
-        },
+    deliveryParty:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'partyModel'
+    },
+   
+    supplierParty:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'partyModel'
+    },
     deliveryEwayBillNo:{
         type:String
     },
-       
-    supplierAddress:{
-        type:String
-    },
-    supplierGst:{
-        type:String,
-    },
-    supplierPersonName:{
-        type:String,
-    },
-    supplierPersonNumber:{
-        type:String
-    },
+
+   
     documents: {
         invoiceCopy: { type: String, default: null },
         courierSlip: { type: String, default: null },

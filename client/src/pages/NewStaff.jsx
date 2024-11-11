@@ -6,6 +6,7 @@ import Layout from '../components/Layout';
 import { useSelector } from 'react-redux';
 import '../styles/PartyMaster.css'
 import Confirmation from '../components/Confirmation';
+import { useNavigate } from 'react-router-dom';
 
 const NewStaff = () => {
   const [staffData, setStaffData] = useState({
@@ -16,6 +17,8 @@ const NewStaff = () => {
     branch:'',
     userId:''
   });
+  const navigate=useNavigate()
+
   const [branches, setBranches] = useState([]);
   const [active, setActive] = useState(true);
   const [selectedBranch, setSelectedBranch] = useState('');
@@ -45,6 +48,11 @@ const NewStaff = () => {
       getBranches(user?.userId);
     }
   }, [user]);
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+        navigate('/login');
+    }
+}, [navigate]);
 
   const handleChange = (e) => {
     setStaffData({

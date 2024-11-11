@@ -8,6 +8,8 @@ import { useSelector } from 'react-redux';
 import { message } from 'antd';
 const UserProfile = () => {
     const {user}=useSelector((state)=>state.user)
+    const navigate=useNavigate()
+
   const [userData, setUserData] = useState({
     name: '',
     phone: '',
@@ -104,6 +106,12 @@ const UserProfile = () => {
       message.error('An error occurred while changing the password.');
     }
   };
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+        navigate('/login');
+    }
+}, [navigate]);
+
 
   return (
     <Layout>

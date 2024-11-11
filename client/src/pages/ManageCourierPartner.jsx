@@ -7,12 +7,14 @@ import { useSelector } from "react-redux";
 import '../styles/Home.css';
 import '../styles/ManageCourierPartner.css'; // New CSS file for additional styling
 import CourierTable from "../components/CourierTable";
+import { useNavigate } from "react-router-dom";
 
 const ManageCourierPartner = () => {
   const [courier, setCourier] = useState([]);
   const [trigger, setTrigger] = useState(false);
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
   const { user } = useSelector((state) => state.user);
+  const navigate=useNavigate()
 
   const getAllCourier = async (id) => {
     try {
@@ -37,6 +39,12 @@ const ManageCourierPartner = () => {
       getAllCourier(user?.userId);
     }
   }, [trigger, user]);
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+        navigate('/login');
+    }
+}, [navigate]);
+
 
   // Filtered data based on the search term
   const filteredData = courier.filter((item) =>

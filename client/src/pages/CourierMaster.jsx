@@ -7,10 +7,12 @@ import axios from 'axios';
 import host from '../APIRoute/APIRoute';
 import { message } from 'antd';
 import { useSelector } from 'react-redux';
-
+import Select from 'react-select'
+import Country from '../helpers/Country';
 const CourierMaster = () => {
   const [isConfirm, setIsConfirm] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const {user}=useSelector((state)=>state.user);
   const [formData, setFormData] = useState({
     companyName: '',
@@ -31,6 +33,14 @@ const CourierMaster = () => {
     aadharNo: ''
   });
 
+  const handleCountryChange = (selectedOption) => {
+    setSelectedCountry(selectedOption);
+    setFormData((prevData) => ({
+      ...prevData,
+      country: selectedOption.value // Use selectedOption.value directly
+    }));
+  };
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -56,12 +66,13 @@ const CourierMaster = () => {
         message.success('Added Successfully');
       }
     } catch (error) {
-        if(error.data && error.data.response){
-            message.error(error.data.response.message);
-        }else{
-            message.error('Something went wrong', error.message);
-
-        }    }
+      if (error.response && error.response.data && error.response.data.message) {
+        message.error(error.response.data.message); // Show the error message from the response
+      } else {
+        message.error('Something went wrong', error.message); // Show general error message
+      }
+  
+        }
   };
 
   return (
@@ -119,16 +130,16 @@ const CourierMaster = () => {
               required
             />
           </Form.Group>
-          <Form.Group className="mb-2" controlId="country">
-            <Form.Label>Country <span className="required">*</span></Form.Label>
-            <Form.Control
-              type="text"
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+          <Form.Group className="mb-3">
+          <Form.Label>Country</Form.Label>
+          <Select
+            value={selectedCountry}
+            onChange={handleCountryChange}
+            options={Country}
+            placeholder="Select or search country"
+            isSearchable
+          />
+        </Form.Group>
           <Form.Group className="mb-2" controlId="gstNo">
             <Form.Label>GST No</Form.Label>
             <Form.Control

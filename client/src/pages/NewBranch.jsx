@@ -8,6 +8,7 @@ import { message } from 'antd';
 import axios from 'axios';
 import host from '../APIRoute/APIRoute';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const NewBranch = () => {
   const [branchName, setBranchName] = useState('');
@@ -20,6 +21,7 @@ const NewBranch = () => {
   const [contactPersonNumber, setContactPersonNumber] = useState('');
   const [isConfirm, setIsConfirm] = useState(false);
   const { user } = useSelector((state) => state.user);
+  const navigate=useNavigate()
 
   const handleSubmit = async () => {
     setIsConfirm(true);
@@ -49,6 +51,12 @@ const NewBranch = () => {
   useEffect(() => {
     console.log(user);
   }, [user]);
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+        navigate('/login');
+    }
+}, [navigate]);
+
 
   return (
     <Layout>

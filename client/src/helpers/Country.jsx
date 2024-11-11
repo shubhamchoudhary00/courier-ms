@@ -11,6 +11,7 @@ const Country = [
     { value: 'Antarctica', label: 'Antarctica' },
     { value: 'Argentina', label: 'Argentina' },
     { value: 'American Samoa', label: 'American Samoa' },
+    { value: 'America', label: 'America' },
     { value: 'Austria', label: 'Austria' },
     { value: 'Australia', label: 'Australia' },
     { value: 'Aruba', label: 'Aruba' },

@@ -4,6 +4,7 @@ import { Input, message, Card, Spin } from 'antd';
 import styles from '../styles/Tracking.module.css';
 import Layout from '../components/Layout';
 import host from '../APIRoute/APIRoute';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -11,7 +12,7 @@ const Tracking = () => {
   const [trackingNumber, setTrackingNumber] = useState('');
   const [parcelDetails, setParcelDetails] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const navigate=useNavigate()
   const handleTrack = async () => {
     if (!trackingNumber) {
       message.error('Please enter a tracking number');
@@ -39,9 +40,12 @@ const Tracking = () => {
     setLoading(false);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+        navigate('/login');
+    }
+}, [navigate]);
 
-  },[trackingNumber])
 
   return (
     <Layout>

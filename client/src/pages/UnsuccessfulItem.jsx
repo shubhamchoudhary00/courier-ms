@@ -5,11 +5,13 @@ import {message} from 'antd';
 import { useEffect, useState } from "react";
 import ParcelTable from "../components/ParcelTable";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const UnsuccessfulItem = () => {
 
     const [parcels,setParcels]=useState([]);
     const [trigger,setTrigger]=useState(false);
     const {user}=useSelector((state)=>state.user)
+    const navigate=useNavigate()
     const getParcels=async(id)=>{
         try{
             const res=await axios.post(`${host}/shipping/unsuccessful-parcels`,{id},{
@@ -50,6 +52,12 @@ const UnsuccessfulItem = () => {
     
         }
       }, [trigger,user]);
+      useEffect(() => {
+        if (!localStorage.getItem('token')) {
+            navigate('/login');
+        }
+    }, [navigate]);
+    
 
   return (
     <Layout>

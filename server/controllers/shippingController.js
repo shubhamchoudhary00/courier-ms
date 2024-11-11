@@ -422,10 +422,7 @@ const modifyShippingController = async (req, res) => {
         shipping.courierCompanyName=formData.courierCompanyName;
         shipping.courierNo=formData.courierNo
         shipping.dispatchDate=formData.dispatchDate
-        shipping.accountWith=formData.accountWith
-        shipping.accountNo=formData.accountNo
         shipping.invoiceNo=formData.invoiceNo
-        shipping.partyName=formData.partyName
         shipping.noOfBox=formData.noOfBox
         shipping.actualWeight=shipping.actualWeight
         shipping.charges=formData.charges
@@ -438,18 +435,13 @@ const modifyShippingController = async (req, res) => {
         shipping.shippingBillDate=formData.shippingBillDate;
         shipping.shippingBillSubmittedToBank=formData.shippingBillSubmittedToBank;
         shipping.gstRefundStatus=formData.gstRefundStatus;
-        shipping.deliveryAddress=formData.deliveryAddress;
-        shipping.deliveryPersonName=formData.deliveryPersonName;
-        shipping.deliveryPersonNumber=formData.deliveryPersonNumber;
-        shipping.deliveryGst=formData.deliveryGst;
+     
         shipping.deliveryEwayBillNo=formData.deliveryEwayBillNo;
-        shipping.deliveryBoxNo=formData.deliveryBoxNo;
+        shipping.deliveryParty=formData.deliveryParty;
         shipping.awbNo=formData.awbNo;
-        shipping.supplierAddress=formData.supplierAddress;
-        shipping.supplierPersonName=formData.supplierPersonName;
-        shipping.supplierPersonNumber=formData.supplierPersonNumber;
-        shipping.supplierGst=formData.supplierGst;
-        shipping.country=formData.country;
+        
+        shipping.supplierParty=formData.supplierParty;
+
         shipping.volumetricWeight=formData.volumetricWeight;
         shipping.dimensions = dimensions;
         shipping.documents = documents; // This now contains merged documents (new + existing)
