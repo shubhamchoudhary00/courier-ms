@@ -6,7 +6,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: scroll;
+  
+  /* Hide scrollbar in Webkit-based browsers (Chrome, Safari) */
+  -webkit-overflow-scrolling: touch;
 }
+
+.custom-sidebar::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+/* Hide scrollbar for Firefox */
+.custom-sidebar {
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for IE and Edge */
+.custom-sidebar {
+  -ms-overflow-style: none; /* Internet Explorer and Edge */
+}
+
 
 .sidebar-item {
   width: 100%;

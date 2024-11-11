@@ -554,7 +554,7 @@ const handleSubmit = async (e) => {
 
             <Col md={4}>
               <Form.Group className="mb-3">
-                <Form.Label>Charges</Form.Label>
+                <Form.Label>Charges (in INR)</Form.Label>
                 <Form.Control type="number" placeholder="Charges" name="charges" value={formData.charges} onChange={handleInputChange} />
               </Form.Group>
             </Col>

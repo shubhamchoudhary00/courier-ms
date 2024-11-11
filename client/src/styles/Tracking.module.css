@@ -1,4 +1,4 @@
-.tracking-container {
+.trackingContainer {
   max-width: 700px;
   margin: 50px auto;
   padding: 30px;
@@ -6,10 +6,9 @@
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   text-align: center;
-  font-family: 'Arial', sans-serif;
 }
 
-.tracking-title {
+.trackingTitle {
   font-size: 2rem;
   color: #233655;
   margin-bottom: 20px;
@@ -17,14 +16,14 @@
   letter-spacing: 1px;
 }
 
-.tracking-input-section {
+.trackingInputSection {
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
   gap: 15px;
 }
 
-.tracking-input {
+.trackingInput {
   width: 70%;
   border-radius: 8px;
   border: 1px solid #ccc;
@@ -33,13 +32,13 @@
   transition: border-color 0.3s;
 }
 
-.tracking-input:focus {
-  border-color: #4caf50; /* Highlight on focus */
+.trackingInput:focus {
+  border-color: #4caf50;
   outline: none;
   box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }
 
-.btn {
+.trackButton {
   padding: 10px 20px;
   border: none;
   border-radius: 8px;
@@ -50,18 +49,18 @@
   transition: background 0.3s, transform 0.2s;
 }
 
-.btn:hover {
+.trackButton:hover {
   background: linear-gradient(90deg, #388e3c, #66bb6a);
   transform: translateY(-2px);
 }
 
-.loading-spinner {
+.loadingSpinner {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
 
-.parcel-details-section {
+.parcelDetailSection {
   background-color: #fff;
   border-radius: 12px;
   padding: 20px;
@@ -70,51 +69,51 @@
   text-align: left;
 }
 
-.parcel-heading {
+.parcelHeading {
   font-size: 1.5rem;
   color: #344f7d;
   text-align: center;
   margin-bottom: 20px;
 }
 
-.parcel-info {
+.parcelInfo {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Increased gap for better spacing */
+  gap: 15px;
   font-size: 1.1rem;
 }
 
-.parcel-item {
+.parcelItem {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* Center items vertically */
+  align-items: center;
   color: #344f7d;
 }
 
-.parcel-status {
+.parcelStatus {
   padding: 5px 15px;
   border-radius: 20px;
   font-weight: bold;
   color: #fff;
 }
 
-/* Status color codes */
-.parcel-status.item-accepted-by-courier {
-  background-color: #4caf50; /* Green */
+/* Add color codes for specific statuses */
+.parcelStatus.item-accepted-by-courier {
+  background-color: #4caf50;
 }
 
-.parcel-status.shipped {
-  background-color: #03a9f4; /* Light Blue */
+.parcelStatus.shipped {
+  background-color: #03a9f4;
 }
 
-.parcel-status.in-transit {
-  background-color: #ff9800; /* Orange */
+.parcelStatus.in-transit {
+  background-color: #ff9800;
 }
 
-.parcel-status.delivered {
-  background-color: #2ecc71; /* Darker Green */
+.parcelStatus.delivered {
+  background-color: #2ecc71;
 }
 
-.parcel-status.unsuccessful-delivery-attempt {
-  background-color: #e74c3c; /* Red */
+.parcelStatus.unsuccessful-delivery-attempt {
+  background-color: #e74c3c;
 }

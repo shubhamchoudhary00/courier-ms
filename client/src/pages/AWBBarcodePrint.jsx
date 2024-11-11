@@ -141,7 +141,12 @@ const AWBBarcodePrint = () => {
         {/* Barcode Section */}
         <div className="barcode-section">
           {formData?.awbNo ? (
-            <Barcode value={formData?.awbNo} width={1.5} height={60} displayValue={false} />
+          <>
+           <Barcode value={formData?.awbNo} width={1.5} height={60} displayValue={false} />
+            <span><strong>AWB no: </strong>{formData?.awbNo}</span>
+            <span><strong>Tracking no: </strong>{formData?._id}</span>
+          </>
+           
           ) : (
             <p><strong>No AWB Number available</strong></p>
           )}

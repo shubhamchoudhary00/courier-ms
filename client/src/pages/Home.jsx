@@ -91,7 +91,39 @@ const Home = () => {
     };
 
     parcels.forEach(item => {
-      if (item?.item?.branch === user?.branch) {
+      if (item?.item?.branch === user?.branch && user?.role==='Staff') {
+        switch (item?.item?.currentStatus) {
+          case 'Item Accepted By Courier':
+            counts.accepted++;
+            break;
+          case 'Collected':
+            counts.collected++;
+            break;
+          case 'Shipped':
+            counts.shipped++;
+            break;
+          case 'In-Transit':
+            counts.inTransit++;
+            break;
+          case 'Arrived At Destination':
+            counts.arrived++;
+            break;
+          case 'Out for Delivery':
+            counts.outforDelivery++;
+            break;
+          case 'Delivered':
+            counts.delivered++;
+            break;
+          case 'Picked Up':
+            counts.pickedUp++;
+            break;
+          case 'Unsuccessful Delivery Attempt':
+            counts.unsuccessful++;
+            break;
+          default:
+            break;
+        }
+      }else if(user?.role==='User'){
         switch (item?.item?.currentStatus) {
           case 'Item Accepted By Courier':
             counts.accepted++;
@@ -168,7 +200,7 @@ const cardData = useMemo(() => {
   return (
     <Layout>
       <div className='main'>
-        <h2>Home</h2>
+        <h2>DashBoard</h2>
         <Reminders />
         <div className='containers'>
           <Suspense fallback={<Spin />}>

@@ -19,10 +19,13 @@ const ShippedItem = () => {
             })
             if(res.data.success){
                 console.log(res.data)
-                const shippings=res.data.filteredParcels;
-                const filteredParcels = user?.role === 'Staff' 
-                ? shippings.filter(item => item?.item?.branch === user.branch)
-                : shippings;
+                const allParcels = res.data.filteredParcels;
+
+                const filteredParcels = (user?.role === 'Staff') 
+                    ? allParcels.filter(parcel => 
+                        parcel?.item?.branch === user.branch || parcel?.item?.branch === null
+                    ) 
+                    : allParcels;
         
                 setParcels(filteredParcels);
               }

@@ -42,6 +42,8 @@ connectDB();
     app.use("/api/v1/shipping", require("./routes/shippingRoutes"));
     app.use("/api/v1/branch", require("./routes/branchRoutes"));
     app.use("/api/v1/staff", require("./routes/staffRoutes"));
+    app.use("/api/v1/party", require("./routes/partyRoutes"));
+    app.use("/api/v1/courier", require("./routes/courierPartnerRoutes"));
 
     const port = process.env.PORT || 5000;
 

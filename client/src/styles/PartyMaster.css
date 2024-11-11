@@ -1,0 +1,108 @@
+.new-branch-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: #ffffff;
+  }
+  
+.required {
+    color: red;
+  }
+  
+  .form-heading {
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 24px;
+    color: #233655;
+  }
+  
+  .branch-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .branch-form .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .branch-form .form-label {
+    font-weight: 600;
+    color: #344f7d;
+  }
+  
+  .branch-form .form-control {
+    border-radius: 6px;
+    border: 1px solid #d1d1d1;
+    padding: 10px;
+    font-size: 16px;
+    transition: border-color 0.2s;
+  }
+  
+  .branch-form .form-control:focus {
+    border-color: #8012bf;
+    box-shadow: 0 0 6px rgba(128, 18, 191, 0.25);
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+    gap: 20px;
+  }
+  
+  .button-group .btn-primary {
+    background-color: #233655;
+    border-color: #233655;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 16px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .button-group .btn-primary:hover {
+    background-color: #8012bf;
+    border-color: #8012bf;
+    box-shadow: 0 4px 10px rgba(128, 18, 191, 0.4);
+  }
+  
+  .button-group .btn-secondary {
+    background-color: #344f7d;
+    border-color: #344f7d;
+    color: #fff;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 16px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .button-group .btn-secondary:hover {
+    background-color: #233655;
+    border-color: #233655;
+    box-shadow: 0 4px 10px rgba(35, 54, 85, 0.4);
+  }
+  
+  /* Responsive grid */
+  @media (min-width: 768px) {
+    .branch-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+  
+    .branch-form .form-group {
+      margin-bottom: 0;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .new-branch-container {
+      padding: 40px;
+      margin: 40px auto;
+    }
+  }
+  

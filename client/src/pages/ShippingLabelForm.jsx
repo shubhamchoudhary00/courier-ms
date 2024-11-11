@@ -14,6 +14,7 @@ import {message} from 'antd';
 import {useSelector} from 'react-redux'
 import Confirmation from '../components/Confirmation';
 import { useNavigate } from 'react-router-dom';
+import FilterInputFields from '../helpers/FilterInputFields';
 
 const ShippingLabelForm = () => {
   const {user}=useSelector((state)=>state.user);
@@ -213,7 +214,9 @@ const ShippingLabelForm = () => {
   };
   
   
-  
+  useEffect(()=>{
+
+  },[user]);
   
   
   
@@ -260,7 +263,10 @@ const ShippingLabelForm = () => {
               </Form.Group>
             </Col>
           </Row>
-
+          <FilterInputFields
+          modeOfTransport={formData.modeOfTransport} 
+          transportType={formData.transportType} 
+        />
           <Row>
             <Col md={6}>
               <Form.Group className="mb-3">
@@ -425,7 +431,7 @@ const ShippingLabelForm = () => {
 
             <Col md={4}>
               <Form.Group className="mb-3">
-                <Form.Label>Charges</Form.Label>
+                <Form.Label>Charges (in INR)</Form.Label>
                 <Form.Control type="number" placeholder="Charges" name="charges" onChange={handleInputChange} />
               </Form.Group>
             </Col>

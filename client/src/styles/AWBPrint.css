@@ -62,6 +62,12 @@
 /* Center-align barcode */
 .barcode-section {
   text-align: center;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.barcode-section span{
+  font-size: 0.7rem;
 }
 
 .handle-with-care {

@@ -4,7 +4,7 @@ import { message } from 'antd';
 import host from '../APIRoute/APIRoute'; // Assuming host is defined here
 import Layout from '../components/Layout';
 import { useSelector } from 'react-redux';
-import '../styles/NewStaff.css'
+import '../styles/PartyMaster.css'
 import Confirmation from '../components/Confirmation';
 
 const NewStaff = () => {

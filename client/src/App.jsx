@@ -37,6 +37,10 @@ const ResetPassword=lazy(()=>import('./pages/ResetPassword'));
 const ContactUs=lazy(()=>import('./pages/ContactUs'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Portfolio = lazy(() => import('./pages/Portfolio'));
+const PartyMaster = lazy(() => import('./pages/PartyMaster'));
+const CourierMaster = lazy(() => import('./pages/CourierMaster'));
+const ManageParty = lazy(() => import('./pages/ManageParty'));
+const ManageCourierPartner = lazy(() => import('./pages/ManageCourierPartner'));
 
 const App = () => {
   return (
@@ -88,6 +92,14 @@ const App = () => {
               <Route path="/arrived" element={<ProtectedRoutes><ArrivedItem /></ProtectedRoutes> } />
               <Route path="/accepted" element={<ProtectedRoutes><AcceptedItem /></ProtectedRoutes> } />
               {/*  End */}
+
+              {/*  Masters */}
+              <Route path="/party-master" element={<ProtectedRoutes><PartyMaster /></ProtectedRoutes> } />
+              <Route path="/courier-master" element={<ProtectedRoutes><CourierMaster /></ProtectedRoutes> } />
+              {/*  End */}
+
+              <Route path="/manage-party" element={<ProtectedRoutes><ManageParty /></ProtectedRoutes> } />
+              <Route path="/manage-courier" element={<ProtectedRoutes><ManageCourierPartner /></ProtectedRoutes> } />
 
 
               <Route path="/new-staff" element={<ProtectedRoutes><NewStaff /></ProtectedRoutes> } />
