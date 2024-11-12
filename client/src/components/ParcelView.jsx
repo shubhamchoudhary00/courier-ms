@@ -15,7 +15,10 @@ const ParcelView = ({ id, open, setOpen }) => {
     const [fileType, setFileType] = useState('');
     const [addedBy, setAddedBy] = useState({});
     const [modifiedBy, setModifiedBy] = useState(null);
-    const [edit,setEdit]=useState(false)
+    const [edit,setEdit]=useState(false);
+    const [deliveryParty,setDeliveryParty]=useState({})
+    const [supplierParty,setSupplierParty]=useState({})
+    const [courierParty,setCourierParty]=useState({})
 
     const handleCloseView = () => {
         setOpen(false);
@@ -78,6 +81,9 @@ const ParcelView = ({ id, open, setOpen }) => {
             });
             if (data.success) {
                 setParcel(data.shipping);
+                const delivery=await getPartyDetails(data?.shipping?.deliveryParty)
+                const supplier=await getPartyDetails(data?.shipping?.supplierParty)
+                const courier=await getCourierPartyDetails(data?.shipping?.courierCompanyName)
 
                 // Fetch user details for addedBy and modifiedBy
                 const addedByUser = await getUserDetails(data.shipping?.addedBy);
@@ -86,15 +92,56 @@ const ParcelView = ({ id, open, setOpen }) => {
                 // Set state after user details are fetched
                 setAddedBy(addedByUser);
                 setModifiedBy(modifiedByUser);
+                setDeliveryParty(delivery)
+                setSupplierParty(supplier)
+                setCourierParty(courier)
 
-                console.log(addedByUser);
-                console.log(modifiedByUser);
+              
             }
         } catch (error) {
-            console.log(error.message);
-            message.error('Something went wrong');
+            // console.log(error.message);
+            // message.error('Something went wrong');
         }
     };
+
+    const getPartyDetails=async(id)=>{
+        if(id){
+            try{
+                const res=await axios.get(`${host}/party/get-party/${id}`,{
+                    headers:{
+                        Authorization:`Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                if(res.data.success){
+                    return res.data.party;
+                }
+            }catch(error){
+                // console.log(error.message)
+                // message.error('Something went wrong')
+            }
+        }
+        return null;
+    }
+   
+   
+    const getCourierPartyDetails=async(id)=>{
+       if(id){
+        try{
+            const res=await axios.get(`${host}/courier/get-courier/${id}`,{
+                headers:{
+                    Authorization:`Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            if(res.data.success){
+                return res.data.courier
+            }
+        }catch(error){
+            // console.log(error.message)
+            // message.error('Something went wrong')
+        }
+       }
+       return null;
+    }
 
     const getUserDetails = async (id) => {
         if (id) {
@@ -108,8 +155,8 @@ const ParcelView = ({ id, open, setOpen }) => {
                     return data.user;
                 }
             } catch (error) {
-                console.log(error.message);
-                message.error('Something went wrong');
+                // console.log(error.message);
+                // message.error('Something went wrong');
             }
         }
         return null;
@@ -146,14 +193,14 @@ const ParcelView = ({ id, open, setOpen }) => {
 
                         <div className="parcel-details-section">
                             {/* Parcel Information */}
-                            <div className="detail-item"><strong>Party Name:</strong> {parcel?.partyName || 'N/A'}</div>
+                            <div className="detail-item"><strong>Party Name:</strong> {deliveryParty?.companyName || 'N/A'}</div>
                             <div className="detail-item"><strong>Courier No:</strong> {parcel?.courierNo || 'N/A'}</div>
                             <div className="detail-item"><strong>Transport Type:</strong> {parcel?.transportType || 'N/A'}</div>
                             <div className="detail-item"><strong>Mode of Transport:</strong> {parcel?.modeOfTransport || 'N/A'}</div>
                             <div className="detail-item"><strong>Dispatch Date:</strong> {formatDate(parcel?.dispatchDate)}</div>
                             <div className="detail-item"><strong>Delivered Date:</strong> {formatDate(parcel?.deliveredDate)}</div>
-                            <div className="detail-item"><strong>Account With:</strong> {parcel?.accountWith || 'N/A'}</div>
-                            <div className="detail-item"><strong>Account No:</strong> {parcel?.accountNo || 'N/A'}</div>
+                            <div className="detail-item"><strong>Account With:</strong> {courierParty?.bankName || 'N/A'}</div>
+                            <div className="detail-item"><strong>Account No:</strong> {courierParty?.bankAccountNo || 'N/A'}</div>
                             <div className="detail-item"><strong>Actual Weight:</strong> {parcel?.actualWeight || 'N/A'} kg</div>
                             <div className="detail-item"><strong>Volumetric Weight:</strong> {parcel?.volumetricWeight || 'N/A'} kg</div>
                             <div className="detail-item"><strong>Charges:</strong> ${parcel?.charges || 'N/A'}</div>

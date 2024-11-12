@@ -37,7 +37,7 @@ const NewStaff = () => {
         setBranches(res.data.branches);
       }
     } catch (error) {
-      message.error(error.message);
+      // message.error(error.message);
     }
   };
 
@@ -50,7 +50,7 @@ const NewStaff = () => {
   }, [user]);
   useEffect(() => {
     if (!localStorage.getItem('token')) {
-        navigate('/login');
+        navigate('/');
     }
 }, [navigate]);
 
@@ -94,7 +94,7 @@ const NewStaff = () => {
         setSelectedBranch('');
       }
     } catch (error) {
-      message.error(error.message);
+      // message.error(error.message);
     }
     setIsConfirm(false);
   };
@@ -104,7 +104,7 @@ const NewStaff = () => {
       <div className="main">
         {isConfirm && <Confirmation isConfirm={isConfirm} setIsConfirm={setIsConfirm} onConfirm={handleSubmit} />}
         <h2>Add New Staff</h2>
-        <form onSubmit={handleSubmit}>
+        <form >
           <div className="row">
             <div className="col-md-6" style={{width:'100%'}}>
               <div className="mb-3">
@@ -195,12 +195,12 @@ const NewStaff = () => {
               </div>
 
               <div className="d-flex justify-content-between">
-                <button type="submit" className="btns btns-primary w-50">
+                <button onClick={handleSubmit} className="btn btn-primary w-50">
                   Add Staff
                 </button>
                 <button
-                  type="button"
-                  className="btns btns-danger w-50"
+                  // type="button"
+                  className="btn btn-danger w-50"
                   onClick={() => {}}
                 >
                   Cancel

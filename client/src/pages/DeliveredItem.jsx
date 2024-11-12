@@ -54,7 +54,7 @@ const DeliveredItem = () => {
 
       useEffect(() => {
         if (!localStorage.getItem('token')) {
-            navigate('/login');
+            navigate('/');
         }
     }, [navigate]);
     

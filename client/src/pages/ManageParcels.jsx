@@ -52,8 +52,8 @@ const ManageParcels = () => {
         if (branchNames.length) await fetchBranches(branchNames);
       }
     } catch (error) {
-      console.log(error.message);
-      message.error('Something went wrong');
+      // console.log(error.message);
+      // message.error('Something went wrong');
     }
   };
   
@@ -87,7 +87,7 @@ const ManageParcels = () => {
         return data.user;
       }
     } catch (error) {
-      message.error(error.message);
+      // message.error(error.message);
     }
   };
 
@@ -102,7 +102,7 @@ const ManageParcels = () => {
         return data.branch;
       }
     } catch (error) {
-      message.error(error.message);
+      // message.error(error.message);
     }
   };
 
@@ -126,7 +126,7 @@ const ManageParcels = () => {
   });
   useEffect(() => {
     if (!localStorage.getItem('token')) {
-        navigate('/login');
+        navigate('/');
     }
 }, [navigate]);
 

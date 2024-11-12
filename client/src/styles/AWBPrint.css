@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 /* AWB Container */
 .awb-container {
   width: 21cm; /* Standard A4 width */
@@ -7,7 +14,8 @@
   margin: 20px auto;
   font-family: Arial, sans-serif;
   background-color: #fff;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+          box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   border-radius: 8px; /* Rounded corners for a modern look */
 }
 
@@ -34,6 +42,8 @@
   color: white;
   border: none;
   border-radius: 5px;
+  -webkit-transition: background-color 0.3s ease;
+  -o-transition: background-color 0.3s ease;
   transition: background-color 0.3s ease;
 }
 
@@ -43,7 +53,9 @@
 
 /* General Layout */
 .print-section {
+  display: -ms-grid;
   display: grid;
+  -ms-grid-columns: 1fr 15px 1fr;
   grid-template-columns: 1fr 1fr;
   gap: 15px; /* Larger gap for better spacing */
   line-height: 1.6; /* Improved line spacing */
@@ -62,9 +74,19 @@
 /* Center-align barcode */
 .barcode-section {
   text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 .barcode-section span{
   font-size: 0.7rem;
@@ -77,6 +99,7 @@
   font-weight: bold;
   margin-top: 20px;
   text-align: center;
+  -ms-grid-column-span: 2;
   grid-column: span 2;
 }
 
@@ -92,10 +115,12 @@
     padding: 0;
     margin: 0;
     width: 100%;
-    box-shadow: none; /* Remove shadow for print */
+    -webkit-box-shadow: none;
+            box-shadow: none; /* Remove shadow for print */
   }
 
   .print-section {
+    -ms-grid-columns: 1fr 5px 1fr;
     grid-template-columns: 1fr 1fr;
     gap: 5px; /* Reduce gap size for print */
   }
@@ -123,6 +148,7 @@
   }
 
   .print-section {
+    -ms-grid-columns: 1fr;
     grid-template-columns: 1fr; /* Stack sections vertically on smaller screens */
   }
 

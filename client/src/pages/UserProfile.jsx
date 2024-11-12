@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../styles/UserProfile.css'; // Assuming you have a CSS file for styling
 import host from '../APIRoute/APIRoute';
 import Layout from '../components/Layout';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { message } from 'antd';
 const UserProfile = () => {
@@ -59,7 +59,7 @@ const UserProfile = () => {
           });
         }
       } catch (error) {
-        console.error('Error fetching user data:', error.message);
+        // console.error('Error fetching user data:', error.message);
       }
     };
 
@@ -108,7 +108,7 @@ const UserProfile = () => {
   };
   useEffect(() => {
     if (!localStorage.getItem('token')) {
-        navigate('/login');
+        navigate('/');
     }
 }, [navigate]);
 

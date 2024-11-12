@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 .black-container {
     position: fixed;
     height: 100vh;
@@ -9,9 +16,15 @@
 }
 
 .top-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     top: 0;
     left: 0;
     height: 100vh;
@@ -26,7 +39,8 @@
     background-color: #ffffff;
     border-radius: 10px;
     padding: 30px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .heading {
@@ -59,6 +73,8 @@
 }
 
 .staff-item {
+    -webkit-transition: background-color 0.3s ease;
+    -o-transition: background-color 0.3s ease;
     transition: background-color 0.3s ease;
 }
 
@@ -67,6 +83,8 @@
 }
 
 .action-buttons {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     gap: 10px;
 }
@@ -77,6 +95,8 @@
     padding: 8px 15px;
     cursor: pointer;
     font-size: 14px;
+    -webkit-transition: background-color 0.3s ease;
+    -o-transition: background-color 0.3s ease;
     transition: background-color 0.3s ease;
 }
 
@@ -100,6 +120,8 @@
 
 .add-btn {
     display: block;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
     margin: 30px auto;
     background-color: #28a745;
@@ -116,8 +138,13 @@
 }
 
 .post-staff-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     gap: 8px;
     max-height: 450px;
     overflow: auto; /* Change 'scroll' to 'auto' */
@@ -136,22 +163,30 @@
 
 
 .staff-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     padding: 10px;
     margin: 10px 0;
     background-color: #ffffff;
     border: 1px solid #dee2e6;
     border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .staff-container span {
     display: inline-block;
     white-space: nowrap; /* Prevent text from wrapping */
     overflow: hidden;
-    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
     padding: 5px 10px;
 }
 
@@ -164,6 +199,8 @@
 }
 
 .staff-container span:nth-child(3) {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content; /* Phone column */
 }
 
@@ -172,15 +209,23 @@
 .staff-container span:nth-child(4) {
     width: 200px; /* Action buttons column */
     text-align: right; /* Align buttons to the right */
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 .action-buttons {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     gap: 10px;
-    justify-content: space-around;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
     width: 100%;
 }
 
@@ -190,6 +235,8 @@
     padding: 8px 12px;
     cursor: pointer;
     font-size: 14px;
+    -webkit-transition: background-color 0.3s ease;
+    -o-transition: background-color 0.3s ease;
     transition: background-color 0.3s ease;
 }
 
@@ -203,9 +250,15 @@
 }
 
 .btns{
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     gap: 10px;
     width: 100%;
 }
@@ -218,5 +271,4 @@
 /* .remove-btn:hover { */
     /* background-color: #c82333; */
 /* } */
-
 

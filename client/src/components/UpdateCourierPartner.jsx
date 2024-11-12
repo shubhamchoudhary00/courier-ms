@@ -67,7 +67,7 @@ const UpdateCourierPartner = ({ open, setOpen, onClose, id }) => {
           });
         }
       } catch (error) {
-        message.error(error.message);
+        // message.error(error.message);
       }
     }
   };
@@ -107,7 +107,7 @@ const UpdateCourierPartner = ({ open, setOpen, onClose, id }) => {
         });
       }
     } catch (error) {
-      message.error(error.message);
+      // message.error(error.message);
     }
     setIsConfirm(false);
   };

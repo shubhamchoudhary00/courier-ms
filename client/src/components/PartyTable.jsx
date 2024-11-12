@@ -42,7 +42,7 @@ const PartyTable = ({ data, trigger, setTrigger }) => {
         message.success(res.data.message);
       }
     } catch (error) {
-      message.error(error.message);
+      message.error('An error occured');
     }
  
     setIsConfirm(false);

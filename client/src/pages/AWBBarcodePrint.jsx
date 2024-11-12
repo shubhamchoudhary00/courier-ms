@@ -7,6 +7,8 @@ import host from '../APIRoute/APIRoute';
 
 const AWBBarcodePrint = () => {
   const params = useParams();
+  const [deliveryParty,setDeliveryParty]=useState({})
+  const [supplierParty,setSupplierParty]=useState({})
   const [formData, setFormData] = useState({
     transportType: '',
     modeOfTransport: '',
@@ -78,6 +80,10 @@ const AWBBarcodePrint = () => {
             otherDocuments: shippingData.documents.otherDocuments || [],
           }
         });
+        const delivery=await getPartyDetails(shippingData?.deliveryParty)
+        const supplier=await getPartyDetails(shippingData?.supplierParty)
+        setSupplierParty(supplier)
+        setDeliveryParty(delivery)
 
         // Set dimensions
         if (shippingData.dimensions) {
@@ -94,6 +100,24 @@ const AWBBarcodePrint = () => {
       console.error('Error fetching parcel details:', error.message);
       alert('An error occurred while fetching parcel details.');
     }
+  };
+
+    const getPartyDetails = async (id) => {
+    if (id) {
+      try {
+        const res = await axios.get(`${host}/party/get-party/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        if (res.data.success) {
+          return res.data.party;
+        }
+      } catch (error) {
+        message.error('Failed to fetch delivery party details');
+      }
+    }
+      return null;
   };
 
   // Function to calculate volumetric weight
@@ -124,11 +148,11 @@ const AWBBarcodePrint = () => {
       <div className="print-section">
         {/* Delivery Details */}
         <div className="delivery-details">
-          <h3 style={{fontSize:'1.4rem'}}><strong>Delivery Address</strong></h3>
-          <p><strong>Address:</strong> {formData?.deliveryAddress}</p>
-          <p><strong>Contact Person:</strong> {formData?.deliveryPersonName}</p>
-          <p><strong>Mobile No:</strong> {formData?.deliveryPersonNumber}</p>
-          <p><strong>GST No:</strong> {formData?.deliveryGst}</p>
+          <h3 style={{fontSize:'1.4rem'}}><strong>{deliveryParty?.companyName}</strong></h3>
+          <p><strong>Address:</strong> {deliveryParty?.address}</p>
+          <p><strong>Contact Person:</strong> {deliveryParty?.personName}</p>
+          <p><strong>Mobile No:</strong> {deliveryParty?.ersonNo}</p>
+          <p><strong>GST No:</strong> {deliveryParty?.gstNo || deliveryParty?.transGstNo}</p>
           <p><strong>Eway Bill No:</strong> {formData?.deliveryEwayBillNo}</p>
           <p><strong>Invoice No:</strong> {formData?.invoiceNo}</p>
           <p><strong>Invoice Amount:</strong> {formData?.charges} (in INR)</p>
@@ -162,11 +186,12 @@ const AWBBarcodePrint = () => {
 
         {/* Supplier Details */}
         <div className="supplier-details">
-          <h3 style={{fontSize:'1.4rem'}}><strong>Supplier Address</strong></h3>
-          <p><strong>Address:</strong> {formData?.supplierAddress}</p>
-          <p><strong>Contact Person:</strong> {formData?.supplierPersonName}</p>
-          <p><strong>Mobile No:</strong> {formData?.supplierPersonNumber}</p>
-          <p><strong>GST No:</strong> {formData?.supplierGst}</p>
+          <h3 style={{fontSize:'1rem'}}><strong>Supplier Address</strong></h3>
+          <h3 style={{fontSize:'1.4rem'}}><strong>{supplierParty?.companyName}</strong></h3>
+          <p><strong>Address:</strong> {supplierParty?.address}</p>
+          <p><strong>Contact Person:</strong> {supplierParty?.personName}</p>
+          <p><strong>Mobile No:</strong> {supplierParty?.personNo}</p>
+          <p><strong>GST No:</strong> {supplierParty?.gstNo || supplierParty?.transGstNo}</p>
         </div>
 
         {/* Footer Section */}

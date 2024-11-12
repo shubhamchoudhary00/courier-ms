@@ -53,7 +53,7 @@ const ArrivedItem = () => {
       }, [trigger,user]);
       useEffect(() => {
         if (!localStorage.getItem('token')) {
-            navigate('/login');
+            navigate('/');
         }
     }, [navigate]);
     

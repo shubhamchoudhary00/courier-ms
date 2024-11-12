@@ -37,7 +37,7 @@ const TableGrid = ({data,editable,onClose}) => {
         }
 
        }catch(error){
-        message.error(error.message)
+        // message.error(error.message)
        }
        onClose();
        setIsConfirm(false)

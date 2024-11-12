@@ -31,50 +31,58 @@ const Home = () => {
 
   // Fetch branches data
   const getBranches = async (id) => {
-    try {
-      const { data } = await axios.get(`${host}/branch/get-stats/${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
+    if(id){
+      try {
+        const { data } = await axios.get(`${host}/branch/get-stats/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        if (data.success) {
+          setBranch(data.totalBranches);
         }
-      });
-      if (data.success) {
-        setBranch(data.totalBranches);
+      } catch (error) {
+        // message.error(error.message);
       }
-    } catch (error) {
-      message.error(error.message);
     }
+    
   };
 
   // Fetch parcels data
   const getParcels = async (id) => {
-    try {
-      const { data } = await axios.post(`${host}/shipping/get-all-shipment`, { id }, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
+    if(id){
+      try {
+        const { data } = await axios.post(`${host}/shipping/get-all-shipment`, { id }, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        if (data.success) {
+          setParcels(data.shippings);
+          calculateParcelCounts(data.shippings);
         }
-      });
-      if (data.success) {
-        setParcels(data.shippings);
-        calculateParcelCounts(data.shippings);
+      } catch (error) {
+        // message.error(error.message);
       }
-    } catch (error) {
-      message.error(error.message);
     }
+   
   };
 
   // Fetch staff data
   const getStaff = async (id) => {
-    try {
-      const { data } = await axios.get(`${host}/staff/get-stats/${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
+    if(id){
+      try {
+        const { data } = await axios.get(`${host}/staff/get-stats/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        if (data.success) {
+          setStaff(data.totalStaffs);
         }
-      });
-      if (data.success) {
-        setStaff(data.totalStaffs);
+      } catch (error) {
+        // message.error(error.message);
       }
-    } catch (error) {
-      message.error(error.message);
     }
   };
 
@@ -178,7 +186,7 @@ const Home = () => {
 
   useEffect(() => {
     if (!localStorage.getItem('token')) {
-        navigate('/login');
+        navigate('/');
     }
 }, [navigate]);
 
@@ -188,18 +196,18 @@ const cardData = useMemo(() => {
   const totalParcels = Object.values(parcelStatusCounts).reduce((acc, count) => acc + count, 0);
 
   const allData = [
-    { imageUrl: '/images/78786.jpg', count: branch, label: 'Branches', path: '/manage-branch' },
-    { imageUrl: '/images/5495.jpg', count: staff, label: 'Staff', path: '/branch-staff' },
-    { imageUrl: '/images/na_january_20.jpg', count: totalParcels, label: 'Parcels', path: '/manage-parcels' }, // Updated line
-    { imageUrl: '/images/8309.jpg', count: parcelStatusCounts.accepted, label: 'Accepted Parcels', path: '/accepted' },
-    { imageUrl: '/images/3811498.jpg', count: parcelStatusCounts.collected, label: 'Collected Parcels', path: '/collected' },
-    { imageUrl: '/images/delivery.jpg', count: parcelStatusCounts.shipped, label: 'Shipped Parcels', path: '/shipped' },
-    { imageUrl: '/images/group.jpg', count: parcelStatusCounts.inTransit, label: 'In Transit', path: '/in-transit' },
-    { imageUrl: '/images/reached.jpg', count: parcelStatusCounts.arrived, label: 'Arrived At Destination', path: '/arrived' },
-    { imageUrl: '/images/3663652.jpg', count: parcelStatusCounts.outforDelivery, label: 'Out For Delivery', path: '/out-for-delivery' },
-    { imageUrl: '/images/delivery.jpg', count: parcelStatusCounts.pickedUp, label: 'Pickup', path: '/pick-up' },
-    { imageUrl: '/images/8309.jpg', count: parcelStatusCounts.delivered, label: 'Delivered', path: '/delivered' },
-    { imageUrl: '/images/3686725.jpg', count: parcelStatusCounts.unsuccessful, label: 'Unsuccessful Attempt', path: '/unsuccessful' },
+    { imageUrl: 'https://firebasestorage.googleapis.com/v0/b/courier-ms.appspot.com/o/images%2F78786.jpg?alt=media&token=6cbcd3fe-c038-410a-a208-159a867fedca', count: branch, label: 'Branches', path: '/manage-branch' },
+    { imageUrl: 'https://firebasestorage.googleapis.com/v0/b/courier-ms.appspot.com/o/images%2F5495.jpg?alt=media&token=c52a96b4-db94-4c50-a8f8-a32bd9725b5f', count: staff, label: 'Staff', path: '/branch-staff' },
+    { imageUrl: 'https://firebasestorage.googleapis.com/v0/b/courier-ms.appspot.com/o/images%2Fna_january_20.jpg?alt=media&token=bee671ad-d944-4a48-a823-a574731c797f', count: totalParcels, label: 'Parcels', path: '/manage-parcels' }, // Updated line
+    { imageUrl: 'https://firebasestorage.googleapis.com/v0/b/courier-ms.appspot.com/o/images%2F8309.jpg?alt=media&token=5a47b2ee-9c8c-4b95-a688-60a88d9e054d', count: parcelStatusCounts.accepted, label: 'Accepted Parcels', path: '/accepted' },
+    { imageUrl: 'https://firebasestorage.googleapis.com/v0/b/courier-ms.appspot.com/o/images%2F3811498.jpg?alt=media&token=8b92270a-62ab-4d08-8f4e-4c0d14d3d3c8', count: parcelStatusCounts.collected, label: 'Collected Parcels', path: '/collected' },
+    { imageUrl: 'https://firebasestorage.googleapis.com/v0/b/courier-ms.appspot.com/o/images%2Fdelivery.jpg?alt=media&token=43f9baba-c9c6-4fed-b071-568170471421', count: parcelStatusCounts.shipped, label: 'Shipped Parcels', path: '/shipped' },
+    { imageUrl: 'https://firebasestorage.googleapis.com/v0/b/courier-ms.appspot.com/o/images%2Fgroup.jpg?alt=media&token=9e193d24-5dac-4a48-be13-c9aa6dde931e', count: parcelStatusCounts.inTransit, label: 'In Transit', path: '/in-transit' },
+    { imageUrl: 'https://firebasestorage.googleapis.com/v0/b/courier-ms.appspot.com/o/images%2Freached.jpg?alt=media&token=3166c20d-dd92-4b6a-ba77-b71ab97b2571', count: parcelStatusCounts.arrived, label: 'Arrived At Destination', path: '/arrived' },
+    { imageUrl: 'https://firebasestorage.googleapis.com/v0/b/courier-ms.appspot.com/o/images%2F3663652.jpg?alt=media&token=9da4a0ee-f1f6-41b7-8bf0-61613170f9e6', count: parcelStatusCounts.outforDelivery, label: 'Out For Delivery', path: '/out-for-delivery' },
+    { imageUrl: 'https://firebasestorage.googleapis.com/v0/b/courier-ms.appspot.com/o/images%2Fdelivery.jpg?alt=media&token=43f9baba-c9c6-4fed-b071-568170471421', count: parcelStatusCounts.pickedUp, label: 'Pickup', path: '/pick-up' },
+    { imageUrl: 'https://firebasestorage.googleapis.com/v0/b/courier-ms.appspot.com/o/images%2F8309.jpg?alt=media&token=5a47b2ee-9c8c-4b95-a688-60a88d9e054d', count: parcelStatusCounts.delivered, label: 'Delivered', path: '/delivered' },
+    { imageUrl: 'https://firebasestorage.googleapis.com/v0/b/courier-ms.appspot.com/o/images%2F3686725.jpg?alt=media&token=b28ba8ea-7354-4ecd-9d9b-139fb2b95d63', count: parcelStatusCounts.unsuccessful, label: 'Unsuccessful Attempt', path: '/unsuccessful' },
   ];
 
   return user?.role === 'Staff' ? allData.slice(2) : allData;

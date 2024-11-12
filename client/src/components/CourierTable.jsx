@@ -40,7 +40,7 @@ const CourierTable = ({data,trigger,setTrigger}) => {
         }
 
        }catch(error){
-        message.error(error.message)
+        // message.error(error.message)
        }
       
        setIsConfirm(false)

@@ -1,20 +1,36 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 /* Main container styling */
 .reminder-container {
   margin-bottom: 20px; /* Space from the header */
   padding: 15px;
+  background: -o-linear-gradient(315deg, #e0f7fa, #f3f4f6);
   background: linear-gradient(135deg, #e0f7fa, #f3f4f6); /* Subtle gradient background */
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 100%; 
   margin-left: auto;
   margin-right: auto;
   border: 1px solid #00acc1; /* Softer accent border */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
+  -webkit-transition: -webkit-transform 0.3s ease, -webkit-box-shadow 0.3s ease;
+  transition: -webkit-transform 0.3s ease, -webkit-box-shadow 0.3s ease;
+  -o-transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, -webkit-transform 0.3s ease, -webkit-box-shadow 0.3s ease; /* Smooth animation */
 }
 
 .reminder-container:hover {
-  transform: translateY(-4px); /* Slight lift on hover */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+  -webkit-transform: translateY(-4px);
+      -ms-transform: translateY(-4px);
+          transform: translateY(-4px); /* Slight lift on hover */
+  -webkit-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
 }
 
 /* Inner content styling */
@@ -32,8 +48,13 @@ h2 {
 
 /* Pending items container */
 .pending-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   gap: 10px; /* Space between pending items */
   max-height: 250px;
   overflow-y: scroll;
@@ -55,26 +76,42 @@ h2 {
   background-color: #ffffff;
   padding: 10px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
   font-size: 16px;
   color: #004d40; /* Deep green color */
   border-left: 5px solid #00acc1; /* Accent left border */
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-transition: background-color 0.3s ease, -webkit-box-shadow 0.3s ease;
+  transition: background-color 0.3s ease, -webkit-box-shadow 0.3s ease;
+  -o-transition: background-color 0.3s ease, box-shadow 0.3s ease;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, -webkit-box-shadow 0.3s ease;
 }
 
 .pending-item:hover {
-  box-shadow: 0 4px 10px rgba(0, 188, 212, 0.2); /* Box shadow effect on hover */
+  -webkit-box-shadow: 0 4px 10px rgba(0, 188, 212, 0.2);
+          box-shadow: 0 4px 10px rgba(0, 188, 212, 0.2); /* Box shadow effect on hover */
   background-color: #e0f7fa; /* Light cyan tint on hover */
 }
 
 /* Text and icon in pending item */
 .pending-item span {
   font-weight: 500;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .pending-item span::before {

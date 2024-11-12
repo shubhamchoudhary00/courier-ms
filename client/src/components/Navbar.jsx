@@ -26,15 +26,15 @@ const Sidebar = () => {
   const handleLogout = () => {
     localStorage.clear();
     dispatch(setUser(null));
-    navigate('/login')
+    navigate('/')
   };
 
   return (
     <div className="custom-sidebar">
-      <div className="sidebar-item" onClick={() => navigate('/')}>
-        <img src="/images/logo.png" alt="Logo" />
+      <div className="sidebar-item" onClick={() => navigate('/home')}>
+        <img src="https://firebasestorage.googleapis.com/v0/b/courier-ms.appspot.com/o/images%2Flogo.png?alt=media&token=7bca5d5f-4d8d-4fea-8201-e8b09a65eb76" alt="Logo" />
       </div>
-      <div className="sidebar-item" onClick={() => navigate('/')}>
+      <div className="sidebar-item" onClick={() => navigate('/home')}>
         <HiChartPie className="sidebar-icon" />
         <span>Dashboard</span>
       </div>

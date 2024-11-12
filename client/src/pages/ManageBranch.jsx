@@ -35,8 +35,8 @@ const ManageBranch = () => {
         // Cache branches in localStorage to avoid fetching the same data
       }
     } catch (error) {
-      console.log(error.message);
-      message.error('Something went wrong');
+      // console.log(error.message);
+      // message.error('Something went wrong');
     }
   };
 
@@ -52,7 +52,7 @@ const ManageBranch = () => {
   }, [user, refresh]);
   useEffect(() => {
     if (!localStorage.getItem('token')) {
-        navigate('/login');
+        navigate('/');
     }
 }, [navigate]);
 

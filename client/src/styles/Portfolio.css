@@ -1,5 +1,26 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 .background-radial-gradient {
     background-color: hsl(218, 41%, 15%);
+    background-image: -o-radial-gradient(0% 0%,
+        650px circle,
+        hsl(218, 41%, 35%) 15%,
+        hsl(218, 41%, 30%) 35%,
+        hsl(218, 41%, 20%) 75%,
+        hsl(218, 41%, 19%) 80%,
+        transparent 100%),
+      -o-radial-gradient(100% 100%,
+        1250px circle,
+        hsl(218, 41%, 45%) 15%,
+        hsl(218, 41%, 30%) 35%,
+        hsl(218, 41%, 20%) 75%,
+        hsl(218, 41%, 19%) 80%,
+        transparent 100%);
     background-image: radial-gradient(650px circle at 0% 0%,
         hsl(218, 41%, 35%) 15%,
         hsl(218, 41%, 30%) 35%,
@@ -19,9 +40,15 @@
 }
 
 .logo {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 .portfolio-logo {
@@ -31,7 +58,8 @@
 
 .transparent-card {
     background-color: rgba(255, 255, 255, 0.1) !important;
-    backdrop-filter: saturate(150%) blur(10px);
+    -webkit-backdrop-filter: saturate(150%) blur(10px);
+            backdrop-filter: saturate(150%) blur(10px);
     border: none;
     border-radius: 15px;
     color: hsl(218, 81%, 95%);
@@ -41,6 +69,22 @@
     background-color: rgba(255, 255, 255, 0.1) !important;
     color: hsl(218, 81%, 95%) !important;
     border-color: hsl(218, 81%, 75%);
+}
+
+.input-field::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.input-field::-moz-placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.input-field:-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.input-field::-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .input-field::placeholder {

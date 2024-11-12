@@ -34,8 +34,8 @@ const PendingItem = () => {
               }
 
         }catch(error){
-            console.log(error.message)
-            message.error('Something went wrong')
+            // console.log(error.message)
+            // message.error('Something went wrong')
         }
     }
 
@@ -55,7 +55,7 @@ const PendingItem = () => {
       }, [trigger,user]);
       useEffect(() => {
         if (!localStorage.getItem('token')) {
-            navigate('/login');
+            navigate('/');
         }
     }, [navigate]);
     

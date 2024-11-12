@@ -34,8 +34,8 @@ const ShippedItem = () => {
               }
 
         }catch(error){
-            console.log(error.message)
-            message.error('Something went wrong')
+            // console.log(error.message)
+            // message.error('Something went wrong')
         }
     }
 
@@ -54,7 +54,7 @@ const ShippedItem = () => {
 
       useEffect(() => {
         if (!localStorage.getItem('token')) {
-            navigate('/login');
+            navigate('/');
         }
     }, [navigate]);
     

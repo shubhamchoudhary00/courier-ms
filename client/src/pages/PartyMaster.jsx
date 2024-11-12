@@ -83,7 +83,7 @@ const PartyMaster = () => {
   };
   useEffect(() => {
     if (!localStorage.getItem('token')) {
-        navigate('/login');
+        navigate('/');
     }
 }, [navigate]);
 
@@ -182,7 +182,7 @@ const PartyMaster = () => {
               onChange={handleChange}
             />
           </Form.Group>
-          <Form.Group className="mb-2" controlId="bankAccountNo">
+         {/*} <Form.Group className="mb-2" controlId="bankAccountNo">
             <Form.Label>Bank Account Number</Form.Label>
             <Form.Control
               type="text"
@@ -208,7 +208,7 @@ const PartyMaster = () => {
               value={formData.ifscCode}
               onChange={handleChange}
             />
-          </Form.Group>
+          </Form.Group> */}
           <Form.Group className="mb-2" controlId="email">
             <Form.Label>Email</Form.Label>
             <Form.Control
@@ -236,7 +236,7 @@ const PartyMaster = () => {
               onChange={handleChange}
             />
           </Form.Group>
-          <Form.Group className="mb-2" controlId="aadharNo">
+          {/*<Form.Group className="mb-2" controlId="aadharNo">
             <Form.Label>Aadhar No</Form.Label>
             <Form.Control
               type="text"
@@ -244,7 +244,7 @@ const PartyMaster = () => {
               value={formData.aadharNo}
               onChange={handleChange}
             />
-          </Form.Group>
+          </Form.Group>*/}
 
           <div className="button-group">
             <Button 

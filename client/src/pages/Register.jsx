@@ -29,7 +29,7 @@ const Register = () => {
             const res=await axios.post(`${host}/user/register`,{name,email,phone,password});
             if(res.data.success){
                 message.success(res.data.message);
-                navigate('/login')
+                navigate('/')
             }
         }catch(error){
             console.log(error.message);
@@ -46,7 +46,7 @@ const Register = () => {
       <MDBRow>
         <MDBCol md="6" className="text-center text-md-start d-flex flex-column justify-content-center">
         <div className='text-center mb-4 logo'>
-        <img src="/images/logo.png" alt="Logo" className="login-logo" />
+        <img src="https://firebasestorage.googleapis.com/v0/b/courier-ms.appspot.com/o/images%2Flogo.png?alt=media&token=7bca5d5f-4d8d-4fea-8201-e8b09a65eb76" alt="Logo" className="login-logo" />
     </div>
           <h1 className="my-5 display-3 fw-bold ls-tight px-3" style={{ color: 'hsl(218, 81%, 95%)' }}>
             Create an Account <br />
@@ -80,7 +80,7 @@ const Register = () => {
               Sign Up
             </MDBBtn>              
             <div className="text-center">
-                <p>or sign in with: <Link to='/login'>Login</Link> </p>
+                <p>or sign in with: <Link to='/'>Login</Link> </p>
                 {/*<MDBBtn tag="a" color="none" className="mx-3" style={{ color: '#1266f1' }}>
                   <MDBIcon fab icon="facebook-f" size="sm" />
                 </MDBBtn>

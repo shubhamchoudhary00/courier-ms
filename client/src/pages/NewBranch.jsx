@@ -40,7 +40,7 @@ const NewBranch = () => {
       }
     } catch (error) {
       if (error.response) {
-        message.error(error.response.message || 'Something went wrong');
+        message.error(error.response.data.message || 'Something went wrong');
       } else {
         message.error('Something went wrong');
       }
@@ -53,7 +53,7 @@ const NewBranch = () => {
   }, [user]);
   useEffect(() => {
     if (!localStorage.getItem('token')) {
-        navigate('/login');
+        navigate('/');
     }
 }, [navigate]);
 

@@ -9,11 +9,14 @@ import { message } from 'antd';
 import { useSelector } from 'react-redux';
 import Select from 'react-select'
 import Country from '../helpers/Country';
+import { useNavigate } from 'react-router-dom';
 const CourierMaster = () => {
   const [isConfirm, setIsConfirm] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const {user}=useSelector((state)=>state.user);
+  const navigate=useNavigate()
+
   const [formData, setFormData] = useState({
     companyName: '',
     address: '',
@@ -54,6 +57,13 @@ const CourierMaster = () => {
     const { companyName, address, city, state, country } = formData;
     setIsFormValid(companyName && address && city && state && country);
   }, [formData]);
+
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+        navigate('/');
+    }
+}, [navigate]);
+
 
   const handleSubmit = async () => {
     try {

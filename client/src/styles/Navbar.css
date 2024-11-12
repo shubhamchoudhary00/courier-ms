@@ -1,11 +1,25 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 .custom-sidebar {
   width: 250px;
   height: 100vh;
   background-color: #233655;
   padding: 20px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   overflow-y: scroll;
   
   /* Hide scrollbar in Webkit-based browsers (Chrome, Safari) */
@@ -29,12 +43,18 @@
 
 .sidebar-item {
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 12px 20px;
   color: white;
   font-size: 16px;
   cursor: pointer;
+  -webkit-transition: background-color 0.3s ease;
+  -o-transition: background-color 0.3s ease;
   transition: background-color 0.3s ease;
   text-align: left;
 }
@@ -68,8 +88,13 @@
 
 .sidebar-dropdown {
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   background-color: #344f7d;
   padding-left: 40px; /* Add padding to indent dropdown items */
 }
@@ -78,6 +103,8 @@
   padding: 10px 15px;
   color: white;
   font-size: 14px;
+  -webkit-transition: background-color 0.3s ease;
+  -o-transition: background-color 0.3s ease;
   transition: background-color 0.3s ease;
 }
 
@@ -86,13 +113,16 @@
 }
 
 .custom-sidebar .sidebar-item:first-child {
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .custom-sidebar img {
   width: 80%; /* Ensures the logo scales well */
   max-width: 150px;
   height: auto;
-  object-fit: contain; /* Ensure image fits nicely within the container */
+  -o-object-fit: contain;
+     object-fit: contain; /* Ensure image fits nicely within the container */
   margin-bottom: 20px;
 }

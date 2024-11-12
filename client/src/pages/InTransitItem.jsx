@@ -52,7 +52,7 @@ const InTransitItem = () => {
       }, [trigger,user]);
       useEffect(() => {
         if (!localStorage.getItem('token')) {
-            navigate('/login');
+            navigate('/');
         }
     }, [navigate]);
     

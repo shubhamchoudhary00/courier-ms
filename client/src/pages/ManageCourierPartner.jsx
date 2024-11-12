@@ -27,8 +27,8 @@ const ManageCourierPartner = () => {
         setCourier(res.data.courier);
       }
     } catch (error) {
-      console.log(error.message);
-      message.error('Something went wrong');
+      // console.log(error.message);
+      // message.error('Something went wrong');
     }
   };
 
@@ -41,7 +41,7 @@ const ManageCourierPartner = () => {
   }, [trigger, user]);
   useEffect(() => {
     if (!localStorage.getItem('token')) {
-        navigate('/login');
+        navigate('/');
     }
 }, [navigate]);
 

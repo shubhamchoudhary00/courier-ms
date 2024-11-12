@@ -1,9 +1,17 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 /* General styling for the container */
 .container {
     padding: 20px;
     background-color: #f8f9fa; /* Light background for better readability */
     border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
 
@@ -13,10 +21,12 @@
     border-collapse: separate;
     border-spacing: 0;
     background-color: white; /* White background for the table */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow for a modern look */
+    -webkit-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow for a modern look */
     border-radius: 12px;
     overflow: hidden;
 }
+
 
 /* Table Head Styling */
 .table th {
@@ -87,15 +97,60 @@
 .status-unsuccessful {
     background-color: #dc3545;
 }
+/* General Badge Styling for Status and Transport Types */
+.badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.65rem;
+    text-align: center;
+    display: inline-block;
+    color: #ffffff; /* White text for readability */
+    font-weight: 600;
+}
+
+/* Specific Transport Type Colors with Enhanced Contrast */
+.transport-courier-import {
+    background-color: #0056b3; /* Dark blue */
+}
+
+.transport-courier-export {
+    background-color: #d97706; /* Dark orange */
+}
+
+.transport-courier-outgoing {
+    background-color: #218c74; /* Deep teal */
+}
+
+.transport-courier-incoming {
+    background-color: #6f42c1; /* Deep purple */
+}
+
+.transport-by-hand-incoming {
+    background-color: #5a3ec8; /* Rich violet */
+}
+
+.transport-by-hand-outgoing {
+    background-color: #b02a37; /* Dark red */
+}
+
+
 
 /* Action buttons */
 .btn {
     padding: 8px 10px;
     border-radius: 8px;
     font-size: 0.8rem;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-transition: background-color 0.2s ease;
+    -o-transition: background-color 0.2s ease;
     transition: background-color 0.2s ease;
     margin: 0 5px;
 }
@@ -151,12 +206,62 @@ td:nth-child(6) {
 
 /* Loading Spinner */
 .loader-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: 100%;
 }
 
+.search-bar {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    -webkit-transition: -webkit-box-shadow 0.3s ease;
+    transition: -webkit-box-shadow 0.3s ease;
+    -o-transition: box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease, -webkit-box-shadow 0.3s ease;
+  }
+  
+  .search-bar:focus {
+    -webkit-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-color: #4a90e2;
+  }
+  
+  .search-bar::-webkit-input-placeholder {
+    color: #888;
+  }
+  
+  .search-bar::-moz-placeholder {
+    color: #888;
+  }
+  
+  .search-bar:-ms-input-placeholder {
+    color: #888;
+  }
+  
+  .search-bar::-ms-input-placeholder {
+    color: #888;
+  }
+  
+  .search-bar::placeholder {
+    color: #888;
+  }
+  
 /* Responsive Layout */
 @media (max-width: 768px) {
     .container {

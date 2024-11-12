@@ -135,4 +135,5 @@ const updatePartyController = async (req, res) => {
 }
 
 
+
 module.exports = { addPartyController ,getAllPartyController,deletePartyController,getPartyController,updatePartyController};

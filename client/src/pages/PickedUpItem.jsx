@@ -35,8 +35,8 @@ const PickedUpItem = () => {
             }
 
         }catch(error){
-            console.log(error.message)
-            message.error('Something went wrong')
+            // console.log(error.message)
+            // message.error('Something went wrong')
         }
     }
 
@@ -55,7 +55,7 @@ const PickedUpItem = () => {
 
       useEffect(() => {
         if (!localStorage.getItem('token')) {
-            navigate('/login');
+            navigate('/');
         }
     }, [navigate]);
     

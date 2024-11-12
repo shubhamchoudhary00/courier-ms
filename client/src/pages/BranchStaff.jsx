@@ -32,8 +32,8 @@ const BranchStaff = () => {
           setBranches(data.branches);
         }
       } catch (error) {
-        console.log(error.message);
-        message.error('Something went wrong');
+        // console.log(error.message);
+        // message.error('Something went wrong');
       } finally {
         setLoading(false); // Set loading to false after fetching
       }
@@ -47,7 +47,7 @@ const BranchStaff = () => {
   }, [user]);
   useEffect(() => {
     if (!localStorage.getItem('token')) {
-        navigate('/login');
+        navigate('/');
     }
 }, [navigate]);
 

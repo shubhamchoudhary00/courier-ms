@@ -7,10 +7,10 @@ import 'flowbite/dist/flowbite.css';
 
 import ProtectedRoutes from './Auth/ProtectedRoutes';
 import PublicRoute from './Auth/PublicRoute';
-
+import Home from './pages/Home'
 // import PublicRoute from './helpers/PublicRoute';
 
-const Home = lazy(() => import('./pages/Home'));
+
 const NewBranch = lazy(() => import('./pages/NewBranch'));
 const ShippingLabelForm = lazy(() => import('./pages/ShippingLabelForm'));
 const Register = lazy(() => import('./pages/Register'));
@@ -54,7 +54,7 @@ const App = () => {
             }
           >
             <Routes>
-              <Route path="/" element={<ProtectedRoutes><Home /></ProtectedRoutes>} />
+              <Route path="/home" element={<ProtectedRoutes><Home /></ProtectedRoutes>} />
               {/* Branch Routes */}
 
               <Route path="/new-branch" element={<ProtectedRoutes><NewBranch /></ProtectedRoutes>} />
@@ -63,7 +63,7 @@ const App = () => {
               {/*  End */}
 
               {/* Basic Routes */}
-              <Route path="/login" element={<PublicRoute><Login /></PublicRoute> } />
+              <Route path="/" element={<PublicRoute><Login /></PublicRoute> } />
               <Route path="/register" element={<PublicRoute><Register /></PublicRoute> } />
               <Route path="/print/:id" element={<ProtectedRoutes><AWBBarcodePrint /></ProtectedRoutes> } />
               <Route path="/user-profile/:id" element={<ProtectedRoutes><UserProfile /></ProtectedRoutes> } />

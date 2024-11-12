@@ -47,8 +47,8 @@ const AddNewStaff = ({ branchId, open, setOpen, update, onClose, userId }) => {
         setActive(res.active); // Set active state based on response
       }
     } catch (error) {
-      console.log(error.message);
-      message.error('Something went wrong');
+      // console.log(error.message);
+      // message.error('Something went wrong');
     }
   };
 
@@ -85,8 +85,8 @@ const AddNewStaff = ({ branchId, open, setOpen, update, onClose, userId }) => {
         onClose(); // Call onClose to refresh parent state and close the modal
       }
     } catch (error) {
-      console.error(error.message);
-      message.error('Something went wrong');
+      // console.error(error.message);
+      // message.error('Something went wrong');
     }
   };
 

@@ -1,3 +1,3 @@
-const host='http://localhost:5000/api/v1'
+const host='https://track-trace-backend.onrender.com/api/v1'
 
 export default host;

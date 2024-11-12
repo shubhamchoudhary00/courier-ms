@@ -26,8 +26,8 @@ const PartyView = ({ id, open, setOpen }) => {
         setParty(data.party);
       }
     } catch (error) {
-      console.log(error.message);
-      message.error('Something went wrong');
+      // console.log(error.message);
+      // message.error('Something went wrong');
     } finally {
       setLoading(false); // Hide loading after request completes
     }

@@ -1,71 +1,109 @@
-.modal-overlay {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 9999;
-  }
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
 
-  
-  .modal-content {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 80%;
-    height: fit-content;
-    position: fixed;
-    /* max-width: 600px; */
-    animation: fadeIn 0.3s ease-in-out;
+.modal-overlay {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 80%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  position: fixed;
+  /* max-width: 600px; */
+  -webkit-animation: fadeIn 0.3s ease-in-out;
+          animation: fadeIn 0.3s ease-in-out;
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+    -webkit-transform: scale(0.95);
+            transform: scale(0.95);
   }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
+  to {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
-  
-  .form-label {
-    font-weight: 500;
-    color: #233655;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    -webkit-transform: scale(0.95);
+            transform: scale(0.95);
   }
-  
-  .form-control {
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  to {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
   }
-  
-  .btn-primary {
-    background-color: #344f7d;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0 3px 6px rgba(52, 79, 125, 0.3);
-    transition: background-color 0.2s ease;
-  }
-  
-  .btn-primary:hover {
-    background-color: #233655;
-  }
-  
-  .btn-danger {
-    background-color: #d9534f;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0 3px 6px rgba(217, 83, 79, 0.3);
-    transition: background-color 0.2s ease;
-  }
-  
-  .btn-danger:hover {
-    background-color: #c9302c;
-  }
-  
+}
+
+.form-label {
+  font-weight: 500;
+  color: #233655;
+}
+
+.form-control {
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background-color: #344f7d;
+  border: none;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 3px 6px rgba(52, 79, 125, 0.3);
+          box-shadow: 0 3px 6px rgba(52, 79, 125, 0.3);
+  -webkit-transition: background-color 0.2s ease;
+  -o-transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #233655;
+}
+
+.btn-danger {
+  background-color: #d9534f;
+  border: none;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 3px 6px rgba(217, 83, 79, 0.3);
+          box-shadow: 0 3px 6px rgba(217, 83, 79, 0.3);
+  -webkit-transition: background-color 0.2s ease;
+  -o-transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease;
+}
+
+.btn-danger:hover {
+  background-color: #c9302c;
+}

@@ -7,12 +7,14 @@ import { useSelector } from "react-redux";
 import '../styles/Home.css';
 import '../styles/ManageParty.css'; // New CSS file for additional styling
 import PartyTable from "../components/PartyTable";
+import { useNavigate } from "react-router-dom";
 
 const ManageParty = () => {
   const [party, setParty] = useState([]);
   const [trigger, setTrigger] = useState(false);
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
   const { user } = useSelector((state) => state.user);
+  const navigate=useNavigate()
 
   const getAllParty = async (id) => {
     try {
@@ -26,8 +28,8 @@ const ManageParty = () => {
         console.log(res.data)
       }
     } catch (error) {
-      console.log(error.message);
-      message.error('Something went wrong');
+      // console.log(error.message);
+      // message.error('Something went wrong');
     }
   };
 
@@ -45,6 +47,12 @@ const ManageParty = () => {
     (item.gstNo && item.gstNo.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (item.transGstNo && item.transGstNo.toLowerCase().includes(searchTerm.toLowerCase()))
   );
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+        navigate('/');
+    }
+}, [navigate]);
+
 
   return (
     <Layout>

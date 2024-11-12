@@ -1,159 +1,178 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 /* General container styling */
 .black-container {
-    position: fixed;
-    height: 100vh;
-    width: 100vw;
-    top: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 9;
-  }
-  
-  .top-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    position: fixed;
-    background-color: rgba(255, 255, 255, 0.8);
-  }
-  
-  .main-container {
-    z-index: 99;
-    width: 90%;
-    max-width: 1100px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    max-height: 650px;
-    overflow-y: scroll;
-  }
-  
-  .main-container::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .heading {
-    text-align: center;
-    color: #233655;
-    margin-bottom: 20px;
-    font-size: 26px;
-    font-weight: bold;
-    letter-spacing: 1px;
-  }
-  
-  /* Parcel Details Section */
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 9;
+}
+
+.top-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.main-container {
+  z-index: 99;
+  width: 90%;
+  max-width: 1100px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  max-height: 650px;
+  overflow-y: scroll;
+}
+
+.main-container::-webkit-scrollbar {
+  display: none;
+}
+
+.heading {
+  text-align: center;
+  color: #233655;
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* Parcel Details Section */
+.parcel-details-section {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 20px 1fr;
+  grid-template-columns: 1fr 1fr; /* Two-column layout */
+  gap: 20px;
+  padding: 10px;
+}
+
+.detail-item {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.detail-item strong {
+  color: #233655;
+}
+
+/* Highlighted tracking number */
+.tracking-number {
+  background-color: #8012bf;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-align: center;
+  -ms-grid-column-span: 2;
+  grid-column: span 2;
+}
+
+/* Document section */
+.documents-preview-section {
+  margin-top: 20px;
+  padding: 0 20px;
+}
+
+.document-item {
+  font-size: 14px;
+}
+
+.document-item span {
+  color: #344f7d;
+  cursor: pointer;
+}
+
+.document-item a {
+  margin-left: 10px;
+  color: #1890ff;
+}
+
+/* User details at the bottom */
+.user-details {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 12px;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
   .parcel-details-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Two-column layout */
-    gap: 20px;
-    padding: 10px;
+    -ms-grid-columns: 1fr;
+    grid-template-columns: 1fr; /* Single-column layout for smaller screens */
   }
-  
-  .detail-item {
-    margin-bottom: 10px;
-    font-size: 14px;
-  }
-  
-  .detail-item strong {
-    color: #233655;
-  }
-  
-  /* Highlighted tracking number */
-  .tracking-number {
-    background-color: #8012bf;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 8px 12px;
-    border-radius: 5px;
-    text-align: center;
-    grid-column: span 2;
-  }
-  
-  /* Document section */
-  .documents-preview-section {
-    margin-top: 20px;
-    padding: 0 20px;
-  }
-  
-  .document-item {
-    font-size: 14px;
-  }
-  
-  .document-item span {
-    color: #344f7d;
-    cursor: pointer;
-  }
-  
-  .document-item a {
-    margin-left: 10px;
-    color: #1890ff;
-  }
-  
-  /* User details at the bottom */
-  .user-details {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    background: #f0f0f0;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    font-size: 12px;
-  }
-  
-  /* Responsive layout */
-  @media (max-width: 768px) {
-    .parcel-details-section {
-      grid-template-columns: 1fr; /* Single-column layout for smaller screens */
-    }
-  }
-  
-  .status {
-    padding: 5px 10px;
-    border-radius: 20px;
-    color: white;
-    font-weight: bold;
-    display: inline-block;
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
+  display: inline-block;
 }
 
 .status-accepted {
-    background-color: rgba(0, 123, 255, 0.72); /* Lighter blue for accepted status */
+  background-color: rgba(0, 123, 255, 0.72); /* Lighter blue for accepted status */
 }
 
 .status-collected {
-    background-color: rgba(0, 123, 255, 0.72); /* Lighter blue for collected status */
+  background-color: rgba(0, 123, 255, 0.72); /* Lighter blue for collected status */
 }
 
 .status-shipped {
-    background-color: rgba(255, 193, 7, 0.72); /* Lighter yellow for shipped status */
+  background-color: rgba(255, 193, 7, 0.72); /* Lighter yellow for shipped status */
 }
 
 .status-intransit {
-    background-color: rgba(255, 193, 7, 0.72); /* Lighter yellow for in-transit status */
+  background-color: rgba(255, 193, 7, 0.72); /* Lighter yellow for in-transit status */
 }
 
 .status-arrived {
-    background-color: rgba(255, 193, 7, 0.72); /* Lighter yellow for arrived status */
+  background-color: rgba(255, 193, 7, 0.72); /* Lighter yellow for arrived status */
 }
 
 .status-outfordelivery {
-    background-color: rgba(255, 193, 7, 0.72); /* Lighter yellow for out for delivery status */
+  background-color: rgba(255, 193, 7, 0.72); /* Lighter yellow for out for delivery status */
 }
 
 .status-delivered {
-    background-color: rgba(40, 167, 69, 0.72); /* Lighter green for delivered status */
+  background-color: rgba(40, 167, 69, 0.72); /* Lighter green for delivered status */
 }
 
 .status-pickedup {
-    background-color: rgba(40, 167, 69, 0.72); /* Lighter green for picked up status */
+  background-color: rgba(40, 167, 69, 0.72); /* Lighter green for picked up status */
 }
 
 .status-unsuccessful {
-    background-color: rgba(220, 53, 69, 0.72); /* Lighter red for unsuccessful attempt */
+  background-color: rgba(220, 53, 69, 0.72); /* Lighter red for unsuccessful attempt */
 }

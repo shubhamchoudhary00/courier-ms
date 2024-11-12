@@ -26,8 +26,8 @@ const CourierPartnerView = ({ id, open, setOpen }) => {
         setCourier(data.courier);
       }
     } catch (error) {
-      console.log(error.message);
-      message.error('Something went wrong');
+      // console.log(error.message);
+      // message.error('Something went wrong');
     } finally {
       setLoading(false); // Hide loading after request completes
     }

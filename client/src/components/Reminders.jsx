@@ -22,6 +22,7 @@ const Reminders = () => {
 
   const getAllPendingShipments = async (id) => {
     setLoading(true);
+   if(id){
     try {
       const res = await axios.post(`${host}/shipping/get-all-pending-shipment`, { id }, {
         headers: {
@@ -34,11 +35,12 @@ const Reminders = () => {
         message.error('Failed to fetch pending shipments');
       }
     } catch (error) {
-      console.error('Error fetching pending shipments:', error);
-      message.error('Something went wrong. Please try again later.');
+      // console.error('Error fetching pending shipments:', error);
+      // message.error('Something went wrong. Please try again later.');
     } finally {
       setLoading(false);
     }
+   }
   };
 
   useEffect(() => {

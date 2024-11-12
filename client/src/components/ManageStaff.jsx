@@ -33,8 +33,8 @@ const ManageStaff = ({ id, setOpen, open }) => {
         setRefresh(prev => !prev); // Trigger a refresh after deletion
       }
     } catch (error) {
-      console.log(error.message);
-      message.error('Something went wrong');
+      // console.log(error.message);
+      // message.error('Something went wrong');
     }
     setIsConfirm(false);
   };
@@ -64,8 +64,8 @@ const ManageStaff = ({ id, setOpen, open }) => {
         message.error('Failed to fetch staff');
       }
     } catch (error) {
-      console.log(error.message);
-      message.error('Something went wrong');
+      // console.log(error.message);
+      // message.error('Something went wrong');
     }
   };
 

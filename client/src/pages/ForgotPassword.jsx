@@ -22,7 +22,7 @@ const ForgotPassword = () => {
       const res = await axios.post(`${host}/user/forgot-password`, { email });
       if (res.data.success) {
         message.success(res.data.message);
-        navigate('/login')
+        navigate('/')
       }
     } catch (error) {
       console.log(error.message);

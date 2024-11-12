@@ -79,7 +79,7 @@ const ParcelDetails = () => {
 
   useEffect(() => {
     if (!localStorage.getItem('token')) {
-        navigate('/login');
+        navigate('/');
     }
 }, [navigate]);
 
@@ -173,8 +173,8 @@ const handleModalClose = () => {
         message.error('Failed to fetch parcel details.'); // Handle unsuccessful response
       }
     } catch (error) {
-      console.log(error.message);
-      message.error('Something went wrong');
+      // console.log(error.message);
+      // message.error('Something went wrong');
     }
   };
   
@@ -358,8 +358,8 @@ const handleSubmit = async (e) => {
             message.success('Updated Successfully');
         }
     } catch (error) {
-        console.error('Error updating shipping:', error.message);
-        message.error('Something went wrong');
+        // console.error('Error updating shipping:', error.message);
+        // message.error('Something went wrong');
     } finally {
         setIsConfirm(false); // Close confirmation modal if present
     }
@@ -406,8 +406,8 @@ const handleSubmit = async (e) => {
             
       }
     } catch (error) {
-      console.log(error.message);
-      message.error('Something went wrong');
+      // console.log(error.message);
+      // message.error('Something went wrong');
     }
   };
   const getAllCourier = async (id) => {
@@ -434,8 +434,8 @@ const handleSubmit = async (e) => {
           } 
       }
     } catch (error) {
-      console.log(error.message);
-      message.error('Something went wrong');
+      // console.log(error.message);
+      // message.error('Something went wrong');
     }
   };
 

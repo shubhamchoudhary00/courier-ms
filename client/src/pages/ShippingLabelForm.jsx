@@ -64,13 +64,13 @@ const ShippingLabelForm = () => {
   const [courier,setCourier]=useState([])
   const [partyOptions, setPartyOptions] = useState([]);
   const [courierOptions, setCourierOptions] = useState([]);
-  const [selectedDelivery,setSelectedDelivery]=useState({});
-  const [selectedSupplier,setSelectedSupplier]=useState({});
-  const [selectedCourier,setSelectedCourier]=useState({});
+  const [selectedDelivery,setSelectedDelivery]=useState(null);
+  const [selectedSupplier,setSelectedSupplier]=useState(null);
+  const [selectedCourier,setSelectedCourier]=useState(null);
   
   useEffect(() => {
     if (!localStorage.getItem('token')) {
-        navigate('/login');
+        navigate('/');
     }
 }, [navigate]);
 
@@ -225,6 +225,7 @@ const ShippingLabelForm = () => {
       if (res.data.success) {
         message.success('Shipping created successfully');
         const shipping = res.data.newShipping;
+        setLoader(true)
         // console.log(res.data)
         setId(shipping?._id); // Store the created shipping ID
       }
@@ -235,7 +236,7 @@ const ShippingLabelForm = () => {
     } finally {
       // Reset confirmation state after the request completes
       setIsConfirm(false);
-      setLoader(true)
+      
     }
   };
   
@@ -258,8 +259,8 @@ const ShippingLabelForm = () => {
         console.log(res.data)
       }
     } catch (error) {
-      console.log(error.message);
-      message.error('Something went wrong');
+      // console.log(error.message);
+      // message.error('Something went wrong');
     }
   };
   const getAllCourier = async (id) => {
@@ -279,8 +280,8 @@ const ShippingLabelForm = () => {
         setCourierOptions(formattedOptions);
       }
     } catch (error) {
-      console.log(error.message);
-      message.error('Something went wrong');
+      // console.log(error.message);
+      // message.error('Something went wrong');
     }
   };
 
@@ -882,11 +883,14 @@ const ShippingLabelForm = () => {
           ))}
           {!loader && (
             <>
-            <button className='btn btn-primary' onClick={(e)=>{
+            <button className='btn btn-primary'
+              disabled={!formData?.transportType && !formData?.modeOfTransport && !selectedDelivery && !selectedSupplier}
+            onClick={(e)=>{
               e.preventDefault()
               setIsConfirm(true)
+              
             }} >Submit</button>
-            <button className='btn btn-danger' onClick={()=>navigate('/')} >Cancel</button>
+            <button className='btn btn-danger' onClick={()=>navigate('/home')} >Cancel</button>
             </>
          ) }
 

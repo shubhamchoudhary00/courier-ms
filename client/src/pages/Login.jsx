@@ -24,19 +24,36 @@ const Login = () => {
     const navigate = useNavigate();
 
     const handleSubmit = async () => {
+        const loadingMessage = message.loading('Logging in...', 0); // Keep loading message until we manually close it
+        
         try {
             const res = await axios.post(`${host}/user/login`, { email, password });
+    
             if (res.data.success) {
+                // Close the loading message
+                loadingMessage();
+                message.success('Login successful');
+                
+                // Store the token and user data
                 localStorage.setItem('token', res.data.token);
-                message.success(res.data.success);
                 dispatch(setUser(res.data.user));
-                navigate('/');
+    
+                // Navigate to home
+                navigate('/home');
             }
         } catch (error) {
-            console.log(error.message);
-            message.error('Something went wrong');
+            // Close the loading message
+            loadingMessage();
+            
+            if (error.response && error.response.data) {
+                message.error(error.response.data.message);
+            } else {
+                message.error('An error occurred. Please try again later.');
+            }
         }
-    }
+    };
+    
+    
 
     return (
         <MDBContainer fluid className='p-4 background-radial-gradient overflow-hidden lp-screen'>
@@ -47,7 +64,7 @@ const Login = () => {
 
                     {/* Insert the logo above the login card */}
                     <div className='text-center mb-4 logo'>
-                        <img src="/images/logo.png" alt="Logo" className="login-logo" />
+                        <img src="https://firebasestorage.googleapis.com/v0/b/courier-ms.appspot.com/o/images%2Flogo.png?alt=media&token=7bca5d5f-4d8d-4fea-8201-e8b09a65eb76" alt="Logo" className="login-logo" />
                     </div>
 
                     <h1 className="my-5 display-4 fw-bold ls-tight px-3 text-center" style={{ color: 'hsl(218, 81%, 95%)' }}>
@@ -69,7 +86,7 @@ const Login = () => {
                     <MDBCard className='my-5 bg-glass'>
                         <MDBCardBody className='p-5'>
 
-                            <h4 className="mb-5 text-center">Login</h4>
+                            <h4 className="mb-5 text-center" style={{fontSize:'2rem'}}>Login</h4>
 
                             <MDBInput wrapperClass='mb-4' id='form1' type='email' placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
                             <MDBInput wrapperClass='mb-4' id='form2' type='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
